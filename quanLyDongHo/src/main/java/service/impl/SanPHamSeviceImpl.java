@@ -5,22 +5,22 @@
 package service.impl;
 
 //import com.mycompany.mavenproject1.hibernate.BanHangHibernate;
-import reponsitory.impl.SanPhamReponstory;
-import ViewModels.ChiTietSPCustom;
-import ViewModels.DongSPCustom;
-import ViewModels.KhachHangCutoms;
-import ViewModels.MauSacCustom;
-import ViewModels.NamSXCustom;
-import ViewModels.SanPhamCustom;
+
+import Repository.SanPhamReponstory;
 import java.math.BigDecimal;
 import java.util.List;
-import model.SanPham.ChiTietSanPham;
-import model.SanPham.DongSp;
-import model.SanPham.MauSac;
-import model.SanPham.NamSanXuat;
-import model.SanPham.SanPham;
-import reponsitory.impl.KhachHangReponstory;
-import seivce.ISanPhamSevice;
+import model.sanpham.ChiTietSanPham;
+import model.sanpham.DongSp;
+import model.sanpham.MauSac;
+import model.sanpham.NamSanXuat;
+import model.sanpham.SanPham;
+import service.ISanPhamSevice;
+import viewmodel.ChiTietSPCustom;
+import viewmodel.DongSPCustom;
+import viewmodel.MauSacCustom;
+import viewmodel.NamSXCustom;
+import viewmodel.SanPhamCustom;
+
 
 /**
  *
@@ -29,7 +29,7 @@ import seivce.ISanPhamSevice;
 public class SanPHamSeviceImpl implements ISanPhamSevice {
 
     private SanPhamReponstory banHang = new SanPhamReponstory();
-    private KhachHangReponstory jkh = new KhachHangReponstory();
+//    private KhachHangReponstory jkh = new KhachHangReponstory();
 
     @Override
     public List<ChiTietSPCustom> getAll() {
@@ -71,10 +71,10 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
 
     }
 
-    @Override
-    public List<KhachHangCutoms> getAllll() {
-        return jkh.getAllKH();
-    }
+//    @Override
+//    public List<KhachHangCutoms> getAllll() {
+//        return jkh.getAllKH();
+//    }
 
     @Override
     public String addSanPham(SanPham sp) {

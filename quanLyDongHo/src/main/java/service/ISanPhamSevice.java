@@ -4,19 +4,20 @@
  */
 package service;
 
-import ViewModels.ChiTietSPCustom;
-import ViewModels.DongSPCustom;
-import ViewModels.KhachHangCutoms;
-import ViewModels.MauSacCustom;
-import ViewModels.NamSXCustom;
-import ViewModels.SanPhamCustom;
+
 import java.math.BigDecimal;
 import java.util.List;
-import model.SanPham.ChiTietSanPham;
-import model.SanPham.DongSp;
-import model.SanPham.MauSac;
-import model.SanPham.NamSanXuat;
-import model.SanPham.SanPham;
+import model.sanpham.ChiTietSanPham;
+import model.sanpham.DongSp;
+import model.sanpham.MauSac;
+import model.sanpham.NamSanXuat;
+import model.sanpham.SanPham;
+import viewmodel.ChiTietSPCustom;
+import viewmodel.DongSPCustom;
+import viewmodel.MauSacCustom;
+import viewmodel.NamSXCustom;
+import viewmodel.SanPhamCustom;
+
 
 /**
  *
@@ -36,7 +37,7 @@ public interface ISanPhamSevice {
 
     List<ChiTietSPCustom> getOne(String ten);
 
-    List<KhachHangCutoms> getAllll();
+//    List<KhachHangCutoms> getAllll();
 
     String addSanPham(SanPham sp);
 
