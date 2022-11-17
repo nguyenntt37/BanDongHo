@@ -68,10 +68,10 @@ public class KhachHang {
     private Integer trangthai;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private String ngayTao;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
 
     @OneToMany(mappedBy = "khachHang", fetch = FetchType.EAGER)
     private List<HoaDon> list = new ArrayList<>();

@@ -33,7 +33,10 @@ public class MauSac {
 
     @Column(name = "Ma")
     private String ma;
-
+    
+    @Column(name = "ngay_sua")
+    private String ngaySua;
+    
     @Column(name = "Ten")
     private String ten;
 
@@ -41,10 +44,9 @@ public class MauSac {
     private Integer trangthai;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private String ngayTao;
 
-    @Column(name = "ngay_sua")
-    private Date ngaySua;
+    
 
     @OneToMany(mappedBy = "mauSac", fetch = FetchType.EAGER)
     List<ChiTietSanPham> list = new ArrayList<>();

@@ -72,7 +72,7 @@ public class HoaDon {
     private String sdt;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
 
     @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
     private List<hoaDonChiTiet> list = new ArrayList<>();

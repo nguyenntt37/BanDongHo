@@ -66,7 +66,7 @@ public class GioHang {
     private Integer trangthai;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
 
     @OneToMany(mappedBy = "gioHang", fetch = FetchType.EAGER)
     List<GioHangChiTiet> list = new ArrayList<>();

@@ -41,10 +41,10 @@ public class DongSp {
     private Integer trangthai;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private String ngayTao;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
 
     @OneToMany(mappedBy = "dongsp", fetch = FetchType.EAGER)
     List<ChiTietSanPham> list = new ArrayList<>();

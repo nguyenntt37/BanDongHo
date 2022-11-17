@@ -41,10 +41,10 @@ public class SanPham {
     private Integer trangthai;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private String ngayTao;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
     
      @Column(name = "xuat_Xu")
     private String xuatXu;
