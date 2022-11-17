@@ -32,11 +32,12 @@ public class ChiTietSPCustom {
 
     private String dayDeo;
 
-     private String may;
+    private String may;
      
-      private String xuatXu;
+    private String xuatXu;
     
     private int soLuongTon;
+
 
     @Override
     public String toString() {

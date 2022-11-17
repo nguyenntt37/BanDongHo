@@ -14,6 +14,7 @@ import model.sanpham.DongSp;
 import model.sanpham.MauSac;
 import model.sanpham.NamSanXuat;
 import model.sanpham.SanPham;
+import model.sanpham.thuongHieu;
 import org.hibernate.HibernateException;
 
 import org.hibernate.Session;
@@ -25,6 +26,7 @@ import viewmodel.DongSPCustom;
 import viewmodel.MauSacCustom;
 import viewmodel.NamSXCustom;
 import viewmodel.SanPhamCustom;
+import viewmodel.ThuongHieuCustomer;
 
 /**
  *
@@ -36,10 +38,15 @@ public class SanPhamReponstory{
         List<ChiTietSPCustom> lsit = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("select new viewmodel.ChiTietSPCustom(c.id,"
-                    + "c.namBH,"
-                    + "c.moTa,"
-                    + "c.soLuongTon,"
-                    + "c.giaNhap"
+                    + "c.maSP,"
+                    + "c.tenSP,"
+                    + "c.giaBan,"
+                    + "c.tenMauSac"
+                    + "c.tenThuongHieu"
+                    + "c.dayDeo"
+                    + "c.may"
+                    + "c.xuatXu"
+                    + "c.soLuongTon"
                     + ")from model.sanpham.ChiTietSanPham c");
             lsit = query.list();
         } catch (HibernateException e) {
@@ -78,7 +85,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean up(ChiTietSanPham ct, String id, int soluong) {
+    public boolean up(ChiTietSanPham ct, int id, int soluong) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -101,14 +108,13 @@ public class SanPhamReponstory{
                     + " m.id ,"
                     + " m.sanPham.ma as maSP,"
                     + "m.sanPham.ten as TenSp,"
-                    + "m.nSX.ten as NSX,"
+                    + " m.giaBan ,"
                     + "m.mauSac.ten as mausac,"
-                    + "m.dongsp.ten ,"
-                    + "m.namBH as namBH,"
-                    + "m.moTa, "
-                    + "m.soLuongTon, "
-                    + "m.giaNhap, "
-                    + "m.giaBan "
+                    + "m.thuongHieu.ten as thuongHieu,"
+                    + "m.sanPham.dayDeo, "
+                    + "m.sanPham.may, "
+                    + "m.sanPham.xuatXu, "
+                    + "m.soLuongTon "
                     + ") "
                     + "from model.sanpham.ChiTietSanPham m ");
             lists = query.list();
@@ -168,20 +174,6 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean addChiTietSp(ChiTietSanPham sp) {
-        Transaction tran = null;
-        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            tran = session.beginTransaction();
-            session.saveOrUpdate(sp);
-
-            tran.commit();
-            return true;
-        } catch (HibernateException e) {
-            tran.begin();
-            return false;
-        }
-    }
-
     public boolean addMauSac(MauSac ms) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -194,8 +186,21 @@ public class SanPhamReponstory{
             return false;
         }
     }
+    
+    public boolean addThuongHieu(thuongHieu th) {
+        Transaction tran = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            tran = session.beginTransaction();
+            session.save(th);
+            tran.commit();
+            return true;
+        } catch (HibernateException e) {
+            tran.rollback();
+            return false;
+        }
+    }
 
-    public boolean updateSp(SanPham sp, String ten, String id, String ma) {
+    public boolean updateSp(SanPham sp, String ten, int id, String ma) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -212,7 +217,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean updateMauSac(MauSac ms, String id, String ma, String ten) {
+    public boolean updateMauSac(MauSac ms, int id, String ma, String ten) {
         Transaction tran = null;
         try ( Session sesion = HibernatUtil.getFACTORY().openSession()) {
             tran = sesion.beginTransaction();
@@ -229,6 +234,23 @@ public class SanPhamReponstory{
         }
     }
 
+    public boolean updateThuongHieu(thuongHieu th, int id, String ma, String ten) {
+        Transaction tran = null;
+        try ( Session sesion = HibernatUtil.getFACTORY().openSession()) {
+            tran = sesion.beginTransaction();
+            Query query = sesion.createQuery("update  thuongHieu s set s.ma =:ma,s.ten=:ten where s.id =  :d ");
+            query.setParameter("ma", ma);
+            query.setParameter("ten", ten);
+            query.setParameter("d", id);
+            query.executeUpdate();
+            tran.commit();
+            return true;
+        } catch (HibernateException e) {
+            tran.rollback();
+            return false;
+        }
+    }
+    
     public boolean updateChitietSP(ChiTietSanPham ct, String id, String idSP, String idDongSP, String idMau, String idNamSX,
             BigDecimal giaBan, BigDecimal giaNhap,
             int namBH, int soLuongTon) {
@@ -257,7 +279,7 @@ public class SanPhamReponstory{
 
     }
 
-    public boolean deleteSP(SanPham sp, String id) {
+    public boolean deleteSP(SanPham sp, int id) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -271,7 +293,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean deleteChitietSP(ChiTietSanPham ct, String id) {
+    public boolean deleteChitietSP(ChiTietSanPham ct, int id) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -285,7 +307,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean deleteMau(MauSac ms, String id) {
+    public boolean deleteMau(MauSac ms, int id) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -299,6 +321,20 @@ public class SanPhamReponstory{
         }
     }
 
+    public boolean deleteThuongHieu(thuongHieu th, int id) {
+        Transaction tran = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            tran = session.beginTransaction();
+            Query query = session.createQuery("delete from thuongHieu s where s.id=:d ");
+            query.setParameter("d", id);
+            query.executeUpdate();
+            tran.commit();
+            return true;
+        } catch (HibernateException e) {
+            return false;
+        }
+    }
+    
     public List<SanPhamCustom> getAllSP() {
         List<SanPhamCustom> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -351,6 +387,22 @@ public class SanPhamReponstory{
         }
         return list;
     }
+    
+    public List<ThuongHieuCustomer> getAllThuongHieu() {
+        List<ThuongHieuCustomer> list = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            Query query = session.createQuery("select new viewmodel.ThuongHieuCustomer("
+                    + "p.id,"
+                    + "p.ma,"
+                    + "p.ten"
+                    + ")from model.sanpham.thuongHieu p ");
+            list = query.list();
+
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public boolean addDongSp(DongSp dp) {
         Transaction tran = null;
@@ -378,7 +430,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean updateDongSP(DongSp dp, String id, String ma, String ten) {
+    public boolean updateDongSP(DongSp dp, int id, String ma, String ten) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -395,7 +447,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean updateNamSX(NamSanXuat nsx, String id, String ma, String ten) {
+    public boolean updateNamSX(NamSanXuat nsx, int id, String ma, String ten) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -412,7 +464,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean deleteDongSP(DongSp dp, String id) {
+    public boolean deleteDongSP(DongSp dp, int id) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -426,7 +478,7 @@ public class SanPhamReponstory{
         }
     }
 
-    public boolean deleteNamSX(NamSanXuat nsx, String id) {
+    public boolean deleteNamSX(NamSanXuat nsx, int id) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -442,9 +494,10 @@ public class SanPhamReponstory{
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<SanPhamCustom> list = sp.getAllSP();
-        for (SanPhamCustom o : list) {
+        List<ThuongHieuCustomer> list = sp.getAllThuongHieu();
+        for (ThuongHieuCustomer o : list) {
             System.out.println(o.toString());
         }
     }
+
 }
