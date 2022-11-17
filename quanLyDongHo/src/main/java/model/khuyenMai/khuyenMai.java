@@ -41,10 +41,10 @@ public class khuyenMai {
     private Integer trangthai;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private String ngayTao;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
 
     @OneToMany(mappedBy = "khuyenMai", fetch = FetchType.EAGER)
     private List<chiTietSPKhuyenMai> list = new ArrayList<>();

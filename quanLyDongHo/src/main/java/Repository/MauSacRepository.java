@@ -84,4 +84,12 @@ public class MauSacRepository {
         }
         return ma;
     }
+    
+    public static void main(String[] args) {
+        MauSacRepository ms = new MauSacRepository();
+           List<MauSac> list = ms.getList();
+           for (MauSac o : list) {
+               System.out.println(o.getNgaySua());
+        }
+    }
 }

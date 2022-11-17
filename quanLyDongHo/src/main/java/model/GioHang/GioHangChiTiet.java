@@ -45,7 +45,7 @@ public class GioHangChiTiet implements Serializable {
     private ChiTietSanPham chiTietSP;
 
     @Column(name = "So_Luong")
-    private int soLuong;
+    private Integer soLuong;
 
     @Column(name = "Don_Gia")
     private BigDecimal donGia;
@@ -57,10 +57,10 @@ public class GioHangChiTiet implements Serializable {
     private Integer trangthai;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private String ngayTao;
 
     @Column(name = "ngay_sua")
-    private Date ngaySua;
+    private String ngaySua;
 
     public GioHangChiTiet(GioHang gioHang, ChiTietSanPham chiTietSP, int soLuong) {
         this.gioHang = gioHang;
