@@ -68,6 +68,7 @@ public class SanPhamForm extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         lbIdSP = new javax.swing.JLabel();
+        btnThoat = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSP = new javax.swing.JTable();
 
@@ -103,31 +104,40 @@ public class SanPhamForm extends javax.swing.JFrame {
         lbIdSP.setForeground(new java.awt.Color(255, 255, 255));
         lbIdSP.setText("treytreyery");
 
+        btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
                         .addComponent(btnAdd)
                         .addGap(18, 18, 18)
-                        .addComponent(btnUpdate)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnDelete))
+                        .addComponent(btnUpdate))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addGap(39, 39, 39)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbIdSP, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtMaSP)
-                                .addComponent(txtTenSp, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)))))
-                .addContainerGap(90, Short.MAX_VALUE))
+                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(panelBorder1Layout.createSequentialGroup()
+                                    .addComponent(btnDelete)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnThoat))
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtMaSP)
+                                    .addComponent(txtTenSp, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))))))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +156,8 @@ public class SanPhamForm extends javax.swing.JFrame {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnAdd)
-                    .addComponent(btnDelete))
+                    .addComponent(btnDelete)
+                    .addComponent(btnThoat))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
 
@@ -222,6 +233,15 @@ public class SanPhamForm extends javax.swing.JFrame {
         mose(row);
     }//GEN-LAST:event_tblSPMouseClicked
 
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        int click = JOptionPane.showConfirmDialog(null, "Bạn muốn thoát ?", "Thoát", JOptionPane.YES_NO_OPTION);
+        if (click == JOptionPane.YES_OPTION) {
+            dispose();
+        } else {
+
+        }
+    }//GEN-LAST:event_btnThoatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -260,6 +280,7 @@ public class SanPhamForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -494,8 +494,8 @@ public class SanPhamReponstory{
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<ThuongHieuCustomer> list = sp.getAllThuongHieu();
-        for (ThuongHieuCustomer o : list) {
+        List<SanPhamCustom> list = sp.getAllSP();
+        for (SanPhamCustom o : list) {
             System.out.println(o.toString());
         }
     }
