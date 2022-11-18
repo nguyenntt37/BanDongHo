@@ -27,22 +27,22 @@ import viewmodel.hoaDonCustom;
  * @author asus_vinh
  */
 public class BanHangForm extends javax.swing.JFrame {
-
+    
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<ChiTietSPCustom> listsp = new ArrayList<>();
-
+    
     private DefaultTableModel dtttm = new DefaultTableModel();
     private List<hoaDonCustom> listHD = new ArrayList<>();
-
+    
     private DefaultTableModel dttm = new DefaultTableModel();
     private List<GioHangChiTietCustom> listGH = new ArrayList<>();
-
+    
     private DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
     private List<String> list = new ArrayList<>();
-
+    
     private DefaultComboBoxModel dcbmm = new DefaultComboBoxModel();
     private List<String> listt = new ArrayList<>();
-
+    
     private banHangSeviceImpl banHangSevice = new banHangSeviceImpl();
 
     /**
@@ -50,30 +50,29 @@ public class BanHangForm extends javax.swing.JFrame {
      */
     public BanHangForm() {
         initComponents();
-
+        
         JHoaDon.setModel(dtttm);
         String[] hedearrr = {"Mã Hóa Đơn", "Ngày tạo", "Nhân viên", "Khách Hàng"};
         dtttm.setColumnIdentifiers(hedearrr);
         showDataHoaDon(listHD);
-
+        
         JSanPham.setModel(dtm);
         String[] hedear = {"Mã Sản Phẩm", "Tên Sản Phẩm", "Đơn giá", "màu sắc", "thương hiệu", "Dây đeo", "Máy", "Xuất xứ", "Số lượng tồn"};
         dtm.setColumnIdentifiers(hedear);
         showDataSanPham(listsp);
         loadDataToTable();
-
+        
         JGioHang.setModel(dttm);
         String[] hedearr = {"Mã Sản Phẩm", "Tên Sản Phẩm", "Đơn giá", "số Lượng"};
         dttm.setColumnIdentifiers(hedearr);
         showDataGioHang(listGH);
-
-        txtTenKH.setText("Khách Hàng");
-
-        dtttm.setRowCount(0);
         
+        txtTenKH.setText("Khách Hàng");
+        
+        //dtttm.setRowCount(0);
         btnChonKhachHang.setEnabled(false);
     }
-
+    
     private void loadCBBThanhToan() {
         cbbHinhthucThanhToan.setModel(dcbm);
         list.add("tien mat");
@@ -81,7 +80,7 @@ public class BanHangForm extends javax.swing.JFrame {
         dcbm.addAll(list);
         dcbm.setSelectedItem("tien mat");
     }
-
+    
     private void loadCBBGiaoHang() {
         cbbHinhThucGiaoHang.setModel(dcbmm);
         listt.add("tt");
@@ -89,12 +88,12 @@ public class BanHangForm extends javax.swing.JFrame {
         dcbmm.addAll(listt);
         dcbmm.setSelectedItem("tt");
     }
-
+    
     private void loadDataToTable() {
         List<ChiTietSPCustom> listLoad = new banHangSeviceImpl().getAsll();
         showDataSanPham(listLoad);
     }
-
+    
     private void showDataHoaDon(List<hoaDonCustom> lisst) {
         listHD = new banHangSeviceImpl().getAllHD();
         dtttm.setRowCount(0);
@@ -102,7 +101,7 @@ public class BanHangForm extends javax.swing.JFrame {
             dtttm.addRow(o.todataRowDS());
         }
     }
-
+    
     private void showDataSanPham(List<ChiTietSPCustom> list) {
         // listsp = new BanHangSeviceImpl().getAll();
         dtm.setRowCount(0);
@@ -110,7 +109,7 @@ public class BanHangForm extends javax.swing.JFrame {
             dtm.addRow(o.todataRowDS());
         }
     }
-
+    
     private void showDataGioHang(List<GioHangChiTietCustom> listt) {
         listGH = new banHangSeviceImpl().getAllGH();
         dttm.setRowCount(0);
@@ -173,6 +172,7 @@ public class BanHangForm extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         JHoaDon = new javax.swing.JTable();
+        lbIdHD = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         JGioHang = new javax.swing.JTable();
@@ -443,7 +443,7 @@ public class BanHangForm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbbHinhThucGiaoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHuyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -473,6 +473,11 @@ public class BanHangForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(JSanPham);
 
         txtSearh.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(204, 0, 0)));
+        txtSearh.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearhCaretUpdate(evt);
+            }
+        });
 
         btnTaoHoaDon.setBackground(new java.awt.Color(255, 51, 51));
         btnTaoHoaDon.setText("Tạo hóa đơn");
@@ -482,10 +487,9 @@ public class BanHangForm extends javax.swing.JFrame {
             }
         });
 
-        lbIdSp.setForeground(new java.awt.Color(255, 255, 255));
         lbIdSp.setText("idSP");
 
-        lbGiaBan.setForeground(new java.awt.Color(255, 255, 255));
+        lbGiaBan.setForeground(new java.awt.Color(51, 51, 51));
         lbGiaBan.setText("giaBanSP");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -551,7 +555,14 @@ public class BanHangForm extends javax.swing.JFrame {
                 "Mã hóa đơn", "Ngày tạo", "Nhân viên tạo", "Khách Hàng"
             }
         ));
+        JHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JHoaDonMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(JHoaDon);
+
+        lbIdHD.setText("lbIdHD");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -561,11 +572,17 @@ public class BanHangForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbIdHD)
+                .addGap(24, 24, 24))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbIdHD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -611,7 +628,6 @@ public class BanHangForm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Số lượng: ");
 
-        lbIDGioHang.setForeground(new java.awt.Color(255, 255, 255));
         lbIDGioHang.setText("idGH");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -646,7 +662,7 @@ public class BanHangForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(lbIDGioHang)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtSoLuong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -694,22 +710,18 @@ public class BanHangForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1495, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
-
+        
         Calendar c = Calendar.getInstance();
         String t = c.get(Calendar.DATE) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR);
         NhanVien nv = new NhanVien();
@@ -718,11 +730,11 @@ public class BanHangForm extends javax.swing.JFrame {
         hd.setTenNguoiNhan(txtTenKH.getText());
         hd.setNgayTao(t);
         hd.setNhanVien(nv);
-        //   banHangSevice.addHoaDon(hd);
+           banHangSevice.addHoaDon(hd);
         // System.out.println( tw);
         showDataHoaDon(listHD);
-        dttm = (DefaultTableModel) JHoaDon.getModel();
-        dttm.setNumRows(1);
+//        dttm = (DefaultTableModel) JHoaDon.getModel();
+//        dttm.setNumRows(1);
 
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
@@ -731,14 +743,17 @@ public class BanHangForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChonKhachHangActionPerformed
 
     private void btnThayDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThayDoiActionPerformed
-        // TODO add your handling code here:
+        
+        HoaDon ct = new HoaDon();
+        this.banHangSevice.updateHD(ct, txtTenKH.getText(), txtSDT.getText(), txtDiaChi.getText(), Integer.valueOf(lbIdHD.getText()));
+        showDataHoaDon(listHD);
     }//GEN-LAST:event_btnThayDoiActionPerformed
 
     private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
         GioHangChiTiet ghCT = new GioHangChiTiet();
         banHangSevice.delete(ghCT, Integer.valueOf(lbIDGioHang.getText()));
         showDataGioHang(listGH);
-
+        
 
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
@@ -757,9 +772,9 @@ public class BanHangForm extends javax.swing.JFrame {
             //  JOptionPane.showMessageDialog(this, new HoaDonseviceIpml().updateTinhtrang(hd, Integer.valueOf(lbTinhtrang.getText()), txtIdHD.getText()));
             showDataHoaDon(listHD);
         } else if (r == JOptionPane.NO_OPTION) {
-
+            
         } else if (r == JOptionPane.CLOSED_OPTION) {
-
+            
         }
     }//GEN-LAST:event_btnHuyHoaDonActionPerformed
 
@@ -776,37 +791,37 @@ public class BanHangForm extends javax.swing.JFrame {
     private void btnThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPActionPerformed
         GioHangChiTiet ghct = new GioHangChiTiet();
         boolean check = false;
-        for (GioHangChiTietCustom o : listGH) {
 
-            if (Integer.valueOf(lbIdSp.getText()) == o.getIdSP()) {
-                o.setSoLuong(o.getSoLuong() + Integer.parseInt(txtSoLuong.getText()));
-                System.out.println("ok");
-                banHangSevice.updateGioHangChiTiet(ghct, o.getSoLuong(), Integer.valueOf(lbIDGioHang.getText()));
-                showDataGioHang(listGH);
-                check = true;
-                break;
-
-            } else {
-
-//                  
-                ChiTietSanPham chi = new ChiTietSanPham(Integer.valueOf(lbIdSp.getText()));
+//        for (GioHangChiTietCustom o : listGH) {
+// 
+//            if (Integer.valueOf(lbIdSp.getText()) ==o.getIdSP()) {
+//                o.setSoLuong(o.getSoLuong() + Integer.parseInt(txtSoLuong.getText()));
+//                System.out.println("ok");
+//                banHangSevice.updateGioHangChiTiet(ghct, o.getSoLuong(), Integer.valueOf(lbIdSp.getText()));
+//                showDataGioHang(listGH);
+//                check = true;
+//                break;
+//
+//            }
+//          
+////                  
+        ChiTietSanPham chi = new ChiTietSanPham(Integer.valueOf(lbIdSp.getText()));
 ////
-                GioHang gh = new GioHang(txtTenKH.getText(), txtDiaChi.getText(), txtSDT.getText());
-                banHangSevice.addGioHang(gh);
-                GioHangChiTiet gr = new GioHangChiTiet(gh, chi, Integer.parseInt(txtSoLuong.getText()));
-                banHangSevice.addGH(gr);
-                showDataGioHang(listGH);
-                double v;
-                double g = Double.valueOf(lbGiaBan.getText()); 		// System.out.println(g); 		
+        GioHang gh = new GioHang(txtTenKH.getText(), txtDiaChi.getText(), txtSDT.getText());
+        banHangSevice.addGioHang(gh);
+        GioHangChiTiet gr = new GioHangChiTiet(gh, chi, Integer.parseInt(txtSoLuong.getText()));
+        banHangSevice.addGH(gr);
+        showDataGioHang(listGH);
+        double v;
+        double g = Double.valueOf(lbGiaBan.getText()); 		// System.out.println(g); 		
+// 
+        v = gr.getSoLuong() * g;
+        lbTongTien.setText(String.valueOf(v));
+        lbThanhToan.setText(String.valueOf(v));
+        //     break;
 
-                v = gr.getSoLuong() * g;
-                lbTongTien.setText(String.valueOf(v));
-                lbThanhToan.setText(String.valueOf(v));
-                break;
-            }
-
-        }
-
+//
+        //     }
 
     }//GEN-LAST:event_btnThemSPActionPerformed
 
@@ -815,13 +830,28 @@ public class BanHangForm extends javax.swing.JFrame {
         moseSP(row);
     }//GEN-LAST:event_JSanPhamMouseClicked
 
+    private void txtSearhCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearhCaretUpdate
+        List<ChiTietSPCustom> listLoad = new banHangSeviceImpl().getSearh(txtSearh.getText());
+        showDataSanPham(listLoad);
+    }//GEN-LAST:event_txtSearhCaretUpdate
+
+    private void JHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JHoaDonMouseClicked
+        int row = JHoaDon.getSelectedRow();
+        btnChonKhachHang.setEnabled(true);
+         moseHD(row);
+    }//GEN-LAST:event_JHoaDonMouseClicked
+    
+    private void moseHD(int index){
+        hoaDonCustom hd = listHD.get(index);
+        lbIdHD.setText(String.valueOf(hd.getId()));
+    }
     private void moseSP(int index) {
         List<ChiTietSPCustom> listLoad = new banHangSeviceImpl().getAsll();
         ChiTietSPCustom chi = listLoad.get(index);
         lbIdSp.setText(chi.getId() + "");
         lbGiaBan.setText(String.valueOf(chi.getGiaBan()));
     }
-
+    
     private void mose(int index) {
         GioHangChiTietCustom gh = listGH.get(index);
         lbIDGioHang.setText(gh.getId() + "");
@@ -906,6 +936,7 @@ public class BanHangForm extends javax.swing.JFrame {
     private javax.swing.JLabel lbGiaBan;
     private javax.swing.JLabel lbGiamGia;
     private javax.swing.JLabel lbIDGioHang;
+    private javax.swing.JLabel lbIdHD;
     private javax.swing.JLabel lbIdSp;
     private javax.swing.JLabel lbMaHD;
     private javax.swing.JLabel lbThanhToan;

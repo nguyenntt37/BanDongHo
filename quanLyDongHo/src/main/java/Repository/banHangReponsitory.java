@@ -6,6 +6,7 @@ package Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.TypedQuery;
 import model.giohang.GioHang;
 import model.giohang.GioHangChiTiet;
 import model.hoadon.HoaDon;
@@ -49,6 +50,30 @@ public class banHangReponsitory {
         return lsit;
     }
 
+    public List<ChiTietSPCustom> getSearh(String ten) {
+        List<ChiTietSPCustom> lsit = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            Query query = session.createQuery("select new viewmodel.ChiTietSPCustom(c.id,"
+                    + "c.sanPham.ma,"
+                    + "c.sanPham.ten,"
+                    + "c.giaBan,"
+                    + "c.mauSac.ten,"
+                    + "c.thuongHieu.ten,"
+                    + "c.sanPham.dayDeo,"
+                    + "c.sanPham.may,"
+                    + "c.sanPham.xuatXu,"
+                    + "c.soLuongTon"
+                    + ")from model.sanpham.ChiTietSanPham  c  where c.sanPham.ten like:name");
+            query.setParameter("name", "%" + ten + "%");
+            lsit = query.list();
+
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+
+        return lsit;
+    }
+
     public List<GioHangChiTietCustom> getAllGH() {
         List<GioHangChiTietCustom> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -82,7 +107,7 @@ public class banHangReponsitory {
                     + ") "
                     + "from model.hoadon.HoaDon m");
             list = query.list();
-       
+
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -116,6 +141,7 @@ public class banHangReponsitory {
             return false;
         }
     }
+
     public boolean addHoaDon(HoaDon hd) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -157,13 +183,30 @@ public class banHangReponsitory {
         }
 
     }
-    
+
     public boolean updateGioHangChiTiet(GioHangChiTiet ct, int soLuong, Integer id) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            Query query = session.createQuery("update GioHangChiTiet c set c.soLuong=:s where c.id =:id");
+            Query query = session.createQuery("update GioHangChiTiet c set c.soLuong=:s where c.chiTietSP.id =:id");
             query.setParameter("s", soLuong);
+            query.setParameter("id", id);
+            query.executeUpdate();
+            tran.commit();
+            return true;
+        } catch (HibernateException e) {
+            return false;
+        }
+    }
+
+    public boolean updateHD(HoaDon ct, String tennguoiNhan, String sdt, String diaChi, int id) {
+        Transaction tran = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            tran = session.beginTransaction();
+            Query query = session.createQuery("update HoaDon c set c.diaChi=:s, c.tenNguoiNhan=:ten,c.sdt=:sdt where c.id =:id");
+            query.setParameter("s", diaChi);
+            query.setParameter("ten", tennguoiNhan);
+            query.setParameter("sdt", sdt);
             query.setParameter("id", id);
             query.executeUpdate();
             tran.commit();
@@ -175,15 +218,9 @@ public class banHangReponsitory {
 
     public static void main(String[] args) {
         banHangReponsitory rp = new banHangReponsitory();
-        ChiTietSanPham ct = new ChiTietSanPham();
-
-        GioHangChiTiet gh = new GioHangChiTiet();
-        gh.setChiTietSP(ct);
-        boolean add = rp.addGH(gh);
-        if (add) {
-            System.out.println("ok");
-        } else {
-            System.out.println("no");
+        List<hoaDonCustom> list = rp.getAllHD();
+        for (hoaDonCustom o : list) {
+            System.out.println(o.getId());
         }
     }
 }

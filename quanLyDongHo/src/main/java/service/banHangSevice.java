@@ -23,11 +23,13 @@ public interface banHangSevice {
 
     public List<GioHangChiTietCustom> getAllGH();
 
+    public List<ChiTietSPCustom> getSearh(String ten);
+
     public List<ChiTietSPCustom> getAsll();
 
     public String addHD(hoaDonChiTiet hd);
-    
-     public String addHoaDon(HoaDon hd);
+
+    public String addHoaDon(HoaDon hd);
 
     public String delete(GioHangChiTiet gh, int id);
 
@@ -36,5 +38,7 @@ public interface banHangSevice {
     public String addGioHang(GioHang g);
 
     public String updateGioHangChiTiet(GioHangChiTiet ct, int soLuong, int id);
+
+    public String updateHD(HoaDon ct, String tennguoiNhan, String sdt, String diaChi, int id);
 
 }

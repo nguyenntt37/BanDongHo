@@ -20,24 +20,24 @@ import viewmodel.hoaDonCustom;
  * @author asus_vinh
  */
 public class banHangSeviceImpl implements banHangSevice {
-
+    
     private banHangReponsitory banHangRepo = new banHangReponsitory();
-
+    
     @Override
     public List<hoaDonCustom> getAllHD() {
         return banHangRepo.getAllHD();
     }
-
+    
     @Override
     public List<GioHangChiTietCustom> getAllGH() {
         return banHangRepo.getAllGH();
     }
-
+    
     @Override
     public List<ChiTietSPCustom> getAsll() {
         return banHangRepo.getAsll();
     }
-
+    
     @Override
     public String addHD(hoaDonChiTiet hd) {
         if (banHangRepo.addHD(hd)) {
@@ -45,9 +45,9 @@ public class banHangSeviceImpl implements banHangSevice {
         } else {
             return "";
         }
-
+        
     }
-
+    
     @Override
     public String addHoaDon(HoaDon hd) {
         if (banHangRepo.addHoaDon(hd)) {
@@ -55,9 +55,9 @@ public class banHangSeviceImpl implements banHangSevice {
         } else {
             return "";
         }
-
+        
     }
-
+    
     @Override
     public String delete(GioHangChiTiet gh, int id) {
         if (banHangRepo.delete(gh, id)) {
@@ -66,7 +66,7 @@ public class banHangSeviceImpl implements banHangSevice {
             return "";
         }
     }
-
+    
     @Override
     public String addGH(GioHangChiTiet gh) {
         if (banHangRepo.addGH(gh)) {
@@ -75,7 +75,7 @@ public class banHangSeviceImpl implements banHangSevice {
             return "";
         }
     }
-
+    
     @Override
     public String addGioHang(GioHang g) {
         if (banHangRepo.addGioHang(g)) {
@@ -84,7 +84,7 @@ public class banHangSeviceImpl implements banHangSevice {
             return "";
         }
     }
-
+    
     @Override
     public String updateGioHangChiTiet(GioHangChiTiet ct, int soLuong, int id) {
         if (banHangRepo.updateGioHangChiTiet(ct, soLuong, id)) {
@@ -93,5 +93,20 @@ public class banHangSeviceImpl implements banHangSevice {
             return "";
         }
     }
-
+    
+    @Override
+    public List<ChiTietSPCustom> getSearh(String ten) {
+        return banHangRepo.getSearh(ten);
+    }
+    
+    @Override
+    public String updateHD(HoaDon ct, String tennguoiNhan, String sdt, String diaChi, int id) {
+        if (banHangRepo.updateHD(ct, tennguoiNhan, sdt, diaChi, id)) {
+            return "";
+        } else {
+            return "";
+        }
+        
+    }
+    
 }
