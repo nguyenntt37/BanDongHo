@@ -150,7 +150,7 @@ public class SanPhamReponstory{
         return lists;
     }
 
-    public ChiTietSanPham findById(String id) {
+    public ChiTietSanPham findById(int id) {
         ChiTietSanPham ct;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             TypedQuery<ChiTietSanPham> query = session.createQuery("select c from ChiTietSanPham c where c.sanPham.id=:id", ChiTietSanPham.class);
@@ -251,7 +251,7 @@ public class SanPhamReponstory{
         }
     }
     
-    public boolean updateChitietSP(ChiTietSanPham ct, String id, String idSP, String idDongSP, String idMau, String idNamSX,
+    public boolean updateChitietSP(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX,
             BigDecimal giaBan, BigDecimal giaNhap,
             int namBH, int soLuongTon) {
         Transaction tran = null;

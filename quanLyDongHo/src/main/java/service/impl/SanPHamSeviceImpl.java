@@ -149,15 +149,15 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
         }
     }
 
-//    @Override
-//    public String updateSPCT(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX, BigDecimal giaBan, BigDecimal giaNhap,
-//            int namBH, int soLuongTon) {
-//        if (banHang.updateChitietSP(ct, id, idSP, idDongSP, idMau, idNamSX, giaBan, giaNhap, namBH, soLuongTon)) {
-//            return "Update  thành công";
-//        } else {
-//            return "Update thất bại";
-//        }
-//    }
+    @Override
+    public String updateSPCT(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX, BigDecimal giaBan, BigDecimal giaNhap,
+            int namBH, int soLuongTon) {
+        if (banHang.updateChitietSP(ct, id, idSP, idDongSP, idMau, idNamSX, giaBan, giaNhap, namBH, soLuongTon)) {
+            return "Update  thành công";
+        } else {
+            return "Update thất bại";
+        }
+    }
 
     @Override
     public String deleteChitietSP(ChiTietSanPham sp, int id) {
