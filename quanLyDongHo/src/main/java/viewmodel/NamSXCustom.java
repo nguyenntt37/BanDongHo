@@ -15,10 +15,13 @@ public class NamSXCustom {
     public NamSXCustom() {
     }
 
-    public NamSXCustom(Integer id, String ten) {
+    public NamSXCustom(Integer id, String ten, String ma) {
         this.id = id;
         this.ten = ten;
+        this.ma = ma;
     }
+
+        
 
     public Integer getId() {
         return id;

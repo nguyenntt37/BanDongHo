@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernatUtil;
 import viewmodel.NamSXCustom;
+import viewmodel.SanPhamCustom;
 
 /**
  *
@@ -24,6 +25,7 @@ public class NamSanXuatRepository {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("select new viewmodel.NamSXCustom("
                     + "p.id,"
+                    + "p.ma,"
                     + "p.ten"
                     + ")from  model.sanpham.NamSanXuat p ");
             list = query.getResultList();
@@ -77,13 +79,17 @@ public class NamSanXuatRepository {
     }
     public static void main(String[] args) {
         NamSanXuatRepository v=new NamSanXuatRepository();
-        NamSanXuat nsx = new NamSanXuat();
-        nsx.setTen("Tu");
-        boolean b = v.deleteNamSX(nsx, 1);
-        if(b){
-            System.out.println("ok");
-        }else{
-            System.out.println("no");
+        List<NamSXCustom> b = v.getAllNamSX();
+        for (NamSXCustom namSXCustom : b) {
+            System.out.println(namSXCustom.getId());
         }
+//        NamSanXuat nsx = new NamSanXuat();
+//        nsx.setTen("Tu");
+//        boolean b = v.deleteNamSX(nsx, 1);
+//        if(b){
+//            System.out.println("ok");
+//        }else{
+//            System.out.println("no");
+//        }
     }
 }

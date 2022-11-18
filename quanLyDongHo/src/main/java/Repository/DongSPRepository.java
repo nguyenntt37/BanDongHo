@@ -25,6 +25,7 @@ public class DongSPRepository {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("select new viewmodel.DongSPCustom("
                     + "p.id,"
+                    + "p.ma,"
                     + "p.ten"
                     + ")from model.sanpham.DongSp p ");
             list = query.getResultList();
@@ -82,13 +83,17 @@ public class DongSPRepository {
     public static void main(String[] args) {
        
     DongSPRepository v=new DongSPRepository();
-        DongSp nsx = new DongSp();
-        nsx.setTen("Tu");
-        boolean b = v.updateDongSP(nsx, 1, "uu", "yy");
-        if(b){
-            System.out.println("ok");
-        }else{
-            System.out.println("no");
+    List<DongSPCustom> b = v.getAllDongSP();
+        for (DongSPCustom dongSPCustom : b) {
+            System.out.println(dongSPCustom.getId());
         }
+//        DongSp nsx = new DongSp();
+//        nsx.setTen("Tu");
+//        boolean b = v.updateDongSP(nsx, 1, "uu", "yy");
+//        if(b){
+//            System.out.println("ok");
+//        }else{
+//            System.out.println("no");
+//        }
     }
 }

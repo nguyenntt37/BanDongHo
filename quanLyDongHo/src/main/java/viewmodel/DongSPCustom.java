@@ -9,13 +9,15 @@ package viewmodel;
  * @author asus_vinh
  */
 public class DongSPCustom {
+
     private Integer id;
     private String ten;
-  private String ma;
+    private String ma;
+
     public DongSPCustom() {
     }
 
-    public DongSPCustom(Integer id, String ten) {
+    public DongSPCustom(Integer id, String ten, String ma) {
         this.id = id;
         this.ten = ten;
         this.ma = ma;
@@ -47,12 +49,14 @@ public class DongSPCustom {
 
     @Override
     public String toString() {
-        return  ten ;
+        return ten;
     }
-     public Integer toStringId() {
-        return  id ;
+
+    public Integer toStringId() {
+        return id;
     }
-     public Object[] todataRow(){
-         return new Object[]{id,ma,ten};
-     }
+
+    public Object[] todataRow() {
+        return new Object[]{id, ma, ten};
+    }
 }
