@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import service.impl.DongSPServicelmpl;
+import service.impl.NamSanXuatServicelmpl;
 import service.impl.SanPHamSeviceImpl;
 import viewmodel.ChiTietSPCustom;
 import viewmodel.DongSPCustom;
@@ -35,6 +37,9 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     List<NamSXCustom> listNamSanXuats = new ArrayList<>();
     List<DongSPCustom> listDongSp = new ArrayList<>();
     private SanPHamSeviceImpl spSevice = new SanPHamSeviceImpl();
+    private NamSanXuatServicelmpl nsxs = new NamSanXuatServicelmpl();
+    private DongSPServicelmpl dsps = new DongSPServicelmpl();
+//    private 
     /**
      * Creates new form ChiTietSPForm
      */
@@ -48,8 +53,8 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         loadDataToTableSP();
         
         cbbMauSac(spSevice.getAllMauSac());
-        addCBBNamSX(spSevice.getAllNamSX());
-        addCBBDongSp(spSevice.getAllDongSp());
+        addCBBNamSX(nsxs.getListNamSanXuat());
+        addCBBDongSp(dsps.getListDongSP());
         cbbSanPham(spSevice.getAllSanPham());
         cbbChiTietSP(spSevice.getAll());
         cbbThuongHieu(spSevice.getAllThuongHieu());
@@ -192,12 +197,22 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         cboNSX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnNsx.setText("+");
+        btnNsx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNsxActionPerformed(evt);
+            }
+        });
 
         jLabel42.setText("Dòng SP");
 
         cboDongSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnDongSP.setText("+");
+        btnDongSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDongSPActionPerformed(evt);
+            }
+        });
 
         jLabel43.setText("Màu sắc");
 
@@ -641,6 +656,16 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         new ThuongHieuForm().setVisible(true);
     }//GEN-LAST:event_btnThuongHieuActionPerformed
 
+    private void btnNsxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNsxActionPerformed
+        DetailNamSX detail = new DetailNamSX(this, true);
+        detail.setVisible(true);
+    }//GEN-LAST:event_btnNsxActionPerformed
+
+    private void btnDongSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongSPActionPerformed
+        DetailDongSP detail = new DetailDongSP(this, true);
+        detail.setVisible(true);
+    }//GEN-LAST:event_btnDongSPActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -689,80 +714,13 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboNSX;
     private javax.swing.JComboBox<String> cboSanPham;
     private javax.swing.JComboBox<String> cboThuongHieu;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox10;
-    private javax.swing.JComboBox<String> jComboBox11;
-    private javax.swing.JComboBox<String> jComboBox12;
-    private javax.swing.JComboBox<String> jComboBox13;
-    private javax.swing.JComboBox<String> jComboBox14;
-    private javax.swing.JComboBox<String> jComboBox15;
-    private javax.swing.JComboBox<String> jComboBox16;
-    private javax.swing.JComboBox<String> jComboBox17;
-    private javax.swing.JComboBox<String> jComboBox18;
-    private javax.swing.JComboBox<String> jComboBox19;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox20;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -772,34 +730,11 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private view.Swing.menu menu2;
     private view.Swing.PanelBorder panelBorder1;
     private view.Swing.PanelBorder panelBorder11;
