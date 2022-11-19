@@ -9,19 +9,21 @@ package viewmodel;
  * @author asus_vinh
  */
 public class NamSXCustom {
-     private Integer id;
-     private String ten;
-     private String ma;
+
+    private Integer id;
+
+    private String ma;
+
+    private String ten;
+
     public NamSXCustom() {
     }
 
-    public NamSXCustom(Integer id, String ten, String ma) {
+    public NamSXCustom(Integer id, String ma, String ten) {
         this.id = id;
-        this.ten = ten;
         this.ma = ma;
+        this.ten = ten;
     }
-
-        
 
     public Integer getId() {
         return id;
@@ -46,16 +48,17 @@ public class NamSXCustom {
     public void setMa(String ma) {
         this.ma = ma;
     }
-    
 
     @Override
     public String toString() {
-        return ten ;
+        return ten;
     }
-       public Integer toStringId() {
-        return id ;
+
+    public Integer toStringId() {
+        return id;
     }
-       public Object[] toDataRow(){
-           return new Object[] {id,ma,ten};
-       }
+
+    public Object[] toDataRow() {
+        return new Object[]{id, ma, ten};
+    }
 }

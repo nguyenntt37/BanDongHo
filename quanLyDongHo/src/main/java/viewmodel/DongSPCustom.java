@@ -11,17 +11,22 @@ package viewmodel;
 public class DongSPCustom {
 
     private Integer id;
-    private String ten;
+    
     private String ma;
+    
+    private String ten;
+    
 
     public DongSPCustom() {
     }
 
-    public DongSPCustom(Integer id, String ten, String ma) {
+    public DongSPCustom(Integer id, String ma, String ten) {
         this.id = id;
-        this.ten = ten;
         this.ma = ma;
+        this.ten = ten;
     }
+
+    
 
     public Integer getId() {
         return id;
