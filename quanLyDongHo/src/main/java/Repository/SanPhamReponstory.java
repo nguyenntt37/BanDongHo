@@ -106,15 +106,25 @@ public class SanPhamReponstory{
             Query query = session.createQuery("select  "
                     + " new viewmodel.ChiTietSPCustom("
                     + " m.id ,"
-                    + " m.sanPham.ma as maSP,"
-                    + "m.sanPham.ten as TenSp,"
-                    + " m.giaBan ,"
-                    + "m.mauSac.ten as mausac,"
-                    + "m.thuongHieu.ten as thuongHieu,"
+                    + " m.sanPham.ma ,"
+                    + "m.sanPham.ten ,"
+                    + " m.namBH ,"
+                   + "m.thuongHieu.ten ,"
+                    + "m.mauSac.ten ,"
+                      + "m.nSX.ten, "
+                     + "m.soLuongTon, "
+                     + "m.giaNhap, "
+                     + "m.giaBan, "
+                     + "m.moTa, "
+                     + "m.ngayTao, "
+                     + "m.ngaySua, "
+                     + "m.trangThai, "
+                     + "m.sanPham.xuatXu, "
+                     + "m.sanPham.kinh, "
                     + "m.sanPham.dayDeo, "
-                    + "m.sanPham.may, "
-                    + "m.sanPham.xuatXu, "
-                    + "m.soLuongTon "
+                    + "m.sanPham.ChucNang "
+                   
+                   
                     + ") "
                     + "from model.sanpham.ChiTietSanPham m ");
             lists = query.list();
@@ -277,6 +287,19 @@ public class SanPhamReponstory{
             return false;
         }
 
+    }
+      public boolean addChiTietSp(ChiTietSanPham sp) {
+        Transaction tran = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            tran = session.beginTransaction();
+            session.saveOrUpdate(sp);
+
+            tran.commit();
+            return true;
+        } catch (HibernateException e) {
+            tran.begin();
+            return false;
+        }
     }
 
     public boolean deleteSP(SanPham sp, int id) {
@@ -494,8 +517,8 @@ public class SanPhamReponstory{
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<SanPhamCustom> list = sp.getAllSP();
-        for (SanPhamCustom o : list) {
+        List<ChiTietSPCustom> list = sp.getAll();
+        for (ChiTietSPCustom o : list) {
             System.out.println(o.toString());
         }
     }

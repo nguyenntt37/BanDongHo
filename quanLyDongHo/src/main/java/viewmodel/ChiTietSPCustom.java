@@ -24,20 +24,35 @@ public class ChiTietSPCustom {
 
     private String tenSP;
 
-    private BigDecimal giaBan;
+    private int NBH;
 
-    private String tenMauSac;
+    private String ThuongHieu;
 
-    private String tenThuongHieu;
+    private String mau;
 
-    private String dayDeo;
+    private String nSX;
 
-    private String may;
-     
-    private String xuatXu;
-    
     private int soLuongTon;
 
+    private BigDecimal giaNhap;
+
+    private BigDecimal giaBan;
+
+    private String moTa;
+
+    private String ngayTao;
+
+    private String ngaySua;
+
+    private Integer trangThai;
+
+    private String xuatXu;
+
+    private String kinh;
+    
+    private String dayDeo;
+
+    private String chucNang;
 
     @Override
     public String toString() {
@@ -48,11 +63,7 @@ public class ChiTietSPCustom {
         return id;
     }
 
-   
-
-   
-
     public Object[] todataRowDS() {
-        return new Object[]{maSP, tenSP, giaBan, tenMauSac, tenThuongHieu,  dayDeo, may, xuatXu, soLuongTon};
+        return new Object[]{id,maSP, tenSP, giaBan, mau, ThuongHieu, dayDeo, kinh, xuatXu, soLuongTon,trangThai};
     }
 }

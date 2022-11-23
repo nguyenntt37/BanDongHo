@@ -110,16 +110,16 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
         }
     }
 
-//    @Override
-//    public String addChiTietSP(ChiTietSanPham sp) {
-//
-//        if (banHang.addChiTietSp(sp)) {
-//            return "Them thanh cong";
-//        } else {
-//            return "thêm thất bại";
-//        }
-//
-//    }
+
+    public String addChiTietSP(ChiTietSanPham sp) {
+
+        if (banHang.addChiTietSp(sp)) {
+            return "Them thanh cong";
+        } else {
+            return "thêm thất bại";
+        }
+
+    }
 //
 
     @Override
