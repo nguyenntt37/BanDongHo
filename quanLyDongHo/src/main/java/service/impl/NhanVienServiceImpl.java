@@ -38,4 +38,10 @@ public class NhanVienServiceImpl implements INhanVienService {
     public void update(NhanVien nv, String maNV) {
         repo.update(nv, maNV);
     }
+
+    @Override
+    public NhanVien getByMaNV(String maNV) {
+        NhanVien nv = repo.getByMaNV(maNV);
+        return nv;
+    }
 }

@@ -54,4 +54,16 @@ public class NhanVienRepository {
             e.printStackTrace();
         }
     }
+
+    public NhanVien getByMaNV(String maNV) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            NhanVien nv;
+            Query q = session.createQuery("FROM NhanVien nv WHERE nv.ma = :maNV").setParameter("maNV", maNV);
+            if (q.getResultList().size() == 0) {
+                return null;
+            }
+            nv = (NhanVien) q.getResultList().get(0);
+            return nv;
+        }
+    }
 }

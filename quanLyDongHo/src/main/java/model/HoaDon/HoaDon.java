@@ -7,7 +7,6 @@ package model.hoadon;
 import model.KhachHang;
 import model.nhanvien.NhanVien;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 import model.khuyenmai.hoaDonKhuyenMai;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
@@ -29,6 +29,7 @@ import model.khuyenmai.hoaDonKhuyenMai;
 @Data
 @Entity
 @Table(name = "Hoa_Don")
+@NamedQuery(name = "HoaDon.GET_ALL", query = "FROM HoaDon")
 public class HoaDon {
 
     @Id
@@ -44,41 +45,30 @@ public class HoaDon {
     @JoinColumn(name = "IdNV")
     private NhanVien nhanVien;
 
-    @Column(name = "Ma")
-    private String ma;
+    @Column(name = "TG_Tao")
+    private String tgTao;
 
-    @Column(name = "Ngay_Tao")
-    private String ngayTao;
+    @Column(name = "Tong_Tien")
+    private long tongTien;
 
-    @Column(name = "Ngay_Thanh_Toan")
-    private String ngayThanhToan;
+    @Column(name = "Tong_KM")
+    private long tongKM;
 
-    @Column(name = "Ngay_Ship")
-    private String ngayShip;
+    @Column(name = "Tien_Tra_Lai")
+    private long tienTraLai;
 
-    @Column(name = "Ngay_Nhan")
-    private String ngayNhan;
+    @Column(name = "Trang_Thai_TT") //-1: Da huy, 0: Da thanh toan, 1: Cho thanh toan
+    private byte trangThaiTT;
 
-    @Column(name = "trang_thai")
-    private Integer trangThai;
+    @Column(name = "Phuong_Thuc_TT") //0: Thanh toan truc tiep, 1: Chuyen khoan
+    private byte phuongThucTT;
 
-    @Column(name = "Ten_Nguoi_Nhan")
-    private String tenNguoiNhan;
-
-    @Column(name = "Dia_Chi")
-    private String diaChi;
-
-    @Column(name = "Sdt")
-    private String sdt;
-
-    @Column(name = "ngay_sua")
-    private String ngaySua;
+    @Column(name = "Ghi_Chu")
+    private String ghiChu;
 
     @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
-    private List<hoaDonChiTiet> list = new ArrayList<>();
-    
-       
-    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
-    private List<hoaDonKhuyenMai> lists = new ArrayList<>();
+    private List<hoaDonChiTiet> lstHDCT = new ArrayList<>();
 
+    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
+    private List<hoaDonKhuyenMai> lstHDKM = new ArrayList<>();
 }

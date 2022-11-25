@@ -5,16 +5,15 @@
 package service;
 
 import java.util.List;
-import model.nhanvien.NhanVien;
-import viewmodel.NhanVienCustom;
+import model.hoadon.HoaDon;
 
 /**
  *
  * @author Nguyen
  */
-public interface INhanVienService {
-    List<NhanVienCustom> get();
-    void add(NhanVien nv);
-    void update(NhanVien nv, String maNV);
-    NhanVien getByMaNV(String maNV);
+public interface IHoaDonService {
+    void insert(HoaDon hd);
+    List<HoaDon> getAll();
+    HoaDon getById(String id);
+    List<HoaDon> getHDTheoTrangThai(byte trangThai);
 }

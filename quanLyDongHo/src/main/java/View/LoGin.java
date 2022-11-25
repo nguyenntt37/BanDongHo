@@ -4,11 +4,7 @@ package View;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
-
-import java.awt.Color;
 import javax.swing.JOptionPane;
-import model.nhanvien.NhanVien;
 import service.impl.LoginSeviceImpl;
 
 /**
@@ -16,14 +12,20 @@ import service.impl.LoginSeviceImpl;
  * @author FPT
  */
 public class LoGin extends javax.swing.JFrame {
+    private static String currentLoginUsername; 
 
     /**
      * Creates new form LoGin
      */
     public LoGin() {
         initComponents();
+        txtname.setText("nv001"); //Set tạm
+        txtpassword.setText("123"); //Set tạm
     }
     
+    public static String getCurrentLoginUsername() {
+        return currentLoginUsername;
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,30 +154,32 @@ public class LoGin extends javax.swing.JFrame {
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
         // TODO add your handling code here:
-        NhanVien nv = new NhanVien();
         LoginSeviceImpl lgin = new LoginSeviceImpl();
         String user = txtname.getText();
         String pass = txtpassword.getText();
         if (user.isEmpty()) {
             lbusename.setText(" tên tài khoản không được để trống");
-            
+
         } else {
             lbusename.setText("");
         }
         if (pass.isEmpty()) {
             lbpass.setText(" mật khẩu không được để trống");
-           
+
         } else {
             lbpass.setText(" ");
         }
-         if(!user.isEmpty() && !pass.isEmpty()){
-              boolean get = lgin.getLogin(user, pass);
-              if (get){
-             System.out.println("ok");
-              }else {
+        if (!user.isEmpty() && !pass.isEmpty()) {
+            boolean get = lgin.getLogin(user, pass);
+            if (get) {
+                System.out.println("ok");
+                currentLoginUsername = txtname.getText();
+                this.setVisible(false);
+                new BanHangForm().setVisible(true);
+            } else {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thất bại.sai UserName hoặc password");
-         } 
-         }   
+            }
+        }
     }//GEN-LAST:event_btLoginActionPerformed
 
     private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed

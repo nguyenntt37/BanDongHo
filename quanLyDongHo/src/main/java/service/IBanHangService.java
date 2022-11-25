@@ -5,16 +5,12 @@
 package service;
 
 import java.util.List;
-import model.nhanvien.NhanVien;
-import viewmodel.NhanVienCustom;
+import viewmodel.HoaDonCustom2;
 
 /**
  *
  * @author Nguyen
  */
-public interface INhanVienService {
-    List<NhanVienCustom> get();
-    void add(NhanVien nv);
-    void update(NhanVien nv, String maNV);
-    NhanVien getByMaNV(String maNV);
+public interface IBanHangService {
+    List<HoaDonCustom2> get();
 }

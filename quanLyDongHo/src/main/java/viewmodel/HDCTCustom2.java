@@ -10,24 +10,14 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author asus_vinh
+ * @author Nguyen
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class hoaDonCustom {
-
-    private Integer id;
-
-    private String ngayTao;
-
-    private String tenNV;
-
-    private String tenKH;
-    
-    
-    
-    public Object[] todataRowDS() {
-        return new Object[]{id, ngayTao, tenNV, tenKH};
-    }
+public class HDCTCustom2 {
+    private String maSP;
+    private String tenSP;
+    private String donGia;
+    private String soLuong;
 }
