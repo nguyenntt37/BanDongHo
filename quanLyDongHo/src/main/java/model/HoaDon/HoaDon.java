@@ -4,6 +4,7 @@
  */
 package model.hoadon;
 
+import java.math.BigDecimal;
 import model.KhachHang;
 import model.nhanvien.NhanVien;
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
-import model.khuyenmai.hoaDonKhuyenMai;
+import model.HoaDon.HinhThucGH;
+import model.HoaDon.PhuongThucTT;
+
 import org.hibernate.annotations.NamedQuery;
 
 /**
@@ -40,7 +43,37 @@ public class HoaDon {
     @ManyToOne
     @JoinColumn(name = "IdKH")
     private KhachHang khachHang;
+    
+     @Column(name = "Ma")
+    private String ma;
 
+    @Column(name = "Ngay_Tao")
+    private String ngayTao;
+
+    @Column(name = "Ngay_Thanh_Toan")
+    private String ngayThanhToan;
+
+    @Column(name = "Ngay_Ship")
+    private String ngayShip;
+
+    @Column(name = "Ngay_Nhan")
+    private String ngayNhan;
+
+    @Column(name = "trang_thai")  //-1: Da huy, 0: Da thanh toan, 1: Cho thanh toan
+    private Integer trangThai;
+
+    @Column(name = "Ten_Nguoi_Nhan")
+    private String tenNguoiNhan;
+
+    @Column(name = "Dia_Chi")
+    private String diaChi;
+
+    @Column(name = "Sdt")
+    private String sdt;
+
+    @Column(name = "ngay_sua")
+    private String ngaySua;
+    
     @ManyToOne
     @JoinColumn(name = "IdNV")
     private NhanVien nhanVien;
@@ -49,19 +82,21 @@ public class HoaDon {
     private String tgTao;
 
     @Column(name = "Tong_Tien")
-    private long tongTien;
-
-    @Column(name = "Tong_KM")
-    private long tongKM;
+    private BigDecimal tongTien;
 
     @Column(name = "Tien_Tra_Lai")
-    private long tienTraLai;
+    private BigDecimal tienTraLai;
 
-    @Column(name = "Trang_Thai_TT") //-1: Da huy, 0: Da thanh toan, 1: Cho thanh toan
-    private byte trangThaiTT;
-
-    @Column(name = "Phuong_Thuc_TT") //0: Thanh toan truc tiep, 1: Chuyen khoan
-    private byte phuongThucTT;
+    @Column(name = "Trang_Thai_TT") 
+    private Integer trangThaiTT;
+    
+    @ManyToOne
+    @JoinColumn(name = "Phuong_Thuc_TT") //0: Thanh toan truc tiep, 1: Chuyen khoan
+    private PhuongThucTT phuongThucTT;
+    
+     @ManyToOne
+    @JoinColumn(name = "Hinh_Thuc_GH") //0: Thanh toan truc tiep, 1: Chuyen khoan
+    private HinhThucGH HinhThucGH;
 
     @Column(name = "Ghi_Chu")
     private String ghiChu;
@@ -69,6 +104,5 @@ public class HoaDon {
     @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
     private List<hoaDonChiTiet> lstHDCT = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
-    private List<hoaDonKhuyenMai> lstHDKM = new ArrayList<>();
+
 }

@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
-import model.khuyenmai.chiTietSPKhuyenMai;
+
 
 /**
  *
@@ -90,8 +90,7 @@ public class ChiTietSanPham {
     @OneToMany(mappedBy = "chiTietSP", fetch = FetchType.EAGER)
     List<GioHangChiTiet> listtt = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chiTietSP", fetch = FetchType.EAGER)
-    private List<chiTietSPKhuyenMai> list = new ArrayList<>();
+  
 
     public ChiTietSanPham(Integer id) {
         this.id = id;
