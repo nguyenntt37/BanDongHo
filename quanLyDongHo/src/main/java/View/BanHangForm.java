@@ -5,7 +5,22 @@
 package View;
 
 import Util.DatetimeUtil;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 import model.hoadon.HoaDon;
@@ -21,11 +36,18 @@ import viewmodel.HoaDonCustom2;
  *
  * @author Nguyen
  */
-public class BanHangForm extends javax.swing.JFrame {
+public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
+
     DefaultTableModel tblModelHD, tblModelHDCT, tblModelSP;
     IHoaDonService hdService = new HoaDonServiceImpl();
     INhanVienService nvService = new NhanVienServiceImpl();
     IBanHangService bhService = new BanHangServiceImpl();
+
+    private WebcamPanel panel = null;
+    private Webcam webcam = null;
+
+    private static final long serialVersionUID = 6441489157408381878L;
+    private Executor executor = Executors.newSingleThreadExecutor(this);
 
     /**
      * Creates new form BanHangForm
@@ -33,8 +55,21 @@ public class BanHangForm extends javax.swing.JFrame {
     public BanHangForm() {
         initComponents();
         loadTableHDCho();
+         initWebcam();
     }
-    
+  private void initWebcam() {
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0); //0 is default webcam
+        webcam.setViewSize(size);
+
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+
+        jPanel2.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 150));
+
+        executor.execute(this);
+    }
     private void loadTableHDCho() {
         tblModelHD = (DefaultTableModel) tblHoaDonCho.getModel();
         tblModelHD.setRowCount(0);
@@ -48,7 +83,45 @@ public class BanHangForm extends javax.swing.JFrame {
             });
         }
     }
+ @Override
+    public void run() {
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+            Result result = null;
+            BufferedImage image = null;
+
+            if (webcam.isOpen()) {
+                if ((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (NotFoundException e) {
+                //No result...
+            }
+
+            if (result != null) {
+                txtTimKiem.setText(result.getText());
+            }
+        } while (true);
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,7 +185,7 @@ public class BanHangForm extends javax.swing.JFrame {
         jScrollPane8 = new javax.swing.JScrollPane();
         tblHoaDonCho = new javax.swing.JTable();
         webCamPanel = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -520,7 +593,7 @@ public class BanHangForm extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLamMoi)
                     .addComponent(btnHuyHoaDon))
@@ -572,9 +645,9 @@ public class BanHangForm extends javax.swing.JFrame {
         webCamPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Quét mã sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         webCamPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel15.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        webCamPanel.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 250, 150));
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        webCamPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 250, 150));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -634,7 +707,7 @@ public class BanHangForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         KhachHang kh = new KhachHang();
         kh.setId(1); //Set tạm vì phần khách hàng chưa hoàn thành
-        
+
         HoaDon hd = new HoaDon();
         hd.setId(null);
         hd.setKhachHang(kh);
@@ -653,12 +726,12 @@ public class BanHangForm extends javax.swing.JFrame {
 
     private void btnXoaSP4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSP4ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnXoaSP4ActionPerformed
 
     private void btnThemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSanPhamActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnThemSanPhamActionPerformed
 
     /**
@@ -732,7 +805,7 @@ public class BanHangForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
