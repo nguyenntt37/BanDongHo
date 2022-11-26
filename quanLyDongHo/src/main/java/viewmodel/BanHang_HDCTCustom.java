@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HoaDonCustom2 {
-    private String maHD;
-    private String tgTao;
-    private String nvTao;
-    private String khachHang;
+public class BanHang_HDCTCustom {
+    private String maSP;
+    private String tenSP;
+    private String donGia;
+    private String soLuong;
 }

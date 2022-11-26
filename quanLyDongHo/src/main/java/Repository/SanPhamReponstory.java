@@ -7,7 +7,6 @@ package Repository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.persistence.TypedQuery;
 import model.sanpham.ChiTietSanPham;
 import model.sanpham.DongSp;
@@ -16,11 +15,11 @@ import model.sanpham.NamSanXuat;
 import model.sanpham.SanPham;
 import model.sanpham.thuongHieu;
 import org.hibernate.HibernateException;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.HibernatUtil;
+import viewmodel.BanHang_SPCustom;
 import viewmodel.ChiTietSPCustom;
 import viewmodel.DongSPCustom;
 import viewmodel.MauSacCustom;
@@ -32,7 +31,7 @@ import viewmodel.ThuongHieuCustomer;
  *
  * @author asus_vinh
  */
-public class SanPhamReponstory{
+public class SanPhamReponstory {
 
     public List<ChiTietSPCustom> getAsll() {
         List<ChiTietSPCustom> lsit = new ArrayList<>();
@@ -109,22 +108,20 @@ public class SanPhamReponstory{
                     + " m.sanPham.ma ,"
                     + "m.sanPham.ten ,"
                     + " m.namBH ,"
-                   + "m.thuongHieu.ten ,"
+                    + "m.thuongHieu.ten ,"
                     + "m.mauSac.ten ,"
-                      + "m.nSX.ten, "
-                     + "m.soLuongTon, "
-                     + "m.giaNhap, "
-                     + "m.giaBan, "
-                     + "m.moTa, "
-                     + "m.ngayTao, "
-                     + "m.ngaySua, "
-                     + "m.trangThai, "
-                     + "m.sanPham.xuatXu, "
-                     + "m.sanPham.kinh, "
+                    + "m.nSX.ten, "
+                    + "m.soLuongTon, "
+                    + "m.giaNhap, "
+                    + "m.giaBan, "
+                    + "m.moTa, "
+                    + "m.ngayTao, "
+                    + "m.ngaySua, "
+                    + "m.trangThai, "
+                    + "m.sanPham.xuatXu, "
+                    + "m.sanPham.kinh, "
                     + "m.sanPham.dayDeo, "
                     + "m.sanPham.ChucNang "
-                   
-                   
                     + ") "
                     + "from model.sanpham.ChiTietSanPham m ");
             lists = query.list();
@@ -196,7 +193,7 @@ public class SanPhamReponstory{
             return false;
         }
     }
-    
+
     public boolean addThuongHieu(thuongHieu th) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -260,7 +257,7 @@ public class SanPhamReponstory{
             return false;
         }
     }
-    
+
     public boolean updateChitietSP(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX,
             BigDecimal giaBan, BigDecimal giaNhap,
             int namBH, int soLuongTon) {
@@ -288,7 +285,8 @@ public class SanPhamReponstory{
         }
 
     }
-      public boolean addChiTietSp(ChiTietSanPham sp) {
+
+    public boolean addChiTietSp(ChiTietSanPham sp) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
@@ -357,7 +355,7 @@ public class SanPhamReponstory{
             return false;
         }
     }
-    
+
     public List<SanPhamCustom> getAllSP() {
         List<SanPhamCustom> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -410,7 +408,7 @@ public class SanPhamReponstory{
         }
         return list;
     }
-    
+
     public List<ThuongHieuCustomer> getAllThuongHieu() {
         List<ThuongHieuCustomer> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -512,6 +510,34 @@ public class SanPhamReponstory{
             return true;
         } catch (HibernateException e) {
             return false;
+        }
+    }
+
+    public Object[] getBH_SPCustom() {
+        Object[] o = null;
+        List<BanHang_SPCustom> lstSP = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstSP = session.createQuery("SELECT ctsp.id, concat(dsp.ten,' ', sp.ten), ctsp.giaBan, ms.ten, sp.may, sp.kinh, sp.xuatXu, ctsp.soLuongTon "
+                    + "FROM SanPham sp JOIN ChiTietSanPham ctsp ON sp.id = ctsp.sanPham.id "
+                    + "JOIN MauSac ms ON ctsp.mauSac.id = ms.id "
+                    + "JOIN DongSp dsp ON ctsp.dongsp.id = dsp.id").getResultList();
+            o = lstSP.toArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return o;
+    }
+
+    public void loadSLTon(int sl, int idCTSP) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createNativeQuery("UPDATE Chi_TietSP SET So_Luong_Ton -= :sl WHERE Chi_TietSP.Id = :idCTSP");
+            query.setParameter("sl", sl);
+            query.setParameter("idCTSP", idCTSP);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

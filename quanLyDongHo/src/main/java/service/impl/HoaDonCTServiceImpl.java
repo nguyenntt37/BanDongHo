@@ -4,9 +4,6 @@
  */
 package service.impl;
 
-import Repository.HoaDonCTRepository;
-import java.util.List;
-import model.hoadon.hoaDonChiTiet;
 import service.IHoaDonCTService;
 
 /**
@@ -14,12 +11,11 @@ import service.IHoaDonCTService;
  * @author Nguyen
  */
 public class HoaDonCTServiceImpl implements IHoaDonCTService {
-    HoaDonCTRepository repo = new HoaDonCTRepository();
 
-    @Override
-    public List<hoaDonChiTiet> getAll(String maHD) {
-        List<hoaDonChiTiet> lstHDCT;
-        lstHDCT = repo.getAll(maHD);
-        return lstHDCT;
-    }
+//    @Override
+//    public List<hoaDonChiTiet> getAll(int id) {
+//        List<hoaDonChiTiet> lstHDCT;
+//        lstHDCT = repo.getAll(id);
+//        return lstHDCT;
+//    }
 }

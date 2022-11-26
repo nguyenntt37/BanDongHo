@@ -4,10 +4,12 @@
  */
 package Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import model.hoadon.HoaDon;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import util.HibernatUtil;
 
 /**
@@ -50,13 +52,49 @@ public class HoaDonRepository {
     }
 
     //Lay danh sach hoa don theo trang thai
-    public List<HoaDon> getHDTheoTrangThai(byte trangThai) {
+    public List<HoaDon> getHDTheoTrangThai(int trangThai) {
         List<HoaDon> lstHDTheoTT = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstHDTheoTT = session.createQuery("FROM HoaDon hd WHERE hd.trangThai = :trangThai").setParameter("trangThai", trangThai).getResultList();
+            lstHDTheoTT = session.createQuery("FROM HoaDon hd WHERE hd.trangThaiTT = :trangThai").setParameter("trangThai", trangThai).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return lstHDTheoTT;
+    }
+
+    public void setTTDaHuy(int idHD) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query q = session.createQuery("UPDATE HoaDon hd SET hd.trangThaiTT = -1 WHERE hd.id = :idHD");
+            q.setParameter("idHD", idHD);
+            q.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, int htgh, int pttt) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query q = session.createQuery("UPDATE HoaDon hd SET "
+                    + "hd.trangThaiTT = 1, "
+                    + "hd.ngayThanhToan = :ngayTT, "
+                    + "hd.tongTien = :tongTien, "
+                    + "hd.tienTraLai = :tienTraLai, "
+                    + "hd.HinhThucGH.id = :htgh, "
+                    + "hd.phuongThucTT.id = :pttt "
+                    + "WHERE hd.id = :idHD");
+            q.setParameter("ngayTT", ngayTT);
+            q.setParameter("tongTien", tongTien);
+            q.setParameter("tienTraLai", tienTraLai);
+            q.setParameter("htgh", htgh);
+            q.setParameter("pttt", pttt);
+            q.setParameter("idHD", idHD);
+            q.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

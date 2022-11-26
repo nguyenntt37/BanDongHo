@@ -4,13 +4,10 @@
  */
 package service;
 
-import java.util.List;
-import model.hoadon.hoaDonChiTiet;
-
 /**
  *
  * @author Nguyen
  */
 public interface IHoaDonCTService {
-    List<hoaDonChiTiet> getAll(String maHD);
+    
 }

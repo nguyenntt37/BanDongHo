@@ -174,7 +174,7 @@ public class LoGin extends javax.swing.JFrame {
             if (get) {
                 System.out.println("ok");
                 currentLoginUsername = txtname.getText();
-                this.setVisible(false);
+                setVisible(false);
                 new BanHangForm().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thất bại.sai UserName hoặc password");

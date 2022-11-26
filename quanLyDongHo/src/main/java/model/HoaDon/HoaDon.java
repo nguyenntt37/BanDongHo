@@ -19,7 +19,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import model.HoaDon.HinhThucGH;
 import model.HoaDon.PhuongThucTT;
 
@@ -30,6 +32,8 @@ import org.hibernate.annotations.NamedQuery;
  * @author asus_vinh
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Hoa_Don")
 @NamedQuery(name = "HoaDon.GET_ALL", query = "FROM HoaDon")
@@ -59,7 +63,7 @@ public class HoaDon {
     @Column(name = "Ngay_Nhan")
     private String ngayNhan;
 
-    @Column(name = "trang_thai")  //-1: Da huy, 0: Da thanh toan, 1: Cho thanh toan
+    @Column(name = "trang_thai")
     private Integer trangThai;
 
     @Column(name = "Ten_Nguoi_Nhan")
@@ -87,15 +91,15 @@ public class HoaDon {
     @Column(name = "Tien_Tra_Lai")
     private BigDecimal tienTraLai;
 
-    @Column(name = "Trang_Thai_TT") 
+    @Column(name = "Trang_Thai_TT") //-1: Da huy, 0: Cho thanh toan, 1: Da thanh toan
     private Integer trangThaiTT;
     
     @ManyToOne
-    @JoinColumn(name = "Phuong_Thuc_TT") //0: Thanh toan truc tiep, 1: Chuyen khoan
+    @JoinColumn(name = "Phuong_Thuc_TT")
     private PhuongThucTT phuongThucTT;
     
      @ManyToOne
-    @JoinColumn(name = "Hinh_Thuc_GH") //0: Thanh toan truc tiep, 1: Chuyen khoan
+    @JoinColumn(name = "Hinh_Thuc_GH")
     private HinhThucGH HinhThucGH;
 
     @Column(name = "Ghi_Chu")
@@ -103,6 +107,4 @@ public class HoaDon {
 
     @OneToMany(mappedBy = "hoaDon", fetch = FetchType.EAGER)
     private List<hoaDonChiTiet> lstHDCT = new ArrayList<>();
-
-
 }
