@@ -123,7 +123,7 @@ public class SanPhamReponstory {
                     + "m.sanPham.dayDeo, "
                     + "m.sanPham.ChucNang "
                     + ") "
-                    + "from model.sanpham.ChiTietSanPham m ");
+                    + "from model.sanpham.ChiTietSanPham m order by m.ngayTao desc");
             lists = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -540,12 +540,46 @@ public class SanPhamReponstory {
             e.printStackTrace();
         }
     }
+    
+    public List<ChiTietSPCustom> getAll2(int heSo) {
+        List<ChiTietSPCustom> lists = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            Query query = session.createQuery("select  "
+                    + " new viewmodel.ChiTietSPCustom("
+                    + " m.id ,"
+                    + " m.sanPham.ma ,"
+                    + "m.sanPham.ten ,"
+                    + " m.namBH ,"
+                    + "m.thuongHieu.ten ,"
+                    + "m.mauSac.ten ,"
+                    + "m.nSX.ten, "
+                    + "m.soLuongTon, "
+                    + "m.giaNhap, "
+                    + "m.giaBan, "
+                    + "m.moTa, "
+                    + "m.ngayTao, "
+                    + "m.ngaySua, "
+                    + "m.trangThai, "
+                    + "m.sanPham.xuatXu, "
+                    + "m.sanPham.kinh, "
+                    + "m.sanPham.dayDeo, "
+                    + "m.sanPham.ChucNang "
+                    + ") "
+                    + "from model.sanpham.ChiTietSanPham m order by m.ngayTao");
+            lists = query.setFirstResult(heSo).getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return lists;
+
+    }
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<ChiTietSPCustom> list = sp.getAll();
+        List<ChiTietSPCustom> list = sp.getAll2(5);
         for (ChiTietSPCustom o : list) {
-            System.out.println(o.toString());
+
+            System.out.println(o);
         }
     }
 

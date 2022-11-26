@@ -8,6 +8,7 @@ package service.impl;
 
 import Repository.SanPhamReponstory;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import model.sanpham.ChiTietSanPham;
 import model.sanpham.DongSp;
@@ -249,6 +250,20 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
         } else {
             return "delete thất bại";
         }
+    }
+    
+    @Override
+    public List<ChiTietSPCustom> getAll2(int heSo) {
+        List<ChiTietSPCustom> list = banHang.getAll2(heSo);
+        List<ChiTietSPCustom> list2 = new ArrayList<>();
+        int index = 0;
+        for (ChiTietSPCustom l : list) {
+            list2.add(l);
+            index++;
+            if (index == 10) 
+                break;
+        }
+        return list2;
     }
 
 }

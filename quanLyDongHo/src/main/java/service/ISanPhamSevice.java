@@ -79,4 +79,6 @@ public interface ISanPhamSevice {
     String deleteThuongHieu(thuongHieu th, int id);
 
     String deleteMauSac(MauSac ms, int id);
+    
+    List<ChiTietSPCustom> getAll2(int heSo);
 }
