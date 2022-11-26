@@ -436,7 +436,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
 
         jLabel36.setText("Giá Nhập");
 
-        jLabel37.setText("Máy");
+        jLabel37.setText("Năm BH");
 
         jLabel38.setText("mô tả ");
 
@@ -451,9 +451,9 @@ public class ChiTietSPForm extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel36)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(16, 16, 16)
                         .addComponent(jLabel37)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtNamBH, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -887,7 +887,8 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, spSevice.updateSPCT(ct, Integer.parseInt(txtIdChiTietSP.getText()), Integer.parseInt(lbIdSanPham.getText()),
                 Integer.parseInt(lbIdDongSp.getText()), Integer.parseInt(lbIdMauSac.getText()), Integer.parseInt(lbIdNSX.getText()), BigDecimal.valueOf(Double.valueOf(txtGiaBan.getText())),
                 BigDecimal.valueOf(Double.valueOf(txtGiaNhap.getText())), Integer.valueOf(txtNamBH.getText()), Integer.valueOf(txtSoLuong.getText())));
-        showDataRow(listSP);
+        updPanel();
+        showDataRow(listSPPage);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void tblCTSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTSanPhamMouseClicked

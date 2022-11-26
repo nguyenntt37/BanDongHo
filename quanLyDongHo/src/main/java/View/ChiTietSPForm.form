@@ -439,9 +439,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtGiaNhap" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="txtNamBH" min="-2" pref="150" max="-2" attributes="0"/>
@@ -527,7 +527,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel37">
           <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe1;y"/>
+            <Property name="text" type="java.lang.String" value="N&#x103;m BH"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel38">
