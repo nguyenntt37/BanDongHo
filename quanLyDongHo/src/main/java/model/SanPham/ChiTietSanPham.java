@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
-
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -51,7 +51,7 @@ public class ChiTietSanPham {
     @ManyToOne
     @JoinColumn(name = "Id_DongSP")
     private DongSp dongsp;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_Thuong_hieu")
     private thuongHieu thuongHieu;
@@ -59,9 +59,11 @@ public class ChiTietSanPham {
     @Column(name = "NamBH")
     private int namBH;
 
+    @Nationalized
     @Column(name = "Mo_Ta")
     private String moTa;
 
+    @Nationalized
     @Column(name = "hinh_anh")
     private String hinhAnh;
 
@@ -89,15 +91,11 @@ public class ChiTietSanPham {
     @OneToMany(mappedBy = "chiTietSP", fetch = FetchType.EAGER)
     List<GioHangChiTiet> listtt = new ArrayList<>();
 
-  
-
     public ChiTietSanPham(Integer id) {
         this.id = id;
     }
 
     public ChiTietSanPham() {
     }
-    
 
-    
 }

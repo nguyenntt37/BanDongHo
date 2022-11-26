@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 import model.hoadon.HoaDon;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -25,7 +26,8 @@ import model.hoadon.HoaDon;
 @Entity
 @Table(name = "Phuong_Thuc_TT")
 public class PhuongThucTT {
-     @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
@@ -33,6 +35,7 @@ public class PhuongThucTT {
     @Column(name = "Ma")
     private String ma;
 
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 

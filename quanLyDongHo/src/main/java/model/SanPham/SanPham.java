@@ -5,7 +5,6 @@
 package model.sanpham;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -34,6 +34,7 @@ public class SanPham {
     @Column(name = "Ma")
     private String ma;
 
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 
@@ -45,23 +46,29 @@ public class SanPham {
 
     @Column(name = "ngay_sua")
     private String ngaySua;
-    
-     @Column(name = "xuat_Xu")
+
+    @Nationalized
+    @Column(name = "xuat_Xu")
     private String xuatXu;
-     
-      @Column(name = "kinh")
+
+    @Nationalized
+    @Column(name = "kinh")
     private String kinh;
-      
-       @Column(name = "may")
+
+    @Nationalized
+    @Column(name = "may")
     private String may;
-       
-        @Column(name = "mat_So")
+
+    @Nationalized
+    @Column(name = "mat_So")
     private String matSo;
-        
-         @Column(name = "day_Deo")
+
+    @Nationalized
+    @Column(name = "day_Deo")
     private String dayDeo;
-         
-          @Column(name = "Chuc_nang")
+
+    @Nationalized
+    @Column(name = "Chuc_nang")
     private String ChucNang;
 
     @OneToMany(mappedBy = "sanPham", fetch = FetchType.EAGER)

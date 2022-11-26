@@ -7,20 +7,19 @@ package model.giohang;
 import model.KhachHang;
 import model.nhanvien.NhanVien;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -53,9 +52,11 @@ public class GioHang {
     @Column(name = "Ngay_Thanh_Toan")
     private String ngayThanhToan;
 
+    @Nationalized
     @Column(name = "Ten_Nguoi_Nhan")
     private String tenNguoiNhan;
 
+    @Nationalized
     @Column(name = "Dia_Chi")
     private String DiaChi;
 
@@ -79,7 +80,5 @@ public class GioHang {
 
     public GioHang() {
     }
-    
-    
 
 }

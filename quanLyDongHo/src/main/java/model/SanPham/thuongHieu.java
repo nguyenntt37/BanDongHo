@@ -5,7 +5,6 @@
 package model.sanpham;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -25,7 +25,8 @@ import lombok.Data;
 @Entity
 @Table(name = "thuong_hieu")
 public class thuongHieu {
-      @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
@@ -33,6 +34,7 @@ public class thuongHieu {
     @Column(name = "Ma")
     private String ma;
 
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 

@@ -26,6 +26,7 @@ import model.HoaDon.HinhThucGH;
 import model.HoaDon.PhuongThucTT;
 
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -47,8 +48,8 @@ public class HoaDon {
     @ManyToOne
     @JoinColumn(name = "IdKH")
     private KhachHang khachHang;
-    
-     @Column(name = "Ma")
+
+    @Column(name = "Ma")
     private String ma;
 
     @Column(name = "Ngay_Tao")
@@ -66,9 +67,11 @@ public class HoaDon {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
+    @Nationalized
     @Column(name = "Ten_Nguoi_Nhan")
     private String tenNguoiNhan;
 
+    @Nationalized
     @Column(name = "Dia_Chi")
     private String diaChi;
 
@@ -77,7 +80,7 @@ public class HoaDon {
 
     @Column(name = "ngay_sua")
     private String ngaySua;
-    
+
     @ManyToOne
     @JoinColumn(name = "IdNV")
     private NhanVien nhanVien;
@@ -93,15 +96,16 @@ public class HoaDon {
 
     @Column(name = "Trang_Thai_TT") //-1: Da huy, 0: Cho thanh toan, 1: Da thanh toan
     private Integer trangThaiTT;
-    
+
     @ManyToOne
     @JoinColumn(name = "Phuong_Thuc_TT")
     private PhuongThucTT phuongThucTT;
-    
-     @ManyToOne
+
+    @ManyToOne
     @JoinColumn(name = "Hinh_Thuc_GH")
     private HinhThucGH HinhThucGH;
 
+    @Nationalized
     @Column(name = "Ghi_Chu")
     private String ghiChu;
 

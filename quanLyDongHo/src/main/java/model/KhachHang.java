@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -42,18 +43,22 @@ public class KhachHang {
     @Column(name = "email")
     private String email;
 
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 
+    @Nationalized
     @Column(name = "Ten_Dem")
     private String tenDem;
 
+    @Nationalized
     @Column(name = "Ho")
     private String ho;
 
     @Column(name = "Ngay_Sinh")
     private String ngaySinh;
 
+    @Nationalized
     @Column(name = "Dia_Chi")
     private String diaChi;
 
@@ -63,9 +68,11 @@ public class KhachHang {
     @Column(name = "Mat_Khau")
     private String matKhau;
 
+    @Nationalized
     @Column(name = "Thanh_Pho")
     private String thanhPho;
 
+    @Nationalized
     @Column(name = "Quoc_Gia")
     private String quocGia;
 

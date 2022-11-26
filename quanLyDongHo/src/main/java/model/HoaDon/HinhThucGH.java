@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 import model.hoadon.HoaDon;
-import model.hoadon.hoaDonChiTiet;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -35,6 +35,7 @@ public class HinhThucGH {
     @Column(name = "Ma")
     private String ma;
 
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 

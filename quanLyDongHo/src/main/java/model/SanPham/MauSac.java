@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -32,10 +33,11 @@ public class MauSac {
 
     @Column(name = "Ma")
     private String ma;
-    
+
     @Column(name = "ngay_sua")
     private String ngaySua;
-    
+
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 
@@ -44,8 +46,6 @@ public class MauSac {
 
     @Column(name = "ngay_tao")
     private String ngayTao;
-
-    
 
     @OneToMany(mappedBy = "mauSac", fetch = FetchType.EAGER)
     List<ChiTietSanPham> list = new ArrayList<>();

@@ -5,7 +5,6 @@
 package model.nhanvien;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 /**
  *
@@ -34,15 +34,19 @@ public class CuaHang {
     @Column(name = "Ma")
     private String ma;
 
+    @Nationalized
     @Column(name = "Ten")
     private String ten;
 
+    @Nationalized
     @Column(name = "Dia_Chi")
     private String diaChi;
 
+    @Nationalized
     @Column(name = "Thanh_Pho")
     private String thanhPho;
 
+    @Nationalized
     @Column(name = "Quoc_Gia")
     private String quocGia;
 
