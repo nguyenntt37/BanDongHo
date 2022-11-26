@@ -19,7 +19,7 @@ public class LoGin extends javax.swing.JFrame {
      */
     public LoGin() {
         initComponents();
-        txtname.setText("nv001"); //Set tạm
+        txtname.setText("nv01"); //Set tạm
         txtpassword.setText("123"); //Set tạm
     }
     

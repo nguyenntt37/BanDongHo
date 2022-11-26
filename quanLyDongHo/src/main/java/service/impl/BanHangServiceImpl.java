@@ -4,6 +4,7 @@
  */
 package service.impl;
 
+import Repository.DongSPRepository;
 import Repository.HoaDonCTRepository;
 import Repository.HoaDonRepository;
 import Repository.SanPhamReponstory;
@@ -13,15 +14,19 @@ import java.util.List;
 import model.hoadon.HoaDon;
 import service.IBanHangService;
 import viewmodel.BanHang_HDCustom;
+import viewmodel.BanHang_SPCustom;
+import viewmodel.DongSPCustom;
 
 /**
  *
  * @author Nguyen
  */
 public class BanHangServiceImpl implements IBanHangService {
+
     HoaDonRepository hdRepo = new HoaDonRepository();
     HoaDonCTRepository hdctRepo = new HoaDonCTRepository();
     SanPhamReponstory spRepo = new SanPhamReponstory();
+    DongSPRepository dspRepo = new DongSPRepository();
 
     @Override
     public List<BanHang_HDCustom> getHDCho(int trangThai) {
@@ -47,7 +52,7 @@ public class BanHangServiceImpl implements IBanHangService {
     public void insertSPToHDCT(int idHD, int sl, int idCTSP) {
         hdctRepo.insertSPToHDCT(idHD, sl, idCTSP);
     }
-    
+
     @Override
     public void loadSLTon(int sl, int idCTSP) {
         spRepo.loadSLTon(sl, idCTSP);
@@ -66,5 +71,17 @@ public class BanHangServiceImpl implements IBanHangService {
     @Override
     public void deleteSPOnHDCT(int idCTSP, int sl) {
         hdctRepo.deleteSPOnHDCT(idCTSP, sl);
+    }
+
+    @Override
+    public List<DongSPCustom> loadCboDongSP() {
+        List<DongSPCustom> lstDSP = dspRepo.getAllDongSP();
+        return lstDSP;
+    }
+    
+    @Override
+    public List<BanHang_SPCustom> loadSPByDongSP(int idDSP) {
+        List<BanHang_SPCustom> lstSP = spRepo.getSPByDongSP(idDSP);
+        return lstSP;
     }
 }

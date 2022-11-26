@@ -11,11 +11,5 @@ import service.IHoaDonCTService;
  * @author Nguyen
  */
 public class HoaDonCTServiceImpl implements IHoaDonCTService {
-
-//    @Override
-//    public List<hoaDonChiTiet> getAll(int id) {
-//        List<hoaDonChiTiet> lstHDCT;
-//        lstHDCT = repo.getAll(id);
-//        return lstHDCT;
-//    }
+    
 }

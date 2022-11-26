@@ -7,6 +7,8 @@ package service;
 import java.math.BigDecimal;
 import java.util.List;
 import viewmodel.BanHang_HDCustom;
+import viewmodel.BanHang_SPCustom;
+import viewmodel.DongSPCustom;
 
 /**
  *
@@ -21,4 +23,6 @@ public interface IBanHangService {
     void setTTDaHuy(int idHD);
     void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int htgh, int pttt);
     void deleteSPOnHDCT(int idCTSP, int sl);
+    List<DongSPCustom> loadCboDongSP();
+    List<BanHang_SPCustom> loadSPByDongSP(int idDSP);
 }

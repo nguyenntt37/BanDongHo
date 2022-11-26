@@ -4,6 +4,12 @@
  */
 package View;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
  * @author Nguyen
@@ -14,6 +20,11 @@ public class HoaDonForm extends javax.swing.JFrame {
      * Creates new form HoaDonForm
      */
     public HoaDonForm() {
+        try {
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
     }
 
