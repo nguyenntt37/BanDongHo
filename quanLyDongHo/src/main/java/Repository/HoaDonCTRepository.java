@@ -7,7 +7,6 @@ package Repository;
 import java.util.ArrayList;
 import java.util.List;
 import model.hoadon.hoaDonChiTiet;
-import model.sanpham.ChiTietSanPham;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.HibernatUtil;
@@ -67,6 +66,23 @@ public class HoaDonCTRepository {
             q.setParameter("idHD", idHD);
             q.setParameter("sl", sl);
             q.setParameter("idCTSP", idCTSP);
+            q.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteSPOnHDCT(int idCTSP, int sl) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query q = session.createQuery("DELETE FROM hoaDonChiTiet hdct WHERE hdct.chiTietSP.id = :id");
+            q.setParameter("id", idCTSP);
+            q.executeUpdate();
+            
+            q = session.createQuery("UPDATE ChiTietSanPham ctsp SET ctsp.soLuongTon = ctsp.soLuongTon + :sl WHERE ctsp.id = :id");
+            q.setParameter("id", idCTSP);
+            q.setParameter("sl", sl);
             q.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {

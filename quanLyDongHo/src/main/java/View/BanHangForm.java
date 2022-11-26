@@ -111,17 +111,17 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         }
     }
 
-    private void insertSPToHDCT() {
+    private void insertSPToHDCT(int sl) {
         try {
             int idHD = Integer.parseInt(lblMaHoaDon.getText());
             int idCTSP = Integer.parseInt(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0).toString());
-            bhService.insertSPToHDCT(idHD, 1, idCTSP);
-            bhService.loadSLTon(1, idCTSP);
+            bhService.insertSPToHDCT(idHD, sl, idCTSP);
+            bhService.loadSLTon(sl, idCTSP);
             loadTableHDCT();
             loadTableSP();
             loadTongTien();
         } catch (Exception e) {
-            System.out.println("Loi");
+            JOptionPane.showMessageDialog(this, "Vui long chon hoa don can them");
             e.printStackTrace();
         }
     }
@@ -173,14 +173,15 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         }
     }
 
-    public void thanhToan() {
+    private void thanhToan() {
         try {
             int idHD = Integer.parseInt(lblMaHoaDon.getText());
             BigDecimal tongTien = new BigDecimal(lblTongTien.getText());
             BigDecimal tienTraLai = new BigDecimal(lblTienThuaTraKhach.getText());
+            String ghiChu = txtghiChu.getText();
             int htgh = (cboHinhThucGH.getSelectedIndex() == 0) ? 1 : 2;
             int pttt = (cboHinhThucGH.getSelectedIndex() == 0) ? 1 : 2;
-            bhService.setTTDaThanhToan(idHD, DatetimeUtil.getCurrentDateAndTime(), tongTien, tienTraLai, htgh, pttt);
+            bhService.setTTDaThanhToan(idHD, DatetimeUtil.getCurrentDateAndTime(), tongTien, tienTraLai, ghiChu, htgh, pttt);
             JOptionPane.showMessageDialog(this, "Đã thanh toán");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn cần thanh toán");
@@ -188,6 +189,45 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         }
     }
 
+    private void xoaSPOnHDCT() {
+        try {
+            int idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(tblHDCT.getSelectedRow(), 0).toString());
+            int sl = Integer.parseInt(tblModelHDCT.getValueAt(tblHDCT.getSelectedRow(), 3).toString());
+            bhService.deleteSPOnHDCT(idCTSP,sl);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui long chon san pham can xoa");
+            e.printStackTrace();
+        }
+    }
+    
+    private void xoaAllSPOnHDCT() {
+        try {
+            for (int i = 0; i < tblHDCT.getRowCount(); i++) {
+                int idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(i, 0).toString());
+                int sl = Integer.parseInt(tblModelHDCT.getValueAt(i, 3).toString());
+                bhService.deleteSPOnHDCT(idCTSP,sl);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui long chon san pham can xoa");
+            e.printStackTrace();
+        }
+    }
+    
+    private void resetGUI() {
+        tblHoaDonCho.clearSelection();
+        tblHDCT.clearSelection();
+        tblSanPham.clearSelection();
+        lblMaHoaDon.setText(null);
+        tblModelHDCT.setRowCount(0);
+        lblTongTien.setText("0");
+        lblThanhToan.setText("0");
+        lblTienThuaTraKhach.setText("0");
+        txtTienKhachDua.setText("0");
+        txtghiChu.setText(null);
+        cboPhuongThucTT.setSelectedIndex(0);
+        cboHinhThucGH.setSelectedIndex(0);
+    }
+    
     @Override
     public void run() {
         do {
@@ -856,12 +896,21 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Chưa code");
+        xoaSPOnHDCT();
+        loadTableHDCT();
+        loadTongTien();
+        loadTableSP();
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
     private void btnThemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSanPhamActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Phần này chưa code đâu\nTạm thời bấm double click vào từng dòng để thêm sp :v");
+        try {
+            int sl = Integer.parseInt(JOptionPane.showInputDialog(this,"Nhập số lượng sản phẩm cần thêm"));
+            insertSPToHDCT(sl);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnThemSanPhamActionPerformed
 
     private void tblHoaDonChoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonChoMouseClicked
@@ -874,7 +923,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            insertSPToHDCT();
+            insertSPToHDCT(1);
         }
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
@@ -904,12 +953,15 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void btnXoaTatCaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTatCaSPActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Chưa code");
+        xoaAllSPOnHDCT();
+        loadTongTien();
+        loadTableHDCT();
+        loadTableSP();
     }//GEN-LAST:event_btnXoaTatCaSPActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Chưa code");
+        resetGUI();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed

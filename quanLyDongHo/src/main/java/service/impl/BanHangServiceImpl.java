@@ -59,7 +59,12 @@ public class BanHangServiceImpl implements IBanHangService {
     }
 
     @Override
-    public void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, int htgh, int pttt) {
-        hdRepo.setTTDaThanhToan(idHD, ngayTT, tongTien, tienTraLai, htgh, pttt);
+    public void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int htgh, int pttt) {
+        hdRepo.setTTDaThanhToan(idHD, ngayTT, tongTien, tienTraLai, ghiChu, htgh, pttt);
+    }
+
+    @Override
+    public void deleteSPOnHDCT(int idCTSP, int sl) {
+        hdctRepo.deleteSPOnHDCT(idCTSP, sl);
     }
 }

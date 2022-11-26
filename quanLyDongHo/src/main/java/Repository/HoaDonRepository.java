@@ -74,7 +74,7 @@ public class HoaDonRepository {
         }
     }
 
-    public void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, int htgh, int pttt) {
+    public void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int htgh, int pttt) {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();
             Query q = session.createQuery("UPDATE HoaDon hd SET "
@@ -82,12 +82,14 @@ public class HoaDonRepository {
                     + "hd.ngayThanhToan = :ngayTT, "
                     + "hd.tongTien = :tongTien, "
                     + "hd.tienTraLai = :tienTraLai, "
+                    + "hd.ghiChu = :ghiChu"
                     + "hd.HinhThucGH.id = :htgh, "
                     + "hd.phuongThucTT.id = :pttt "
                     + "WHERE hd.id = :idHD");
             q.setParameter("ngayTT", ngayTT);
             q.setParameter("tongTien", tongTien);
             q.setParameter("tienTraLai", tienTraLai);
+            q.setParameter("ghiChu", ghiChu);
             q.setParameter("htgh", htgh);
             q.setParameter("pttt", pttt);
             q.setParameter("idHD", idHD);

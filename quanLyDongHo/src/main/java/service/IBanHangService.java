@@ -19,5 +19,6 @@ public interface IBanHangService {
     void insertSPToHDCT(int idHD, int sl, int idCTSP);
     void loadSLTon(int sl, int idCTSP);
     void setTTDaHuy(int idHD);
-    void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, int htgh, int pttt);
+    void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int htgh, int pttt);
+    void deleteSPOnHDCT(int idCTSP, int sl);
 }
