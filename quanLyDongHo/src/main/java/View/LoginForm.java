@@ -3,41 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.login.loginformdesign;
+package View;
 
-import java.awt.Toolkit;
+import View.login.gui.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *
  * @author RAVEN
  */
-public class MainLoginPanel extends javax.swing.JFrame {
-
+public class LoginForm extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    public MainLoginPanel() {
+    public LoginForm() {
         initComponents();
+//        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         Login login = new Login();
         ForgotPassword register = new ForgotPassword();
         slide.setAnimate(5);
         slide.init(login, register);
-        login.addEventRegister(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                //  Show register form
-                slide.show(1);
-                register.register();
-            }
+        login.addEventRegister((ActionEvent ae) -> {
+            //  Show register form
+            slide.show(1);
+            register.register();
         });
-        register.addEventBackLogin(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                slide.show(0);
-                login.login();
-            }
+        register.addEventBackLogin((ActionEvent ae) -> {
+            slide.show(0);
+            login.login();
         });
     }
 
@@ -50,9 +43,9 @@ public class MainLoginPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelGradiente1 = new loginclassdesign.PanelGradiente();
-        panelBorder1 = new loginclassdesign.PanelBorder();
-        slide = new loginclassdesign.PanelSlide();
+        panelGradiente1 = new View.login.PanelGradiente();
+        panelBorder1 = new View.login.PanelBorder();
+        slide = new View.login.PanelSlide();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -144,31 +137,30 @@ public class MainLoginPanel extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainLoginPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainLoginPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainLoginPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainLoginPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainLoginPanel().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginForm().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private loginclassdesign.PanelBorder panelBorder1;
-    private loginclassdesign.PanelGradiente panelGradiente1;
-    private loginclassdesign.PanelSlide slide;
+    private View.login.PanelBorder panelBorder1;
+    private View.login.PanelGradiente panelGradiente1;
+    private View.login.PanelSlide slide;
     // End of variables declaration//GEN-END:variables
 }

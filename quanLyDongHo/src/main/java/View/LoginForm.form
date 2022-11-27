@@ -34,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="loginclassdesign.PanelGradiente" name="panelGradiente1">
+    <Container class="View.login.PanelGradiente" name="panelGradiente1">
       <Properties>
         <Property name="colorPrimario" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="fb" green="e9" red="92" type="rgb"/>
@@ -65,7 +65,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="loginclassdesign.PanelBorder" name="panelBorder1">
+        <Container class="View.login.PanelBorder" name="panelBorder1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -93,7 +93,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="loginclassdesign.PanelSlide" name="slide">
+            <Container class="View.login.PanelSlide" name="slide">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>

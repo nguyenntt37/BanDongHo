@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package loginclassdesign;
+package View.login;
 
 import java.awt.Color;
 import java.awt.GradientPaint;

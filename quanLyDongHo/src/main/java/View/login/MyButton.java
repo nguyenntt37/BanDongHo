@@ -1,4 +1,4 @@
-package loginclassdesign;
+package View.login;
 
 import java.awt.Color;
 import java.awt.Graphics;

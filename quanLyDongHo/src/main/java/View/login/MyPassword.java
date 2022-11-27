@@ -1,4 +1,4 @@
-package loginclassdesign;
+package View.login;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
-public class MyTextField extends JTextField {
+public class MyPassword extends JPasswordField {
 
     public Icon getPrefixIcon() {
         return prefixIcon;
@@ -31,7 +31,7 @@ public class MyTextField extends JTextField {
     private Icon prefixIcon;
     private Icon suffixIcon;
 
-    public MyTextField() {
+    public MyPassword() {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 5, 7, 5));
     }
 

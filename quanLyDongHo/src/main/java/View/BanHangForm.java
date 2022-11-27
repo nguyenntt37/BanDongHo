@@ -6,6 +6,7 @@ package View;
 
 import Util.DatetimeUtil;
 import Util.MoneyUtil;
+import View.login.gui.Login;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -543,9 +544,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         });
         jScrollPane6.setViewportView(tblSanPham);
 
-        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyReleased(evt);
+        txtTimKiem.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTimKiemCaretUpdate(evt);
             }
         });
 
@@ -1115,7 +1116,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         HoaDon hd = new HoaDon();
         hd.setId(null);
         hd.setKhachHang(kh);
-        hd.setNhanVien(nvService.getByMaNV(LoGin.getCurrentLoginUsername()));
+        hd.setNhanVien(nvService.getByMaNV(Login.getCurrentLoginUsername()));
         hd.setTgTao(DatetimeUtil.getCurrentDateAndTime());
         hd.setTrangThaiTT(0);
         hdService.insert(hd);
@@ -1133,12 +1134,12 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         }
     }//GEN-LAST:event_cboDongSPActionPerformed
 
-    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+    private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
         // TODO add your handling code here:
         if (txtTimKiem.getText().trim().length() > 0) {
             loadTableSPBySearching(txtTimKiem.getText().trim());
         } else loadTableSP();
-    }//GEN-LAST:event_txtTimKiemKeyReleased
+    }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     /**
      * @param args the command line arguments
