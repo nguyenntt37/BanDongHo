@@ -14,7 +14,6 @@ import java.util.List;
 import model.hoadon.HoaDon;
 import service.IBanHangService;
 import viewmodel.BanHang_HDCustom;
-import viewmodel.BanHang_SPCustom;
 import viewmodel.DongSPCustom;
 
 /**
@@ -74,14 +73,12 @@ public class BanHangServiceImpl implements IBanHangService {
     }
 
     @Override
-    public List<DongSPCustom> loadCboDongSP() {
-        List<DongSPCustom> lstDSP = dspRepo.getAllDongSP();
-        return lstDSP;
+    public Object[] loadCboDongSP() {
+        return dspRepo.getAllDongSPham();
     }
-    
+
     @Override
-    public List<BanHang_SPCustom> loadSPByDongSP(int idDSP) {
-        List<BanHang_SPCustom> lstSP = spRepo.getSPByDongSP(idDSP);
-        return lstSP;
+    public Object[] getBH_SPCustomByDongSP(int idDSP) {
+        return spRepo.getBH_SPCustomByDongSP(idDSP);
     }
 }

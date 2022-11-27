@@ -30,15 +30,9 @@ public class HoaDonCTRepository {
 
     public Object[] getBH_HDCTCustom(int maHD) {
         Object[] o = null;
-        List<BanHang_HDCTCustom> lstHDCT = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstHDCT = session.createQuery("SELECT ctsp.id, concat(dsp.ten,' ', sp.ten), ctsp.giaBan, hdct.soLuong "
-                    + "FROM SanPham sp JOIN ChiTietSanPham ctsp ON sp.id = ctsp.sanPham.id "
-                    + "JOIN hoaDonChiTiet hdct ON ctsp.id = hdct.chiTietSP.id "
-                    + "JOIN HoaDon hd ON hdct.hoaDon.id = hd.id "
-                    + "JOIN DongSp dsp ON dsp.id = ctsp.dongsp.id "
-                    + "WHERE hd.id = :maHD").setParameter("maHD", maHD).getResultList();
-            o = lstHDCT.toArray();
+            o = session.createQuery("SELECT hdct.chiTietSP.id, CONCAT(hdct.chiTietSP.dongsp.ten,' ',hdct.chiTietSP.thuongHieu.ten,' ',hdct.chiTietSP.sanPham.ten),hdct.chiTietSP.giaBan,hdct.soLuong FROM hoaDonChiTiet hdct "
+                    + "WHERE hdct.hoaDon.id = :maHD").setParameter("maHD", maHD).getResultList().toArray();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,15 +47,15 @@ public class HoaDonCTRepository {
                     + "JOIN Hoa_Don ON Hoa_Don_Chi_Tiet.Id_Hoa_Don = Hoa_Don.Id\n"
                     + "WHERE Hoa_Don.Id = :idHD AND Hoa_Don_Chi_Tiet.Id_Chi_TietSP = :idCTSP)\n"
                     + "BEGIN\n"
-                    + "	UPDATE Hoa_Don_Chi_Tiet\n"
-                    + "	SET So_Luong += 1\n"
-                    + "	WHERE Hoa_Don_Chi_Tiet.Id_Hoa_Don = :idHD\n"
+                    + "UPDATE Hoa_Don_Chi_Tiet\n"
+                    + "SET So_Luong += 1\n"
+                    + "WHERE Hoa_Don_Chi_Tiet.Id_Hoa_Don = :idHD\n"
                     + "AND Hoa_Don_Chi_Tiet.Id_Chi_TietSP = :idCTSP\n"
                     + "END\n"
                     + "ELSE\n"
                     + "BEGIN\n"
-                    + "	INSERT INTO Hoa_Don_Chi_Tiet VALUES\n"
-                    + "	(null,null,null,:sl,null,:idCTSP,:idHD)\n"
+                    + "INSERT INTO Hoa_Don_Chi_Tiet(So_Luong,Id_Chi_TietSP,Id_Hoa_Don) VALUES\n"
+                    + "(:sl,:idCTSP,:idHD)\n"
                     + "END");
             q.setParameter("idHD", idHD);
             q.setParameter("sl", sl);
@@ -72,14 +66,14 @@ public class HoaDonCTRepository {
             e.printStackTrace();
         }
     }
-    
+
     public void deleteSPOnHDCT(int idCTSP, int sl) {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();
             Query q = session.createQuery("DELETE FROM hoaDonChiTiet hdct WHERE hdct.chiTietSP.id = :id");
             q.setParameter("id", idCTSP);
             q.executeUpdate();
-            
+
             q = session.createQuery("UPDATE ChiTietSanPham ctsp SET ctsp.soLuongTon = ctsp.soLuongTon + :sl WHERE ctsp.id = :id");
             q.setParameter("id", idCTSP);
             q.setParameter("sl", sl);

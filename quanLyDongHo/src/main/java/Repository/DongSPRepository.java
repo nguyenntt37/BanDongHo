@@ -29,11 +29,14 @@ public class DongSPRepository {
                     + "p.ten"
                     + ")from model.sanpham.DongSp p ");
             list = query.getResultList();
-
         } catch (HibernateException e) {
             e.printStackTrace();
         }
         return list;
+    }
+    
+    public Object[] getAllDongSPham() {
+        return getAllDongSP().toArray();
     }
 
     public boolean addDongSp(DongSp dp) {
