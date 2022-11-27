@@ -19,6 +19,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,10 +30,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import model.HoaDon.HinhThucGH;
+import model.HoaDon.PhuongThucTT;
 import model.KhachHang;
 import model.hoadon.HoaDon;
 import service.IBanHangService;
@@ -50,8 +56,10 @@ import viewmodel.DongSPCustom;
  */
 public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
+    private JTableHeader tblHDHeader, tblHDCTHeader, tblSPHeader;
+    private DefaultTableCellRenderer tblHDCTRenderer, tblSPRenderer, tblHDRenderer;
     private TableColumnModel tblSPColModel, tblHDCTColModel, tblHDColModel;
-    private DefaultComboBoxModel cboModelDongSP;
+    private DefaultComboBoxModel cboModelDongSP, cboModelHTGH, cboModelPTTT;
     private DefaultTableModel tblModelHD, tblModelSP, tblModelHDCT;
     private IHoaDonService hdService = new HoaDonServiceImpl();
     private INhanVienService nvService = new NhanVienServiceImpl();
@@ -77,10 +85,10 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void init() {
         setTableModel();
-        setTableColumnWidth();
+        initTableStructure();
         loadTableHDCho();
         loadTableSP();
-        loadCboDongSP();
+        loadAllCombobox();
     }
 
     private void setTableModel() {
@@ -89,14 +97,27 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         tblModelSP = (DefaultTableModel) tblSanPham.getModel();
     }
 
-    private void setTableColumnWidth() {
+    private void initTableStructure() {
+        tblHDHeader = tblHoaDonCho.getTableHeader();
+        tblHDCTHeader = tblHDCT.getTableHeader();
+        tblSPHeader = tblSanPham.getTableHeader();
+        tblHDHeader.setFont(new Font("segoeui", Font.BOLD, 12));
+        tblHDHeader.setBackground(Color.LIGHT_GRAY);
+        tblHDCTHeader.setFont(new Font("segoeui", Font.BOLD, 12));
+        tblHDCTHeader.setBackground(Color.LIGHT_GRAY);
+        tblSPHeader.setFont(new Font("segoeui", Font.BOLD, 12));
+        tblSPHeader.setBackground(Color.LIGHT_GRAY);
 
+        tblHDCTRenderer = (DefaultTableCellRenderer) tblHDCT.getDefaultRenderer(this.getClass());
+        tblHDRenderer = (DefaultTableCellRenderer) tblHoaDonCho.getDefaultRenderer(this.getClass());
+        tblSPRenderer = (DefaultTableCellRenderer) tblSanPham.getDefaultRenderer(this.getClass());
         tblSPColModel = tblSanPham.getColumnModel();
         tblHDColModel = tblHoaDonCho.getColumnModel();
         tblHDCTColModel = tblHDCT.getColumnModel();
 
-//        DefaultTableCellRenderer render = (DefaultTableCellRenderer) tblHDCT.getDefaultRenderer(String.class);
-//        render.setHorizontalAlignment(SwingConstants.CENTER);
+        tblHDCTRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblHDRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblSPRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         tblHDCTColModel.getColumn(0).setPreferredWidth(30);
         tblHDCTColModel.getColumn(1).setPreferredWidth(200);
         tblHDColModel.getColumn(0).setPreferredWidth(30);
@@ -118,12 +139,31 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         executor.execute(this);
     }
 
+    private void loadAllCombobox() {
+        loadCboDongSP();
+        loadCboPTTT();
+        loadCboHTGH();
+    }
+
     private void loadCboDongSP() {
         cboModelDongSP = (DefaultComboBoxModel) cboDongSP.getModel();
-        cboDongSP.setModel(cboModelDongSP);
         cboModelDongSP.addElement("Tất cả");
         for (Object o : bhService.loadCboDongSP()) {
             cboModelDongSP.addElement(o);
+        }
+    }
+
+    private void loadCboPTTT() {
+        cboModelPTTT = (DefaultComboBoxModel) cboPhuongThucTT.getModel();
+        for (Object o : bhService.getAllPTTT()) {
+            cboModelPTTT.addElement(o);
+        }
+    }
+
+    private void loadCboHTGH() {
+        cboModelHTGH = (DefaultComboBoxModel) cboHinhThucGH.getModel();
+        for (Object o : bhService.getAllHTGH()) {
+            cboModelHTGH.addElement(o);
         }
     }
 
@@ -143,6 +183,13 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private void loadTableSP() {
         tblModelSP.setRowCount(0);
         for (Object o : bhService.getSPCustom()) {
+            tblModelSP.addRow((Object[]) o);
+        }
+    }
+
+    private void loadTableSPBySearching(String search) {
+        tblModelSP.setRowCount(0);
+        for (Object o : bhService.searchSP(search)) {
             tblModelSP.addRow((Object[]) o);
         }
     }
@@ -172,7 +219,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 loadTableHDCT();
                 loadTableSP();
                 loadTongTien();
-            } else JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần thêm");
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần thêm");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn cần thêm");
             e.printStackTrace();
@@ -227,14 +276,16 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }
 
     private void thanhToan() {
+        PhuongThucTT pttt;
+        HinhThucGH htgh;
         try {
             int idHD = Integer.parseInt(lblMaHoaDon.getText());
             BigDecimal tongTien = new BigDecimal(lblTongTien.getText());
             BigDecimal tienTraLai = new BigDecimal(lblTienThuaTraKhach.getText());
             String ghiChu = txtghiChu.getText();
-            int htgh = (cboHinhThucGH.getSelectedIndex() == 0) ? 1 : 2;
-            int pttt = (cboHinhThucGH.getSelectedIndex() == 0) ? 1 : 2;
-            bhService.setTTDaThanhToan(idHD, DatetimeUtil.getCurrentDateAndTime(), tongTien, tienTraLai, ghiChu, htgh, pttt);
+            htgh = (HinhThucGH) cboModelHTGH.getSelectedItem();
+            pttt = (PhuongThucTT) cboModelPTTT.getSelectedItem();
+            bhService.thanhToanHD(idHD, DatetimeUtil.getCurrentDateAndTime(), tongTien, tienTraLai, ghiChu, pttt.getId(), htgh.getId());
             JOptionPane.showMessageDialog(this, "Đã thanh toán");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn cần thanh toán");
@@ -412,10 +463,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         tblHDCT.setShowGrid(true);
         jScrollPane5.setViewportView(tblHDCT);
 
-        btnXoaSP.setBackground(new java.awt.Color(0, 204, 255));
+        btnXoaSP.setBackground(new java.awt.Color(51, 102, 153));
         btnXoaSP.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnXoaSP.setForeground(new java.awt.Color(0, 0, 0));
+        btnXoaSP.setForeground(new java.awt.Color(255, 255, 255));
         btnXoaSP.setText("Xóa sản phẩm");
+        btnXoaSP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnXoaSP.setPreferredSize(new java.awt.Dimension(60, 30));
         btnXoaSP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -423,10 +475,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             }
         });
 
-        btnXoaTatCaSP.setBackground(new java.awt.Color(0, 204, 255));
+        btnXoaTatCaSP.setBackground(new java.awt.Color(51, 102, 153));
         btnXoaTatCaSP.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnXoaTatCaSP.setForeground(new java.awt.Color(0, 0, 0));
+        btnXoaTatCaSP.setForeground(new java.awt.Color(255, 255, 255));
         btnXoaTatCaSP.setText("Xóa tất cả");
+        btnXoaTatCaSP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnXoaTatCaSP.setPreferredSize(new java.awt.Dimension(60, 30));
         btnXoaTatCaSP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -470,7 +523,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
             },
             new String [] {
-                "Mã SP", "Tên sản phẩm", "Đơn giá", "Màu sắc", "Loại máy", "Kính", "Xuất xứ", "Số lượng còn"
+                "Mã SP", "Tên sản phẩm", "Đơn giá", "Màu sắc", "Loại máy", "Kính", "Xuất xứ", "SL còn"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -490,13 +543,20 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         });
         jScrollPane6.setViewportView(tblSanPham);
 
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Tìm kiếm sản phẩm:");
 
-        btnThemSanPham.setBackground(new java.awt.Color(0, 204, 255));
+        btnThemSanPham.setBackground(new java.awt.Color(51, 102, 153));
         btnThemSanPham.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnThemSanPham.setForeground(new java.awt.Color(0, 0, 0));
+        btnThemSanPham.setForeground(new java.awt.Color(255, 255, 255));
         btnThemSanPham.setText("Thêm sản phẩm");
+        btnThemSanPham.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnThemSanPham.setPreferredSize(new java.awt.Dimension(60, 30));
         btnThemSanPham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -564,10 +624,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đơn hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
-        btnTao.setBackground(new java.awt.Color(0, 204, 255));
-        btnTao.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        btnTao.setForeground(new java.awt.Color(0, 0, 0));
+        btnTao.setBackground(new java.awt.Color(51, 102, 153));
+        btnTao.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnTao.setForeground(new java.awt.Color(255, 255, 255));
         btnTao.setText("Tạo");
+        btnTao.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnTao.setPreferredSize(new java.awt.Dimension(101, 25));
         btnTao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -588,22 +649,22 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Phương thức thanh toán:");
 
-        cboPhuongThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản" }));
-
-        btnHuyHoaDon.setBackground(new java.awt.Color(0, 204, 255));
-        btnHuyHoaDon.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        btnHuyHoaDon.setForeground(new java.awt.Color(0, 0, 0));
+        btnHuyHoaDon.setBackground(new java.awt.Color(51, 102, 153));
+        btnHuyHoaDon.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnHuyHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         btnHuyHoaDon.setText("Hủy hóa đơn");
+        btnHuyHoaDon.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnHuyHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyHoaDonActionPerformed(evt);
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(0, 204, 255));
-        btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        btnLamMoi.setForeground(new java.awt.Color(0, 0, 0));
+        btnLamMoi.setBackground(new java.awt.Color(51, 102, 153));
+        btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnLamMoi.setText("Làm mới");
+        btnLamMoi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLamMoiActionPerformed(evt);
@@ -618,11 +679,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Ghi chú:");
 
-        btnThanhToan.setBackground(new java.awt.Color(0, 204, 255));
+        btnThanhToan.setBackground(new java.awt.Color(51, 102, 153));
         btnThanhToan.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnThanhToan.setForeground(new java.awt.Color(255, 102, 102));
+        btnThanhToan.setForeground(new java.awt.Color(255, 255, 255));
         btnThanhToan.setText("Thanh toán");
-        btnThanhToan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 0)));
+        btnThanhToan.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThanhToanActionPerformed(evt);
@@ -631,8 +692,6 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Tiền khách đưa:");
-
-        cboHinhThucGH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bán trực tiếp", "Giao hàng" }));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel12.setText("Hình thức giao hàng:");
@@ -643,20 +702,22 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         lblMaKH.setForeground(new java.awt.Color(255, 0, 0));
         lblMaKH.setText("KH00");
 
-        btnThayDoi.setBackground(new java.awt.Color(0, 204, 255));
-        btnThayDoi.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnThayDoi.setForeground(new java.awt.Color(0, 0, 0));
+        btnThayDoi.setBackground(new java.awt.Color(51, 102, 153));
+        btnThayDoi.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        btnThayDoi.setForeground(new java.awt.Color(255, 255, 255));
         btnThayDoi.setText("Thay đổi");
+        btnThayDoi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnThayDoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThayDoiActionPerformed(evt);
             }
         });
 
-        btnChon.setBackground(new java.awt.Color(0, 204, 255));
+        btnChon.setBackground(new java.awt.Color(51, 102, 153));
         btnChon.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        btnChon.setForeground(new java.awt.Color(0, 0, 0));
+        btnChon.setForeground(new java.awt.Color(255, 255, 255));
         btnChon.setText("Chọn");
+        btnChon.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnChon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChonActionPerformed(evt);
@@ -848,7 +909,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 39, Short.MAX_VALUE)
+                .addGap(18, 47, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLamMoi)
                     .addComponent(btnHuyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1024,6 +1085,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
         thanhToan();
+        resetGUI();
         loadTableHDCho();
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
@@ -1036,7 +1098,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         // TODO add your handling code here:
         try {
             int maHD = Integer.parseInt(lblMaHoaDon.getText());
-            bhService.setTTDaHuy(maHD);
+            bhService.huyHD(maHD);
             loadTableHDCho();
             lblMaHoaDon.setText("");
         } catch (Exception e) {
@@ -1070,6 +1132,13 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             loadTableSPByDongSP(dsp.getId());
         }
     }//GEN-LAST:event_cboDongSPActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+        if (txtTimKiem.getText().trim().length() > 0) {
+            loadTableSPBySearching(txtTimKiem.getText().trim());
+        } else loadTableSP();
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
     /**
      * @param args the command line arguments

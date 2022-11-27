@@ -548,6 +548,17 @@ public class SanPhamReponstory {
         }
     }
 
+    public Object[] searchSP(String search) {
+        Object[] o = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            o = session.createQuery("SELECT ctsp.id, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), ctsp.giaBan, ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
+                    + "FROM ChiTietSanPham ctsp WHERE ctsp.thuongHieu.ten LIKE :search OR ctsp.sanPham.ten LIKE :search OR ctsp.id LIKE :search").setParameter("search", "%"+search+"%").getResultList().toArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return o;
+    }
+
     public List<ChiTietSPCustom> getAll2(int heSo) {
         List<ChiTietSPCustom> lists = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
@@ -579,21 +590,6 @@ public class SanPhamReponstory {
         }
         return lists;
 
-    }
-
-    public List<BanHang_SPCustom> getSPByDongSP(int idDSP) {
-        List<BanHang_SPCustom> lstSP = new ArrayList<>();
-        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstSP = session.createQuery("SELECT ctsp.id, concat(dsp.ten,' ', th.ten, ' ', sp.ten), ctsp.giaBan, ms.ten, sp.may, sp.kinh, sp.xuatXu, ctsp.soLuongTon "
-                    + "FROM SanPham sp JOIN ChiTietSanPham ctsp ON sp.id = ctsp.sanPham.id "
-                    + "JOIN MauSac ms ON ctsp.mauSac.id = ms.id "
-                    + "JOIN DongSp dsp ON ctsp.dongsp.id = dsp.id "
-                    + "JOIN thuongHieu th ON ctsp.thuongHieu.id = th.id "
-                    + "WHERE dsp.id = :idDSP").setParameter("idDSP", idDSP).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lstSP;
     }
 
     public static void main(String[] args) {

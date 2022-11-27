@@ -34,10 +34,6 @@ public class DongSPRepository {
         }
         return list;
     }
-    
-    public Object[] getAllDongSPham() {
-        return getAllDongSP().toArray();
-    }
 
     public boolean addDongSp(DongSp dp) {
         Transaction tran = null;

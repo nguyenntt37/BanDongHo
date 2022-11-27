@@ -24,6 +24,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.HoaDon.HinhThucGH;
 import model.HoaDon.PhuongThucTT;
+import org.hibernate.annotations.Check;
 
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Nationalized;
@@ -37,6 +38,7 @@ import org.hibernate.annotations.Nationalized;
 @NoArgsConstructor
 @Entity
 @Table(name = "Hoa_Don")
+@Check(constraints = "Tong_Tien > 0")
 @NamedQuery(name = "HoaDon.GET_ALL", query = "FROM HoaDon")
 public class HoaDon {
 

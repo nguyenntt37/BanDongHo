@@ -41,4 +41,9 @@ public class PhuongThucTT {
 
     @OneToMany(mappedBy = "phuongThucTT", fetch = FetchType.EAGER)
     private List<HoaDon> list = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return ten;
+    }
 }

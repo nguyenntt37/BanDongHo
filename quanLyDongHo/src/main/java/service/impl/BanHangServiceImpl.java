@@ -5,8 +5,10 @@
 package service.impl;
 
 import Repository.DongSPRepository;
+import Repository.HinhThucGHRepository;
 import Repository.HoaDonCTRepository;
 import Repository.HoaDonRepository;
+import Repository.PhuongThucTTRepository;
 import Repository.SanPhamReponstory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,7 +16,6 @@ import java.util.List;
 import model.hoadon.HoaDon;
 import service.IBanHangService;
 import viewmodel.BanHang_HDCustom;
-import viewmodel.DongSPCustom;
 
 /**
  *
@@ -26,6 +27,8 @@ public class BanHangServiceImpl implements IBanHangService {
     HoaDonCTRepository hdctRepo = new HoaDonCTRepository();
     SanPhamReponstory spRepo = new SanPhamReponstory();
     DongSPRepository dspRepo = new DongSPRepository();
+    HinhThucGHRepository htghRepo = new HinhThucGHRepository();
+    PhuongThucTTRepository ptttRepo = new PhuongThucTTRepository();
 
     @Override
     public List<BanHang_HDCustom> getHDCho(int trangThai) {
@@ -58,13 +61,13 @@ public class BanHangServiceImpl implements IBanHangService {
     }
 
     @Override
-    public void setTTDaHuy(int idHD) {
-        hdRepo.setTTDaHuy(idHD);
+    public void huyHD(int idHD) {
+        hdRepo.huyHD(idHD);
     }
 
     @Override
-    public void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int htgh, int pttt) {
-        hdRepo.setTTDaThanhToan(idHD, ngayTT, tongTien, tienTraLai, ghiChu, htgh, pttt);
+    public void thanhToanHD(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int pttt, int htgh) {
+        hdRepo.thanhToanHD(idHD, ngayTT, tongTien, tienTraLai, ghiChu, pttt, htgh);
     }
 
     @Override
@@ -74,11 +77,26 @@ public class BanHangServiceImpl implements IBanHangService {
 
     @Override
     public Object[] loadCboDongSP() {
-        return dspRepo.getAllDongSPham();
+        return dspRepo.getAllDongSP().toArray();
     }
 
     @Override
     public Object[] getBH_SPCustomByDongSP(int idDSP) {
         return spRepo.getBH_SPCustomByDongSP(idDSP);
+    }
+
+    @Override
+    public Object[] getAllHTGH() {
+        return htghRepo.getAll();
+    }
+
+    @Override
+    public Object[] getAllPTTT() {
+        return ptttRepo.getAll();
+    }
+
+    @Override
+    public Object[] searchSP(String search) {
+        return spRepo.searchSP(search);
     }
 }

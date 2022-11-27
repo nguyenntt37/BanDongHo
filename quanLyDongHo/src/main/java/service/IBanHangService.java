@@ -18,9 +18,12 @@ public interface IBanHangService {
     Object[] getHDCT(int idHD);
     void insertSPToHDCT(int idHD, int sl, int idCTSP);
     void loadSLTon(int sl, int idCTSP);
-    void setTTDaHuy(int idHD);
-    void setTTDaThanhToan(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int htgh, int pttt);
+    void huyHD(int idHD);
+    void thanhToanHD(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int pttt, int htgh);
     void deleteSPOnHDCT(int idCTSP, int sl);
     Object[] loadCboDongSP();
     Object[] getBH_SPCustomByDongSP(int idDSP);
+    Object[] getAllHTGH();
+    Object[] getAllPTTT();
+    Object[] searchSP(String search);
 }
