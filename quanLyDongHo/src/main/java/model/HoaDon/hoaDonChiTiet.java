@@ -6,6 +6,7 @@ package model.hoadon;
 
 import model.sanpham.ChiTietSanPham;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,5 +50,8 @@ public class hoaDonChiTiet implements Serializable {
 
     @Column(name = "ngay_sua")
     private String ngaySua;
+
+    @Column(name = "Don_Gia")
+    private BigDecimal dongia;
 
 }
