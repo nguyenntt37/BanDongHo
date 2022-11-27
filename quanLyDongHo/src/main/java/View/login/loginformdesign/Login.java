@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package loginformdesign;
+package View.login.loginformdesign;
 
+import View.BanHangForm;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import service.impl.LoginSeviceImpl;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Login extends javax.swing.JPanel {
     }
 
     public void login() {
-        txtUser.grabFocus();
+        txtName.grabFocus();
     }
 
     public void addEventRegister(ActionListener event) {
@@ -37,7 +40,7 @@ public class Login extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtUser = new loginclassdesign.MyTextField();
+        txtName = new loginclassdesign.MyTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtPass = new loginclassdesign.MyPassword();
@@ -83,7 +86,7 @@ public class Login extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
                     .addComponent(jLabel1)
-                    .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                     .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(myButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,7 +101,7 @@ public class Login extends javax.swing.JPanel {
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -113,8 +116,27 @@ public class Login extends javax.swing.JPanel {
 
     private void myButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println(txtUser.getText());
-        System.out.println(txtPass.getText());
+        LoginSeviceImpl lgin = new LoginSeviceImpl();
+        String user = txtName.getText();
+        String pass = txtPass.getText();
+        if (user.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "tai khoan khong duoc trong");
+        }
+        if (pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "mat khau khong duoc trong");
+
+        }
+        if (!user.isEmpty() && !pass.isEmpty()) {
+            boolean get = lgin.getLogin(user, pass);
+            if (get) {
+                System.out.println("ok");
+
+                setVisible(false);
+                new BanHangForm().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thất bại.sai UserName hoặc password");
+            }
+        }
     }//GEN-LAST:event_myButton1ActionPerformed
 
 
@@ -124,7 +146,7 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private loginclassdesign.MyButton myButton1;
+    private loginclassdesign.MyTextField txtName;
     private loginclassdesign.MyPassword txtPass;
-    private loginclassdesign.MyTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
