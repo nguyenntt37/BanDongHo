@@ -5,7 +5,6 @@
 package service.impl;
 
 import Repository.NhanVienRepository;
-import java.util.ArrayList;
 import java.util.List;
 import model.nhanvien.NhanVien;
 import service.INhanVienService;
@@ -21,22 +20,31 @@ public class NhanVienServiceImpl implements INhanVienService {
 
     @Override
     public List<NhanVienCustom> get() {
-        List<NhanVien> nvList = repo.get();
-        List<NhanVienCustom> nvCustomList = new ArrayList<>();
-        for (NhanVien nv : nvList) {
-            nvCustomList.add(new NhanVienCustom(nv.getMa(), nv.getHo() + " " + nv.getTenDem() + " " + nv.getTen(), nv.getGioiTinh(), nv.getNgaySinh(), nv.getDiaChi(), nv.getSdt(), nv.getTrangThai()));
+        return repo.get();
+    }
+
+    @Override
+    public String add(NhanVien nv) {
+        if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
+            return "Vui lòng nhập đủ dữ liệu";
         }
-        return nvCustomList;
+        boolean check = repo.add(nv);
+        if(check){
+            return "Thêm thành công";
+        }
+        else return "Thêm thất bại";
     }
 
     @Override
-    public void add(NhanVien nv) {
-        repo.add(nv);
-    }
-
-    @Override
-    public void update(NhanVien nv, String maNV) {
-        repo.update(nv, maNV);
+    public String update(NhanVien nv, String maNV) {
+        if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
+            return "Vui lòng nhập đủ dữ liệu";
+        }
+        boolean check = repo.update(nv, maNV);
+        if(check){
+            return "Sua thanh cong";
+        }
+        else return "Sua that bai";
     }
 
     @Override
@@ -44,4 +52,21 @@ public class NhanVienServiceImpl implements INhanVienService {
         NhanVien nv = repo.getByMaNV(maNV);
         return nv;
     }
+
+    @Override
+    public String updateTrangThai(NhanVien nv, String maNV) {
+        boolean check = repo.updateTrangThai(nv, maNV);
+        if(check){
+            return "Update thanh cong";
+        }
+        else return "Update that bai";
+
+    }
+
+    @Override
+    public List<NhanVienCustom> Search(String sdt) {
+        return repo.Search(sdt);
+    }
+    
+
 }

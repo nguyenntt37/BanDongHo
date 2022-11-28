@@ -14,7 +14,9 @@ import viewmodel.NhanVienCustom;
  */
 public interface INhanVienService {
     List<NhanVienCustom> get();
-    void add(NhanVien nv);
-    void update(NhanVien nv, String maNV);
+    String add(NhanVien nv);
+    String update(NhanVien nv, String maNV);
     NhanVien getByMaNV(String maNV);
+    String updateTrangThai(NhanVien nv, String maNV);
+    List<NhanVienCustom>Search(String sdt);
 }
