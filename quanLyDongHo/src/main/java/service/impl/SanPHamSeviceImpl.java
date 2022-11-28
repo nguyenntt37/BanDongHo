@@ -266,4 +266,8 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
         return list2;
     }
 
+    @Override
+    public List<ChiTietSPCustom> search(String ten) {
+        return banHang.search(ten);
+    }
 }

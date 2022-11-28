@@ -81,4 +81,6 @@ public interface ISanPhamSevice {
     String deleteMauSac(MauSac ms, int id);
     
     List<ChiTietSPCustom> getAll2(int heSo);
+    
+    List<ChiTietSPCustom> search(String ten);
 }

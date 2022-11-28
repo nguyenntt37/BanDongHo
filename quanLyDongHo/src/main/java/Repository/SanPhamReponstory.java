@@ -592,6 +592,39 @@ public class SanPhamReponstory {
 
     }
 
+    public List<ChiTietSPCustom> search(String ten) {
+        List<ChiTietSPCustom> lists = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            Query query = session.createQuery("select  "
+                    + " new viewmodel.ChiTietSPCustom("
+                    + " m.id ,"
+                    + " m.sanPham.ma ,"
+                    + "m.sanPham.ten ,"
+                    + " m.namBH ,"
+                    + "m.thuongHieu.ten ,"
+                    + "m.mauSac.ten ,"
+                    + "m.nSX.ten, "
+                    + "m.soLuongTon, "
+                    + "m.giaNhap, "
+                    + "m.giaBan, "
+                    + "m.moTa, "
+                    + "m.ngayTao, "
+                    + "m.ngaySua, "
+                    + "m.trangThai, "
+                    + "m.sanPham.xuatXu, "
+                    + "m.sanPham.kinh, "
+                    + "m.sanPham.dayDeo, "
+                    + "m.sanPham.ChucNang "
+                    + ") "
+                    + "from model.sanpham.ChiTietSanPham m where m.sanPham.ten like :ten or m.sanPham.ma like :ten");
+            query.setParameter("ten", "%" + ten + "%");
+            lists = query.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return lists;
+    }
+    
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
         List<ChiTietSPCustom> list = sp.getAll2(5);
