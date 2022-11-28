@@ -40,7 +40,7 @@ public class ThongKeCustom {
     }
 
     public Object[] toDataRow() {
-        return new Object[]{tenSP, soLuong, MoneyUtil.formatMoney(String.valueOf(DonGia)),MoneyUtil.formatMoney(String.valueOf(DonGia)) ,  MoneyUtil.formatMoney(String.valueOf(doanhThu()))};
+        return new Object[]{tenSP, soLuong, MoneyUtil.formatMoney1(DonGia), MoneyUtil.formatMoney1(DonGia), MoneyUtil.formatMoney1(doanhThu())};
     }
 
 }
