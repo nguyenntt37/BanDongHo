@@ -169,6 +169,39 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         txtGiaBan.setText(ctsp.getGiaBan() + "");
     }
 
+    private void mose(int index) {
+        ChiTietSPCustom sp = listSPPage.get(index);
+//        List<ChiTietSPCustom> listload = new SanPHamSeviceImpl().getAll();
+//        ChiTietSPCustom sp = listload.get(index);
+//        cboSanPham.setSelectedItem(sp.getTenSP());
+//        MauSacCustom ms = listMau.get(index);
+//        DongSPCustom dp = listDongSp.get(index);
+//        NamSXCustom ns = listNamSanXuats.get(index);
+        txtID.setText(sp.getId().toString());
+        txtGiaBan.setText(String.valueOf(sp.getGiaBan()));
+        txtGiaNhap.setText(String.valueOf(sp.getGiaNhap()));
+        txtMota.setText(sp.getMoTa());
+        txtNamBH.setText(String.valueOf(sp.getNBH()));
+        txtSoLuong.setText(String.valueOf(sp.getSoLuongTon()));
+        cboSanPham.setSelectedIndex(index);
+        cboNSX.setSelectedIndex(index);
+        cboMauSac.setSelectedIndex(index);
+        cboThuongHieu.setSelectedIndex(index);
+        cboDongSP.setSelectedIndex(index);
+//        List<MauSacCustom> listloadms = new SanPHamSeviceImpl().getAllMauSac();
+//        MauSacCustom ms = listloadms.get(index);
+//        cboMauSac.setSelectedItem(ms.getTen());
+//        List<DongSPCustom> listloaddsp = new DongSPServicelmpl().getListDongSP();
+//        DongSPCustom dsp = listloaddsp.get(index);
+//        cboDongSP.setSelectedItem(dsp.getTen());
+//        List<NamSXCustom> listloadnsx = new NamSanXuatServicelmpl().getListNamSanXuat();
+//        NamSXCustom nsx = listloadnsx.get(index);
+//        cboNSX.setSelectedItem(nsx.getTen());
+//        List<ThuongHieuCustomer> listloadth = new SanPHamSeviceImpl().getAllThuongHieu();
+//        ThuongHieuCustomer th = listloadth.get(index);
+//        cboThuongHieu.setSelectedItem(th.getTen());
+//        txtIdChiTietSP.setText(sp.getId().toString());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1065,8 +1098,9 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void tblCTSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTSanPhamMouseClicked
-        int index = tblCTSanPham.getSelectedRow();
-        fillData(index);
+        int row = tblCTSanPham.getSelectedRow();
+//        fillData(index);
+        mose(row);
     }//GEN-LAST:event_tblCTSanPhamMouseClicked
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
