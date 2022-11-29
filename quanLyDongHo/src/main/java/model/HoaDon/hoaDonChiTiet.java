@@ -53,5 +53,4 @@ public class hoaDonChiTiet implements Serializable {
 
     @Column(name = "Don_Gia")
     private BigDecimal dongia;
-
 }

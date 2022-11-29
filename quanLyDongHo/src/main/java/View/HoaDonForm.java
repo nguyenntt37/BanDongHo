@@ -4,11 +4,19 @@
  */
 package View;
 
+import Util.DatetimeUtil;
+import Util.MoneyUtil;
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+import service.IHoaDonService;
+import service.impl.HoaDonServiceImpl;
+import viewmodel.HDCTCustom;
+import viewmodel.HoaDonCustom;
 
 /**
  *
@@ -16,16 +24,62 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class HoaDonForm extends javax.swing.JFrame {
 
+    private DefaultTableModel tblModelHD, tblModelHDCT;
+    private IHoaDonService hdService = new HoaDonServiceImpl();
+    
     /**
      * Creates new form HoaDonForm
      */
     public HoaDonForm() {
+        setLookAndFeel();
+        initComponents();
+        loadTableHD();
+    }
+
+    private void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        initComponents();
+    }
+
+    private void loadTableHD() {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getAllHD();
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadTableHDCT(int maHD) {
+        tblModelHDCT = (DefaultTableModel) tblHDCT.getModel();
+        tblModelHDCT.setRowCount(0);
+        List<HDCTCustom> lstHDCT = hdService.getAllHDCT(maHD);
+        for (HDCTCustom hdct : lstHDCT) {
+            tblModelHDCT.addRow(new Object[]{
+                hdct.getMaHDCT(),
+                hdct.getMaCTSP(),
+                hdct.getTenCTSP(),
+                hdct.getSoLuong(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hdct.getDonGia())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hdct.getThanhTien()))
+            });
+        }
     }
 
     /**
@@ -40,10 +94,10 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tblChiTietHoaDoon = new javax.swing.JTable();
+        tblHDCT = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblHoaDon3 = new javax.swing.JTable();
+        tblHoaDon = new javax.swing.JTable();
         txtTimKiem3 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -71,12 +125,12 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa đơn chi tiết", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
-        tblChiTietHoaDoon.setModel(new javax.swing.table.DefaultTableModel(
+        tblHDCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mã hóa đơn chi tiết", "Mã sản phẩm", "Tên sản phẩm chi tiết", "Số lượng", "Đơn giá", "Thành tiền"
+                "Mã HĐCT", "Mã SP", "Tên SP", "Số lượng", "Đơn giá", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -87,7 +141,8 @@ public class HoaDonForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(tblChiTietHoaDoon);
+        tblHDCT.setShowGrid(true);
+        jScrollPane5.setViewportView(tblHDCT);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -109,28 +164,29 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
-        tblHoaDon3.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mã hóa đơn", "Tổng tiền", "Thanh Toán", "Tiền thừa trả khách", "Hình thức thanh toán", "Hình thức giao hàng", "Ngày lập hóa đơn", "Trạng thái thanh toán", "Mã NV", "Tên NV", "Mã KH", "Tên KH", "Ghi chú"
+                "Mã HĐ", "Tổng tiền", "Tiền thừa trả khách", "Phương thức thanh toán", "Hình thức giao hàng", "TG lập hoá đơn", "Trạng thái thanh toán", "Mã NV", "Tên NV", "Mã KH", "Tên KH", "Ghi chú"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblHoaDon3.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblHoaDon.setShowGrid(true);
+        tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblHoaDon3MouseClicked(evt);
+                tblHoaDonMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(tblHoaDon3);
+        jScrollPane4.setViewportView(tblHoaDon);
 
         txtTimKiem3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -147,7 +203,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Tháng:");
 
-        cboThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  ", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
         cboThang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboThangItemStateChanged(evt);
@@ -157,7 +212,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Năm:");
 
-        cboNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  ", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
         cboNam.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboNamItemStateChanged(evt);
@@ -199,7 +253,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Tổng tiền:");
 
-        cboTongTien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "    ", "0 VND - 500,000 VND", "500,000 VND - 1,000,000 VND", "1,000,000 VND - 5,000,000 VND", "5,000,000 VND - 10,000,000 VND", "10,000,000 VND - 20,000,000 VND", "20,000,000 VND - 50,000,000 VND", "50,000,000 VND - ... VND" }));
         cboTongTien.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboTongTienItemStateChanged(evt);
@@ -407,11 +460,14 @@ public class HoaDonForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblHoaDon3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDon3MouseClicked
+    private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblHoaDon3MouseClicked
+        int i = (int) tblModelHD.getValueAt(tblHoaDon.getSelectedRow(), 0);
+        loadTableHDCT(i);
+    }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void txtTimKiem3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiem3KeyReleased
         // TODO add your handling code here:
@@ -500,8 +556,8 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable tblChiTietHoaDoon;
-    private javax.swing.JTable tblHoaDon3;
+    private javax.swing.JTable tblHDCT;
+    private javax.swing.JTable tblHoaDon;
     private javax.swing.JTextField txtTimKiem3;
     // End of variables declaration//GEN-END:variables
 }

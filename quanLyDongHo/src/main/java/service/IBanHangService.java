@@ -6,6 +6,7 @@ package service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import model.hoadon.HoaDon;
 import viewmodel.BanHang_HDCustom;
 
 /**
@@ -13,6 +14,7 @@ import viewmodel.BanHang_HDCustom;
  * @author Nguyen
  */
 public interface IBanHangService {
+    void insert(HoaDon hd);
     List<BanHang_HDCustom> getHDCho(int trangThai);
     Object[] getSPCustom();
     Object[] getHDCT(int idHD);

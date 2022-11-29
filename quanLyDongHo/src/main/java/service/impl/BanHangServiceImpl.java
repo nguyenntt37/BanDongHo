@@ -31,6 +31,11 @@ public class BanHangServiceImpl implements IBanHangService {
     PhuongThucTTRepository ptttRepo = new PhuongThucTTRepository();
 
     @Override
+    public void insert(HoaDon hd) {
+        hdRepo.insert(hd);
+    }
+
+    @Override
     public List<BanHang_HDCustom> getHDCho(int trangThai) {
         List<HoaDon> lstHD = hdRepo.getHDTheoTrangThai(trangThai);
         List<BanHang_HDCustom> lstHDCustom = new ArrayList<>();
@@ -99,4 +104,5 @@ public class BanHangServiceImpl implements IBanHangService {
     public Object[] searchSP(String search) {
         return spRepo.searchSP(search);
     }
+
 }

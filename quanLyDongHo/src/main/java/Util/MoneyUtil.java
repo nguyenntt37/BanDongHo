@@ -15,9 +15,14 @@ import java.util.Locale;
  */
 public class MoneyUtil {
 
-    public static Long formatMoney(String money) {
+    public static Long formatMoney2(String money) {
         String moneyReplace = money.replace(".", "");
-        return Long.parseLong(moneyReplace);
+        return Long.valueOf(moneyReplace);
+    }
+
+    public static Long removeDecimalPart(String money) {
+        String moneyReplace = money.replace(".00", "");
+        return Long.valueOf(moneyReplace);
     }
 
     public static String formatMoney1(BigDecimal money) {

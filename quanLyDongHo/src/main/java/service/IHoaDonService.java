@@ -5,15 +5,16 @@
 package service;
 
 import java.util.List;
-import model.hoadon.HoaDon;
+import viewmodel.HDCTCustom;
+import viewmodel.HoaDonCustom;
 
 /**
  *
  * @author Nguyen
  */
 public interface IHoaDonService {
-    void insert(HoaDon hd);
-    List<HoaDon> getAll();
-    HoaDon getById(String id);
-    List<HoaDon> getHDTheoTrangThai(byte trangThai);
+    List<HoaDonCustom> getAllHD();
+    List<HDCTCustom> getAllHDCT(int maHD);
+//    HoaDon getById(String id);
+//    List<HoaDon> getHDTheoTrangThai(byte trangThai);
 }

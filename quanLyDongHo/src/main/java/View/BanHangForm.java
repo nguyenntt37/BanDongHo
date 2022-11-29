@@ -43,10 +43,8 @@ import model.HoaDon.PhuongThucTT;
 import model.KhachHang;
 import model.hoadon.HoaDon;
 import service.IBanHangService;
-import service.IHoaDonService;
 import service.INhanVienService;
 import service.impl.BanHangServiceImpl;
-import service.impl.HoaDonServiceImpl;
 import service.impl.NhanVienServiceImpl;
 import viewmodel.BanHang_HDCustom;
 import viewmodel.DongSPCustom;
@@ -62,7 +60,6 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private TableColumnModel tblSPColModel, tblHDCTColModel, tblHDColModel;
     private DefaultComboBoxModel cboModelDongSP, cboModelHTGH, cboModelPTTT;
     private DefaultTableModel tblModelHD, tblModelSP, tblModelHDCT;
-    private IHoaDonService hdService = new HoaDonServiceImpl();
     private INhanVienService nvService = new NhanVienServiceImpl();
     private IBanHangService bhService = new BanHangServiceImpl();
     private WebcamPanel panel = null;
@@ -189,6 +186,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }
 
     private void loadTableSPBySearching(String search) {
+        cboDongSP.setSelectedIndex(0);
         tblModelSP.setRowCount(0);
         for (Object o : bhService.searchSP(search)) {
             tblModelSP.addRow((Object[]) o);
@@ -240,7 +238,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 return;
             }
             for (int i = 0; i < tblHDCT.getRowCount(); i++) {
-                long donGia = MoneyUtil.formatMoney(tblHDCT.getValueAt(i, 2).toString());
+                long donGia = MoneyUtil.removeDecimalPart(tblHDCT.getValueAt(i, 2).toString());
                 int soLuong = Integer.parseInt(tblHDCT.getValueAt(i, 3).toString());
                 tongTien += (soLuong * donGia);
                 lblTongTien.setText(String.valueOf(tongTien));
@@ -261,11 +259,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             return;
         } else {
             try {
-                long tienKhachDuaFormated = MoneyUtil.formatMoney(txtTienKhachDua.getText().trim());
+                long tienKhachDuaFormated = MoneyUtil.removeDecimalPart(txtTienKhachDua.getText().trim());
                 txtTienKhachDua.setText(String.valueOf(tienKhachDuaFormated));
 
-                long thanhToan = MoneyUtil.formatMoney(lblThanhToan.getText());
-                long tienKhachDua = MoneyUtil.formatMoney(txtTienKhachDua.getText().trim());
+                long thanhToan = MoneyUtil.removeDecimalPart(lblThanhToan.getText());
+                long tienKhachDua = MoneyUtil.removeDecimalPart(txtTienKhachDua.getText().trim());
                 long tienThua = tienKhachDua - thanhToan;
                 lblTienThuaTraKhach.setText(String.valueOf(tienThua));
             } catch (NumberFormatException e) {
@@ -1100,7 +1098,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         try {
             int maHD = Integer.parseInt(lblMaHoaDon.getText());
             bhService.huyHD(maHD);
+            JOptionPane.showMessageDialog(this, "Đã huỷ hoá đơn");
             loadTableHDCho();
+            tblModelHDCT.setRowCount(0);
             lblMaHoaDon.setText("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui long chon hoa don can huy");
@@ -1119,7 +1119,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         hd.setNhanVien(nvService.getByMaNV(Login.getCurrentLoginUsername()));
         hd.setTgTao(DatetimeUtil.getCurrentDateAndTime());
         hd.setTrangThaiTT(0);
-        hdService.insert(hd);
+        bhService.insert(hd);
         System.out.println("Inserted");
         loadTableHDCho();
     }//GEN-LAST:event_btnTaoActionPerformed
