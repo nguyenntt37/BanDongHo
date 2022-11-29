@@ -14,10 +14,16 @@ import viewmodel.KhachHangCutoms;
  */
 public interface KhachHangService {
 
-    List<KhachHangCutoms> listAll();
+    List<KhachHangCutoms> getAllKH();
 
     String add(KhachHang kh);
 
     String delete(int id);
+
+    String update(KhachHangCutoms kh);
+
+    List<KhachHangCutoms> search(String ten);
+
+    List<KhachHangCutoms> locTrangThai(int trangThai);
 
 }

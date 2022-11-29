@@ -11,26 +11,38 @@ package viewmodel;
 public class KhachHangCutoms {
     private int id;
     private String ma;
-    private String pass;
+    private String ten;
     private String sdt;
     private String quocGia;
     private String tenDem;
     private String ho;
     private String thanhPho;
+    private Integer trangthai;
     
     public KhachHangCutoms() {
     }
 
-    public KhachHangCutoms(int id, String ma, String pass, String sdt, String quocGia, String tenDem, String ho, String thanhPho) {
+    public KhachHangCutoms(int id, String ma, String ten, String sdt, String quocGia, String tenDem, String ho, String thanhPho, int trangthai) {
         this.id = id;
         this.ma = ma;
-        this.pass = pass;
+        this.ten = ten;
         this.sdt = sdt;
         this.quocGia = quocGia;
         this.tenDem = tenDem;
         this.ho = ho;
         this.thanhPho = thanhPho;
+        this.trangthai = trangthai;
     }
+
+    public int getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(int trangthai) {
+        this.trangthai = trangthai;
+    }
+
+
 
     public int getId() {
         return id;
@@ -48,12 +60,12 @@ public class KhachHangCutoms {
         this.ma = ma;
     }
 
-    public String getPass() {
-        return pass;
+    public String getten() {
+        return ten;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setten(String ten) {
+        this.ten = ten;
     }
 
     public String getSdt() {
@@ -98,10 +110,12 @@ public class KhachHangCutoms {
 
     @Override
     public String toString() {
-        return "KhachHangCutoms{" + "id=" + id + ", ma=" + ma + ", pass=" + pass + ", sdt=" + sdt + ", quocGia=" + quocGia + ", tenDem=" + tenDem + ", ho=" + ho + ", thanhPho=" + thanhPho + '}';
+        return "KhachHangCutoms{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", sdt=" + sdt + ", quocGia=" + quocGia + ", tenDem=" + tenDem + ", ho=" + ho + ", thanhPho=" + thanhPho + ", trangthai=" + trangthai + '}';
     }
+
+
     public Object[] toDataRow(){
-        return  new Object[]{id, ma, pass, tenDem, ho, sdt, quocGia,thanhPho};
+        return  new Object[]{id, ma, ten, tenDem, ho, sdt, quocGia,thanhPho,trangthai};
     }
     
 
