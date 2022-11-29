@@ -187,6 +187,7 @@ public class KhachHangJD extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnRest.setBackground(new java.awt.Color(0, 102, 204));
+        btnRest.setForeground(new java.awt.Color(255, 255, 255));
         btnRest.setText("RESET");
         btnRest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,6 +256,7 @@ public class KhachHangJD extends javax.swing.JDialog {
         buttonGroup1.add(rdoKhongHD);
         rdoKhongHD.setText("Không hoạt động");
 
+        txtID.setForeground(new java.awt.Color(255, 255, 255));
         txtID.setText("jLabel10");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
