@@ -145,7 +145,7 @@ public class Login extends javax.swing.JPanel {
         if (!user.isEmpty() && !pass.isEmpty()) {
             boolean get = lgin.getLogin(user, pass);
             if (get) {
-                System.out.println("ok");
+               JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
                 currentLoginUsername = txtUsername.getText();
                 setVisible(false);
                 new BanHangForm().setVisible(true);

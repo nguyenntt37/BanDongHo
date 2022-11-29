@@ -33,14 +33,5 @@ public class LoginRepository {
         }
         return false;
     }
-    public static void main(String[] args) {
-        LoginRepository login = new LoginRepository();
-        boolean b = login.getLogin("12A","1234");
-        if(b){
-            System.out.println("ok");
-        }else {
-            System.out.println("thoat");
-        }
-        
-    }
+    
 }
