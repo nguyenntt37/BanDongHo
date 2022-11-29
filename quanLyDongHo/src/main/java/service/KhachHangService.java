@@ -20,7 +20,7 @@ public interface KhachHangService {
 
     String delete(int id);
 
-    String update(KhachHangCutoms kh);
+    String update(KhachHang khachHang, String ma, int trangthai, String ho, String quocGia, String sdt, String ten, String tenDem, String thanhPho, int id);
 
     List<KhachHangCutoms> search(String ten);
 

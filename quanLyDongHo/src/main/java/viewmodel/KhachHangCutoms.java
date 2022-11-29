@@ -9,23 +9,22 @@ package viewmodel;
  * @author asus_vinh
  */
 public class KhachHangCutoms {
-    private int id;
+  private int id;
     private String ma;
-    private String ten;
+    private String pass;
     private String sdt;
     private String quocGia;
     private String tenDem;
     private String ho;
     private String thanhPho;
-    private Integer trangthai;
-    
+     private Integer trangthai;
     public KhachHangCutoms() {
     }
 
-    public KhachHangCutoms(int id, String ma, String ten, String sdt, String quocGia, String tenDem, String ho, String thanhPho, int trangthai) {
+    public KhachHangCutoms(int id, String ma, String pass, String sdt, String quocGia, String tenDem, String ho, String thanhPho, Integer trangthai) {
         this.id = id;
         this.ma = ma;
-        this.ten = ten;
+        this.pass = pass;
         this.sdt = sdt;
         this.quocGia = quocGia;
         this.tenDem = tenDem;
@@ -34,15 +33,7 @@ public class KhachHangCutoms {
         this.trangthai = trangthai;
     }
 
-    public int getTrangthai() {
-        return trangthai;
-    }
-
-    public void setTrangthai(int trangthai) {
-        this.trangthai = trangthai;
-    }
-
-
+  
 
     public int getId() {
         return id;
@@ -60,12 +51,12 @@ public class KhachHangCutoms {
         this.ma = ma;
     }
 
-    public String getten() {
-        return ten;
+    public String getPass() {
+        return pass;
     }
 
-    public void setten(String ten) {
-        this.ten = ten;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getSdt() {
@@ -108,17 +99,22 @@ public class KhachHangCutoms {
         this.thanhPho = thanhPho;
     }
 
-    @Override
-    public String toString() {
-        return "KhachHangCutoms{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", sdt=" + sdt + ", quocGia=" + quocGia + ", tenDem=" + tenDem + ", ho=" + ho + ", thanhPho=" + thanhPho + ", trangthai=" + trangthai + '}';
+    public Integer getTrangthai() {
+        return trangthai;
     }
 
-
-    public Object[] toDataRow(){
-        return  new Object[]{id, ma, ten, tenDem, ho, sdt, quocGia,thanhPho,trangthai};
+    public void setTrangthai(Integer trangthai) {
+        this.trangthai = trangthai;
     }
     
 
-   
+    @Override
+    public String toString() {
+        return "KhachHangCutoms{" + "id=" + id + ", ma=" + ma + ", pass=" + pass + ", sdt=" + sdt + ", quocGia=" + quocGia + ", tenDem=" + tenDem + ", ho=" + ho + ", thanhPho=" + thanhPho + '}';
+    }
+    public Object[] toDataRow(){
+        return  new Object[]{id, ma, pass, tenDem, ho, sdt, quocGia,thanhPho,trangthai};
+    }
+    
 
 }

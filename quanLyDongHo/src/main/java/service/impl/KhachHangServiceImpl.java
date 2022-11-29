@@ -1,4 +1,4 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -44,20 +44,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public String update(KhachHangCutoms kh) {
-        KhachHang kh1 = new  KhachHang();
-        kh.setHo(kh1.getHo());
-        kh.setMa(kh1.getMa());
-        kh.setten(kh1.getTen());
-        kh.setQuocGia(kh1.getQuocGia());
-        kh.setSdt(kh1.getSdt());
-        kh.setTenDem(kh1.getTenDem());
-        kh.setThanhPho(kh1.getThanhPho());
-        kh.setId(kh1.getId());
-        if (!khr.checkUpdate(kh1.getMa(), String.valueOf(kh.getId()))) {
-            return "Mã không được trùng";
-        }
-        return khr.update(kh1) ? "" : "Cập nhật thất bại";
+    public String update(KhachHang khachHang, String ma, int trangthai, String ho, String quocGia, String sdt, String ten, String tenDem, String thanhPho, int id) {
+
+        return khr.update(khachHang, ma, trangthai, ho, quocGia, sdt, ten, tenDem, thanhPho, id) ? "cập nhập thành công" : "Cập nhật thất bại";
     }
 
     @Override
@@ -68,7 +57,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public List<KhachHangCutoms> locTrangThai(int trangThai) {
         return khr.locTrangThai(trangThai);
-        }
-
+    }
 
 }

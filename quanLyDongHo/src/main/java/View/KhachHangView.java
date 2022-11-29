@@ -55,7 +55,7 @@ public class KhachHangView extends javax.swing.JFrame {
         loadCbb.add("Hoạt động");
         loadCbb.add("Không Hoạt động");
         dcmb.addAll(loadCbb);
-        dcmb.setSelectedItem(0);
+        dcmb.setSelectedItem("All");
 
     }
 
@@ -101,10 +101,16 @@ public class KhachHangView extends javax.swing.JFrame {
         txtMa.setText(kh.getMa());
         txtHo.setText(kh.getHo());
         txtQuocGia.setText(kh.getQuocGia());
-        txtTen.setText(kh.getten());
+        txtTen.setText(kh.getPass());
         txtSDT.setText(kh.getSdt());
         txtTenDem.setText(kh.getTenDem());
         txtThanhPho.setText(kh.getThanhPho());
+         int trangThai = kh.getTrangthai();
+         if(trangThai == 1){
+             rdoHoatdong.setSelected(true);
+         }else if (trangThai == 2){
+             rdoKhongHD.setSelected(true);
+         }
     }
 
     /**
@@ -167,7 +173,7 @@ public class KhachHangView extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
+            .addGap(0, 157, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +232,7 @@ public class KhachHangView extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel14)
                     .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -297,7 +303,8 @@ public class KhachHangView extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnDelete.setBackground(new java.awt.Color(102, 153, 255));
+        btnDelete.setBackground(new java.awt.Color(0, 102, 204));
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("RESET");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,7 +312,8 @@ public class KhachHangView extends javax.swing.JFrame {
             }
         });
 
-        btnAdd.setBackground(new java.awt.Color(102, 153, 255));
+        btnAdd.setBackground(new java.awt.Color(0, 102, 204));
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("ADD");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,7 +321,8 @@ public class KhachHangView extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setBackground(new java.awt.Color(102, 153, 255));
+        btnUpdate.setBackground(new java.awt.Color(0, 102, 204));
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("UPDATE");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,7 +330,8 @@ public class KhachHangView extends javax.swing.JFrame {
             }
         });
 
-        btnExit.setBackground(new java.awt.Color(255, 153, 153));
+        btnExit.setBackground(new java.awt.Color(0, 102, 204));
+        btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("CLOSE");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,18 +344,13 @@ public class KhachHangView extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(btnExit))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(btnAdd)))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -456,7 +461,7 @@ public class KhachHangView extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 255));
@@ -473,7 +478,7 @@ public class KhachHangView extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -504,7 +509,7 @@ public class KhachHangView extends javax.swing.JFrame {
                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel12)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,9 +536,9 @@ public class KhachHangView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -542,6 +547,7 @@ public class KhachHangView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -557,9 +563,9 @@ public class KhachHangView extends javax.swing.JFrame {
         boolean trangThai = rdoHoatdong.isSelected();
         int tt = 0;
         if (trangThai == true) {
-            tt = 0;
-        } else {
             tt = 1;
+        } else {
+            tt = 2;
         }
         kh.setTrangthai(tt);
         JOptionPane.showMessageDialog(this, service.add(kh));
@@ -582,31 +588,32 @@ public class KhachHangView extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        KhachHangCutoms khc = getData();
-
-        if (khc == null) {
-            return;
+        //      KhachHangCutoms khc = getData();
+        KhachHang kh = new KhachHang();
+//        if (khc == null) {
+//            return;
+//        }
+        //   String check = service.update(kh);
+//        if (!check.equals("")) {
+//            JOptionPane.showMessageDialog(rootPane, check);
+//            return;
+//        }
+        kh.setMa(txtMa.getText());
+        kh.setHo(txtHo.getText());
+        kh.setQuocGia(txtQuocGia.getText());
+        kh.setSdt(txtSDT.getText());
+        kh.setTen(txtTen.getText());
+        kh.setTenDem(txtTenDem.getText());
+        kh.setThanhPho(txtThanhPho.getText());
+        boolean trangThai = rdoHoatdong.isSelected();
+        int tt = 0;
+        if (trangThai == true) {
+            tt = 1;
+        } else {
+            tt = 2;
         }
-        String check = service.update(khc);
-        if (!check.equals("")) {
-            JOptionPane.showMessageDialog(rootPane, check);
-            return;
-        }
-        JOptionPane.showMessageDialog(rootPane, "Câp nhật thành công");
-//      KhachHang kh = new KhachHang(WIDTH, ma, null, ten, tenDem, ho, null, null, sdt, null, thanhPho, quocGia, null, null, null, null, null);
-//        int index = tableKH.getSelectedRow();
-//        KhachHangCutoms kh1 = listKH.get(index);
-//        KhachHang kh2 = new KhachHang(kh1.getId(), kh1.getMa(), null, kh1.getPass(), kh1.getTenDem(), kh1.getHo(), null, null, kh1.getSdt(), null, kh1.getThanhPho(), kh1.getQuocGia(), null, null, null, null, null);
-//        String ma = txtMa.getText();
-//        String ten = txtTen.getText();
-//        String sdt = txtSDT.getText();
-//        String ho = txtHo.getText();
-//        String tenDem = txtTenDem.getText();
-//        String thanhPho = txtThanhPho.getText();
-//        String quocGia = txtQuocGia.getText();
-//        int id = Integer.parseInt(txtID.getText());
-////        idCheck.setText(String.valueOf(kh1.getId()));
-////      JOptionPane.showMessageDialog(this, service.update(kh, kh.getMa(), kh.getHo(), kh.getQuocGia(), kh.getSdt(), kh.getTen(), kh.getTenDem(), kh.getThanhPho(), kh.getId()));
+        kh.setTrangthai(tt);
+        JOptionPane.showMessageDialog(this, service.update(kh, txtMa.getText(), tt, txtHo.getText(), txtQuocGia.getText(), txtSDT.getText(), txtTen.getText(), txtTenDem.getText(), txtThanhPho.getText(), Integer.valueOf(txtID.getText())));
 //        JOptionPane.showMessageDialog(this, service.update(kh2, ma, ho, quocGia, sdt, ten, tenDem, thanhPho, id));
         listKH = service.getAllKH();
         showTB(listKH);
@@ -625,8 +632,15 @@ public class KhachHangView extends javax.swing.JFrame {
 
     private void cbbTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTrangThaiActionPerformed
         // TODO add your handling code here:
-        List<KhachHangCutoms> listLoc = service.locTrangThai(cbbTrangThai.getSelectedIndex());
-        showTB(listLoc);
+        if (cbbTrangThai.getSelectedIndex() == 0) {
+            listKH = service.getAllKH();
+            showTB(listKH);
+        } else {
+            List<KhachHangCutoms> listLoc = service.locTrangThai(cbbTrangThai.getSelectedIndex());
+            showTB(listLoc);
+        }
+
+
     }//GEN-LAST:event_cbbTrangThaiActionPerformed
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
