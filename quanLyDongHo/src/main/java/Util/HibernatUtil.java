@@ -16,13 +16,10 @@ import model.sanpham.DongSp;
 import model.sanpham.MauSac;
 import model.sanpham.NamSanXuat;
 import model.sanpham.SanPham;
-
 import java.util.Properties;
+import model.HoaDon.HinhThucGH;
+import model.HoaDon.PhuongThucTT;
 import model.sanpham.thuongHieu;
-import model.khuyenmai.chiTietSPKhuyenMai;
-import model.khuyenmai.hoaDonKhuyenMai;
-import model.khuyenmai.khuyenMai;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -60,14 +57,13 @@ public class HibernatUtil {
         conf.addAnnotatedClass(MauSac.class);
         conf.addAnnotatedClass(thuongHieu.class);
         conf.addAnnotatedClass(NamSanXuat.class);
-        conf.addAnnotatedClass(khuyenMai.class);
 
         conf.addAnnotatedClass(ChiTietSanPham.class);
         conf.addAnnotatedClass(hoaDonChiTiet.class);
         conf.addAnnotatedClass(GioHangChiTiet.class);
 
-        conf.addAnnotatedClass(hoaDonKhuyenMai.class);
-        conf.addAnnotatedClass(chiTietSPKhuyenMai.class);
+        conf.addAnnotatedClass(PhuongThucTT.class);
+        conf.addAnnotatedClass(HinhThucGH.class);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
