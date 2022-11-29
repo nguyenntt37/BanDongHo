@@ -38,9 +38,9 @@ public class KhachHangJD extends javax.swing.JDialog {
     }
 
     public void showTB(List<KhachHangCutoms> kh) {
-        listKH = new KhachHangRespository().getAllKH();
+  //      listKH = new KhachHangRespository().getAllKH();
         dtm.setRowCount(0);
-        for (KhachHangCutoms khr : listKH) {
+        for (KhachHangCutoms khr : kh) {
             dtm.addRow(khr.toDataRow());
         }
     }
@@ -268,9 +268,7 @@ public class KhachHangJD extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel9)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
@@ -357,6 +355,7 @@ public class KhachHangJD extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
