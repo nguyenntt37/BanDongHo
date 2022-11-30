@@ -56,6 +56,9 @@ public class ChiTietSanPham {
     @JoinColumn(name = "id_Thuong_hieu")
     private thuongHieu thuongHieu;
 
+    @Column(name = "Ma")
+    private String ma;
+
     @Column(name = "NamBH")
     private int namBH;
 
