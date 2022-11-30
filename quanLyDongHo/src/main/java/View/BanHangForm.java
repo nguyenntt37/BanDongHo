@@ -30,6 +30,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -56,7 +57,7 @@ import viewmodel.DongSPCustom;
 public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
     private JTableHeader tblHDHeader, tblHDCTHeader, tblSPHeader;
-    private DefaultTableCellRenderer tblHDCTRenderer, tblSPRenderer, tblHDRenderer;
+    private DefaultTableCellRenderer tblHDCTCellRenderer, tblSPCellRenderer, tblHDCellRenderer;
     private TableColumnModel tblSPColModel, tblHDCTColModel, tblHDColModel;
     private DefaultComboBoxModel cboModelDongSP, cboModelHTGH, cboModelPTTT;
     private DefaultTableModel tblModelHD, tblModelSP, tblModelHDCT;
@@ -106,16 +107,16 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         tblSPHeader.setFont(new Font("segoeui", Font.BOLD, 12));
         tblSPHeader.setBackground(Color.LIGHT_GRAY);
 
-        tblHDCTRenderer = (DefaultTableCellRenderer) tblHDCT.getDefaultRenderer(this.getClass());
-        tblHDRenderer = (DefaultTableCellRenderer) tblHoaDonCho.getDefaultRenderer(this.getClass());
-        tblSPRenderer = (DefaultTableCellRenderer) tblSanPham.getDefaultRenderer(this.getClass());
+        tblHDCTCellRenderer = (DefaultTableCellRenderer) tblHDCT.getDefaultRenderer(this.getClass());
+        tblHDCellRenderer = (DefaultTableCellRenderer) tblHoaDonCho.getDefaultRenderer(this.getClass());
+        tblSPCellRenderer = (DefaultTableCellRenderer) tblSanPham.getDefaultRenderer(this.getClass());
+        tblHDCTCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblHDCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblSPCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        
         tblSPColModel = tblSanPham.getColumnModel();
         tblHDColModel = tblHoaDonCho.getColumnModel();
         tblHDCTColModel = tblHDCT.getColumnModel();
-
-        tblHDCTRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblHDRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblSPRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         tblHDCTColModel.getColumn(0).setPreferredWidth(30);
         tblHDCTColModel.getColumn(1).setPreferredWidth(200);
         tblHDColModel.getColumn(0).setPreferredWidth(30);
@@ -167,7 +168,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void loadTableHDCho() {
         tblModelHD.setRowCount(0);
-        List<BanHang_HDCustom> lstHD = bhService.getHDCho(0);
+        List<BanHang_HDCustom> lstHD = bhService.getHDCho();
         for (BanHang_HDCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
@@ -186,7 +187,6 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }
 
     private void loadTableSPBySearching(String search) {
-        cboDongSP.setSelectedIndex(0);
         tblModelSP.setRowCount(0);
         for (Object o : bhService.searchSP(search)) {
             tblModelSP.addRow((Object[]) o);
@@ -202,15 +202,15 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void loadTableHDCT() {
         tblModelHDCT.setRowCount(0);
-        int id = Integer.valueOf(lblMaHoaDon.getText());
-        for (Object o : bhService.getHDCT(id)) {
+        int maHD = Integer.parseInt(getIdHD());
+        for (Object o : bhService.getHDCT(maHD)) {
             tblModelHDCT.addRow((Object[]) o);
         }
     }
 
     private void insertSPToHDCT(int sl) {
         try {
-            int idHD = Integer.parseInt(lblMaHoaDon.getText());
+            int idHD = Integer.parseInt(getIdHD());
             if (tblSanPham.getSelectedRowCount() >= 1) {
                 int idCTSP = Integer.parseInt(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0).toString());
                 bhService.insertSPToHDCT(idHD, sl, idCTSP);
@@ -278,7 +278,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         PhuongThucTT pttt;
         HinhThucGH htgh;
         try {
-            int idHD = Integer.parseInt(lblMaHoaDon.getText());
+            int idHD = Integer.parseInt(getIdHD());
             BigDecimal tongTien = new BigDecimal(lblTongTien.getText());
             BigDecimal tienTraLai = new BigDecimal(lblTienThuaTraKhach.getText());
             String ghiChu = txtghiChu.getText();
@@ -304,14 +304,46 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }
 
     private void xoaAllSPOnHDCT() {
+        int idCTSP, sl;
         try {
             for (int i = 0; i < tblHDCT.getRowCount(); i++) {
-                int idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(i, 0).toString());
-                int sl = Integer.parseInt(tblModelHDCT.getValueAt(i, 3).toString());
+                idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(i, 0).toString());
+                sl = Integer.parseInt(tblModelHDCT.getValueAt(i, 3).toString());
                 bhService.deleteSPOnHDCT(idCTSP, sl);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui long chon san pham can xoa");
+            e.printStackTrace();
+        }
+    }
+
+    private void huyHD() {
+        try {
+            int maHD = Integer.parseInt(getIdHD());
+            bhService.huyHD(maHD);
+            JOptionPane.showMessageDialog(this, "Đã huỷ hoá đơn");
+            loadTableHDCho();
+            tblModelHDCT.setRowCount(0);
+            lblMaHoaDon.setText("");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui long chon hoa don can huy");
+            e.printStackTrace();
+        }
+    }
+
+    private void updateSLTon() {
+        try {
+            int idCTSP, sl;
+            if (tblModelHDCT.getRowCount() > 0) {
+                for (int i = 0; i < tblHDCT.getRowCount(); i++) {
+                    idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(i, 0).toString());
+                    sl = Integer.parseInt(tblModelHDCT.getValueAt(i, 3).toString());
+                    bhService.updateSLTon(idCTSP, sl);
+                }
+                loadTableSP();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui long chon hoa don can huy");
             e.printStackTrace();
         }
     }
@@ -329,6 +361,10 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         txtghiChu.setText(null);
         cboPhuongThucTT.setSelectedIndex(0);
         cboHinhThucGH.setSelectedIndex(0);
+    }
+
+    public String getIdHD() {
+        return lblMaHoaDon.getText().substring(2);
     }
 
     @Override
@@ -415,7 +451,6 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jPanel13 = new javax.swing.JPanel();
         lblMaKH = new javax.swing.JLabel();
         btnThayDoi = new javax.swing.JButton();
-        btnChon = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblTenKH = new javax.swing.JLabel();
@@ -702,24 +737,13 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         lblMaKH.setText("KH00");
 
         btnThayDoi.setBackground(new java.awt.Color(51, 102, 153));
-        btnThayDoi.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        btnThayDoi.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnThayDoi.setForeground(new java.awt.Color(255, 255, 255));
         btnThayDoi.setText("Thay đổi");
         btnThayDoi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
         btnThayDoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThayDoiActionPerformed(evt);
-            }
-        });
-
-        btnChon.setBackground(new java.awt.Color(51, 102, 153));
-        btnChon.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        btnChon.setForeground(new java.awt.Color(255, 255, 255));
-        btnChon.setText("Chọn");
-        btnChon.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
-        btnChon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChonActionPerformed(evt);
             }
         });
 
@@ -745,14 +769,12 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTenKH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnThayDoi)
-                    .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4))
+                .addGap(2, 2, 2)
+                .addComponent(btnThayDoi)
+                .addContainerGap())
         );
 
-        jPanel13Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnChon, btnThayDoi});
+        jPanel13Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnThayDoi, lblMaKH});
 
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,17 +782,17 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(btnChon)
                     .addComponent(lblMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThayDoi)
                     .addComponent(jLabel7)
                     .addComponent(lblTenKH))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnThayDoi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jPanel13Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnChon, btnThayDoi});
 
         txtTienKhachDua.setText("0");
         txtTienKhachDua.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -779,7 +801,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             }
         });
 
-        lblMaHoaDon.setText("Vui lòng tạo!");
+        lblMaHoaDon.setText(" ");
 
         jLabel13.setText("VNĐ");
 
@@ -908,7 +930,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 47, Short.MAX_VALUE)
+                .addGap(18, 48, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLamMoi)
                     .addComponent(btnHuyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1071,14 +1093,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         loadTienThua();
     }//GEN-LAST:event_txtTienKhachDuaKeyReleased
 
-    private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Thằng khách hàng làm chưa xong");
-    }//GEN-LAST:event_btnChonActionPerformed
-
     private void btnThayDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThayDoiActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Thằng khách hàng làm chưa xong");
+        new KhachHangJD(this, true).setVisible(true);
     }//GEN-LAST:event_btnThayDoiActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
@@ -1095,21 +1112,14 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void btnHuyHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyHoaDonActionPerformed
         // TODO add your handling code here:
-        try {
-            int maHD = Integer.parseInt(lblMaHoaDon.getText());
-            bhService.huyHD(maHD);
-            JOptionPane.showMessageDialog(this, "Đã huỷ hoá đơn");
-            loadTableHDCho();
-            tblModelHDCT.setRowCount(0);
-            lblMaHoaDon.setText("");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Vui long chon hoa don can huy");
-            e.printStackTrace();
-        }
+        updateSLTon();
+        huyHD();
+        resetGUI();
     }//GEN-LAST:event_btnHuyHoaDonActionPerformed
 
     private void btnTaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoActionPerformed
         // TODO add your handling code here:
+        resetGUI();
         KhachHang kh = new KhachHang();
         kh.setId(1); //Set tạm vì phần khách hàng chưa hoàn thành
 
@@ -1136,9 +1146,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
         // TODO add your handling code here:
+        cboDongSP.setSelectedIndex(0);
         if (txtTimKiem.getText().trim().length() > 0) {
             loadTableSPBySearching(txtTimKiem.getText().trim());
-        } else loadTableSP();
+        } else
+            loadTableSP();
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     /**
@@ -1177,7 +1189,6 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnChon;
     private javax.swing.JButton btnHuyHoaDon;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnTao;

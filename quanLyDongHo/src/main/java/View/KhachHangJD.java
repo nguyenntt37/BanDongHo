@@ -5,9 +5,14 @@
 package View;
 
 import Repository.KhachHangRespository;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 import service.KhachHangService;
@@ -28,7 +33,13 @@ public class KhachHangJD extends javax.swing.JDialog {
     KhachHangService service = new KhachHangServiceImpl();
 
     public KhachHangJD(java.awt.Frame parent, boolean modal) {
+
         super(parent, modal);
+        try {
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(KhachHangJD.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         tableDS.setModel(dtm);
         String[] name = {"ID", "Mã", "Tên", "Tên Đệm", "Họ", "SĐT", "Quốc Gia", "Thành Phố"};
@@ -38,7 +49,7 @@ public class KhachHangJD extends javax.swing.JDialog {
     }
 
     public void showTB(List<KhachHangCutoms> kh) {
-  //      listKH = new KhachHangRespository().getAllKH();
+        //      listKH = new KhachHangRespository().getAllKH();
         dtm.setRowCount(0);
         for (KhachHangCutoms khr : kh) {
             dtm.addRow(khr.toDataRow());

@@ -7,12 +7,18 @@ package View;
 import Util.DatetimeUtil;
 import Util.MoneyUtil;
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import service.IHoaDonService;
 import service.impl.HoaDonServiceImpl;
 import viewmodel.HDCTCustom;
@@ -23,17 +29,48 @@ import viewmodel.HoaDonCustom;
  * @author Nguyen
  */
 public class HoaDonForm extends javax.swing.JFrame {
-
+    private DefaultTableCellRenderer tblHDCellRenderer, tblHDCTCellRenderer;
     private DefaultTableModel tblModelHD, tblModelHDCT;
+    private TableColumnModel tblHDColModel, tblHDCTColModel;
+    private JTableHeader tblHDHeader, tblHDCTHeader;
     private IHoaDonService hdService = new HoaDonServiceImpl();
-    
+
     /**
      * Creates new form HoaDonForm
      */
     public HoaDonForm() {
         setLookAndFeel();
         initComponents();
+        init();
         loadTableHD();
+    }
+
+    private void init() {
+        initTableStructure();
+    }
+
+    private void initTableStructure() {
+        tblHDHeader = tblHoaDon.getTableHeader();
+        tblHDCTHeader = tblHDCT.getTableHeader();
+        tblHDHeader.setFont(new Font("segoeui", Font.BOLD, 12));
+        tblHDHeader.setBackground(Color.LIGHT_GRAY);
+        tblHDCTHeader.setFont(new Font("segoeui", Font.BOLD, 12));
+        tblHDCTHeader.setBackground(Color.LIGHT_GRAY);
+        
+        tblHDCellRenderer = (DefaultTableCellRenderer) tblHoaDon.getDefaultRenderer(this.getClass());
+        tblHDCTCellRenderer = (DefaultTableCellRenderer) tblHDCT.getDefaultRenderer(this.getClass());
+        tblHDCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblHDCTCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        tblHDColModel = tblHoaDon.getColumnModel();
+        tblHDCTColModel = tblHDCT.getColumnModel();
+        tblHDColModel.getColumn(0).setPreferredWidth(30);
+        tblHDColModel.getColumn(5).setPreferredWidth(90);
+        tblHDColModel.getColumn(7).setPreferredWidth(30);
+        tblHDColModel.getColumn(9).setPreferredWidth(30);
+        tblHDCTColModel.getColumn(0).setPreferredWidth(30);
+        tblHDCTColModel.getColumn(1).setPreferredWidth(30);
+        tblHDCTColModel.getColumn(2).setPreferredWidth(200);
     }
 
     private void setLookAndFeel() {
@@ -451,7 +488,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 214, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1081, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(

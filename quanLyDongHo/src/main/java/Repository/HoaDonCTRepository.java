@@ -27,11 +27,11 @@ public class HoaDonCTRepository {
         return lstHDCT;
     }
 
-    public Object[] getBH_HDCTCustom(int maHD) {
+    public Object[] getBH_HDCTCustom(int idHD) {
         Object[] o = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             o = session.createQuery("SELECT hdct.chiTietSP.id, CONCAT(hdct.chiTietSP.dongsp.ten,' ',hdct.chiTietSP.thuongHieu.ten,' ',hdct.chiTietSP.sanPham.ten),hdct.chiTietSP.giaBan,hdct.soLuong FROM hoaDonChiTiet hdct "
-                    + "WHERE hdct.hoaDon.id = :maHD").setParameter("maHD", maHD).getResultList().toArray();
+                    + "WHERE hdct.hoaDon.id = :idHD").setParameter("idHD", idHD).getResultList().toArray();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,6 +64,20 @@ public class HoaDonCTRepository {
             q.setParameter("idHD", idHD);
             q.setParameter("sl", sl);
             q.setParameter("idCTSP", idCTSP);
+            q.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //cập nhật lại số lượng tồn của sản phẩm khi huỷ hoá đơn
+    public void updateSLTon(int idCTSP, int sl) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query q = session.createQuery("UPDATE ChiTietSanPham ctsp SET ctsp.soLuongTon = ctsp.soLuongTon + :sl WHERE ctsp.id = :id");
+            q.setParameter("id", idCTSP);
+            q.setParameter("sl", sl);
             q.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {

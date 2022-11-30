@@ -23,6 +23,7 @@ public class HoaDonRepository {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();
             session.save(hd);
+            hd.setMa(String.valueOf("HD" + hd.getId()));
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
