@@ -14,9 +14,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
-import service.IBanHangService;
 import service.KhachHangService;
-import service.impl.BanHangServiceImpl;
 import service.impl.KhachHangServiceImpl;
 import viewmodel.KhachHangCutoms;
 
@@ -25,8 +23,7 @@ import viewmodel.KhachHangCutoms;
  * @author admin
  */
 public class KhachHangJD extends javax.swing.JDialog {
-    IBanHangService bhService = new BanHangServiceImpl();
-    private KhachHang kh = new KhachHang();
+    private static KhachHang kh = new KhachHang();
 
     /**
      * Creates new form KhachHangJD
@@ -36,7 +33,6 @@ public class KhachHangJD extends javax.swing.JDialog {
     KhachHangService service = new KhachHangServiceImpl();
 
     public KhachHangJD(java.awt.Frame parent, boolean modal) {
-
         super(parent, modal);
         setLaF();
         initComponents();
@@ -70,10 +66,6 @@ public class KhachHangJD extends javax.swing.JDialog {
         kh.setTenDem(dtm.getValueAt(tableDS.getSelectedRow(), 3).toString());
         kh.setTen(dtm.getValueAt(tableDS.getSelectedRow(), 2).toString());
         return kh;
-    }
-    
-    private void updateKHOnHD() {
-        bhService.updateKhachHang(getSelectedKH().getId(), BanHangForm.getIdHD());
     }
 
     /**
@@ -417,10 +409,7 @@ public class KhachHangJD extends javax.swing.JDialog {
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
-        BanHangForm.setKhachHang(getSelectedKH());
-        if (BanHangForm.isTblHDSelected()) {
-            updateKHOnHD();
-        }
+        BanHangForm.setInfoKhachHang(getSelectedKH());
         dispose();
     }//GEN-LAST:event_btnChonActionPerformed
 
