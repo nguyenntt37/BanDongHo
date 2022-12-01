@@ -208,11 +208,11 @@ public class SanPhamReponstory {
         }
     }
 
-    public boolean updateSp(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu) {
+    public boolean updateSp(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu, int trangthai) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            Query query = session.createQuery("update SanPham s set s.ma =:ma,s.ten=:ten,s.ChucNang=:ChucNang,s.dayDeo=:dayDeo,s.kinh=:kinh,s.matSo=:matSo,s.may=:may,s.xuatXu=:xuatXu where s.id = :d");
+            Query query = session.createQuery("update SanPham s set s.ma =:ma,s.ten=:ten,s.ChucNang=:ChucNang,s.dayDeo=:dayDeo,s.kinh=:kinh,s.matSo=:matSo,s.may=:may,s.xuatXu=:xuatXu,s.trangthai=:trangthai where s.id = :d");
             query.setParameter("ma", ma);
             query.setParameter("ten", ten);
             query.setParameter("ChucNang", ChucNang);
@@ -221,6 +221,7 @@ public class SanPhamReponstory {
             query.setParameter("matSo", matSo);
             query.setParameter("may", may);
             query.setParameter("xuatXu", xuatXu);
+            query.setParameter("trangthai", trangthai);
             query.setParameter("d", id);
             query.executeUpdate();
             tran.commit();

@@ -125,8 +125,8 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
 //
 
     @Override
-    public String updateSanPham(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu) {
-        if (banHang.updateSp(sp, ten, id, ma, ChucNang, dayDeo, kinh, matSo, may, xuatXu)) {
+    public String updateSanPham(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu, int trangthai) {
+        if (banHang.updateSp(sp, ten, id, ma, ChucNang, dayDeo, kinh, matSo, may, xuatXu, trangthai)) {
             return "Update  thành công";
         } else {
             return "Update thất bại";
