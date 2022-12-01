@@ -97,8 +97,16 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         int heSo = (soTrang * 5) - 5;
         listSPPage = spSevice.getAll2(heSo);
         showDataRow(listSPPage);
+        if (listSPPage.size() == 0) {
+            btnFirst.setEnabled(false);
+            btnNext.setEnabled(false);
+            btnBack.setEnabled(false);
+            btnLast.setEnabled(false);
+        }
+        btnFirst.setEnabled(false);
+        btnBack.setEnabled(false);
         updPanel();
-        
+
     }
 
     private void showDataRow(List<ChiTietSPCustom> listSPPage) {
@@ -114,7 +122,6 @@ public class ChiTietSPForm extends javax.swing.JFrame {
 //            dcbmChiTietSP.addElement(o);
 //        }
 //    }
-
     private void cbbMauSac(List<MauSacCustom> listMau) {
         cboMauSac.setModel(dcbmMauSac);
         for (MauSacCustom o : listMau) {
@@ -170,6 +177,13 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         txtGiaBan.setText(ctsp.getGiaBan() + "");
     }
 
+    private void setTruePhanTrang() {
+        btnFirst.setEnabled(true);
+        btnNext.setEnabled(true);
+        btnBack.setEnabled(true);
+        btnLast.setEnabled(true);
+    }
+
     private void mose(int index) {
         ChiTietSPCustom sp = listSPPage.get(index);
 //        List<ChiTietSPCustom> listload = new SanPHamSeviceImpl().getAll();
@@ -203,6 +217,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
 //        cboThuongHieu.setSelectedItem(th.getTen());
 //        txtIdChiTietSP.setText(sp.getId().toString());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1184,6 +1199,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNhapFileActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        setTruePhanTrang();
         int tongSoTrang = listSP.size() / 10;
         if (listSP.size() % 10 != 0) {
             tongSoTrang += 1;
@@ -1194,6 +1210,10 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         } else {
             listSPPage.removeAll(listSPPage);
             soTrang += 1;
+            if (soTrang == tongSoTrang) {
+                btnNext.setEnabled(false);
+                btnLast.setEnabled(false);
+            }
             int heSo = (soTrang * 10) - 10;
             listSPPage = spSevice.getAll2(heSo);
             showDataRow(listSPPage);
@@ -1203,8 +1223,11 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        setTruePhanTrang();
         listSPPage.removeAll(listSPPage);
         soTrang = 1;
+        btnBack.setEnabled(false);
+        btnFirst.setEnabled(false);
         int heSo = (soTrang * 10) - 10;
         listSPPage = spSevice.getAll2(heSo);
         showDataRow(listSPPage);
@@ -1212,16 +1235,20 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFirstActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        setTruePhanTrang();
         int tongSoTrang = listSP.size() / 10;
         if (listSP.size() % 10 != 0) {
             tongSoTrang += 1;
         }
         if (soTrang == 1) {
             showDataRow(listSPPage);
-
         } else {
             listSPPage.removeAll(listSPPage);
             soTrang -= 1;
+            if (soTrang == 1) {
+                btnFirst.setEnabled(false);
+                btnBack.setEnabled(false);
+            }
             int heSo = (soTrang * 10) - 10;
             listSPPage = spSevice.getAll2(heSo);
             showDataRow(listSPPage);
@@ -1230,10 +1257,13 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        setTruePhanTrang();
         int tongSoTrang = listSP.size() / 10;
         if (listSP.size() % 10 != 0) {
             tongSoTrang += 1;
         }
+        btnNext.setEnabled(false);
+        btnLast.setEnabled(false);
         listSPPage.removeAll(listSPPage);
         soTrang = tongSoTrang;
         int heSo = (soTrang * 10) - 10;
