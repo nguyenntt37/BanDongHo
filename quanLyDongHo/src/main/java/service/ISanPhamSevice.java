@@ -18,6 +18,7 @@ import viewmodel.DongSPCustom;
 import viewmodel.MauSacCustom;
 import viewmodel.NamSXCustom;
 import viewmodel.SanPhamCustom;
+import viewmodel.SanPhamCustom3;
 import viewmodel.ThuongHieuCustomer;
 
 
@@ -35,7 +36,7 @@ public interface ISanPhamSevice {
 
     List<DongSPCustom> getAllDongSp();
 
-    List<SanPhamCustom> getAllSanPham();
+    List<SanPhamCustom3> getAllSanPham();
     
     List<ThuongHieuCustomer> getAllThuongHieu();
     
@@ -55,7 +56,7 @@ public interface ISanPhamSevice {
 
 //    String addChiTietSP(ChiTietSanPham sp);
 
-    String updateSanPham(SanPham sp, String ten, int id, String ma);
+    String updateSanPham(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu);
     
     String updateThuongHieu(thuongHieu th, int id, String ma, String ten);
 

@@ -45,6 +45,7 @@ import viewmodel.DongSPCustom;
 import viewmodel.MauSacCustom;
 import viewmodel.NamSXCustom;
 import viewmodel.SanPhamCustom;
+import viewmodel.SanPhamCustom3;
 import viewmodel.ThuongHieuCustomer;
 
 /**
@@ -62,7 +63,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     DefaultComboBoxModel dcbmChiTietSP = new DefaultComboBoxModel();
     DefaultComboBoxModel dcbmSanPham = new DefaultComboBoxModel();
     List<ChiTietSPCustom> listSP = new ArrayList<>();
-    List<SanPhamCustom> listSPc = new ArrayList<>();
+    List<SanPhamCustom3> listSPc = new ArrayList<>();
     List<MauSacCustom> listMau = new ArrayList<>();
     List<NamSXCustom> listNamSanXuats = new ArrayList<>();
     List<DongSPCustom> listDongSp = new ArrayList<>();
@@ -89,7 +90,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         addCBBNamSX(nsxs.getListNamSanXuat());
         addCBBDongSp(dsps.getListDongSP());
         cbbSanPham(spSevice.getAllSanPham());
-        cbbChiTietSP(spSevice.getAllSanPham());
+//        cbbChiTietSP(spSevice.getAllSanPham());
         cbbThuongHieu(spSevice.getAllThuongHieu());
 
         listSP = spSevice.getAll();
@@ -107,12 +108,12 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         }
     }
 
-    private void cbbChiTietSP(List<SanPhamCustom> list) {
-        cboSanPham.setModel(dcbmChiTietSP);
-        for (SanPhamCustom o : list) {
-            dcbmChiTietSP.addElement(o);
-        }
-    }
+//    private void cbbChiTietSP(List<SanPhamCustom3> list) {
+//        cboSanPham.setModel(dcbmChiTietSP);
+//        for (SanPhamCustom3 o : list) {
+//            dcbmChiTietSP.addElement(o);
+//        }
+//    }
 
     private void cbbMauSac(List<MauSacCustom> listMau) {
         cboMauSac.setModel(dcbmMauSac);
@@ -130,9 +131,9 @@ public class ChiTietSPForm extends javax.swing.JFrame {
 
     }
 
-    private void cbbSanPham(List<SanPhamCustom> listSPc) {
+    private void cbbSanPham(List<SanPhamCustom3> listSPc) {
         cboSanPham.setModel(dcbmSanPham);
-        for (SanPhamCustom o : listSPc) {
+        for (SanPhamCustom3 o : listSPc) {
             dcbmSanPham.addElement(o);
         }
     }
@@ -1064,7 +1065,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void cboSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSanPhamActionPerformed
-        SanPhamCustom d = (SanPhamCustom) cboSanPham.getSelectedItem();
+        SanPhamCustom3 d = (SanPhamCustom3) cboSanPham.getSelectedItem();
         lbIdSanPham.setText(String.valueOf(d.toStringId()));
     }//GEN-LAST:event_cboSanPhamActionPerformed
 

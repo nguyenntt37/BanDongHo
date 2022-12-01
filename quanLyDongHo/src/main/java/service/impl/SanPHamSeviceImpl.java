@@ -22,6 +22,7 @@ import viewmodel.DongSPCustom;
 import viewmodel.MauSacCustom;
 import viewmodel.NamSXCustom;
 import viewmodel.SanPhamCustom;
+import viewmodel.SanPhamCustom3;
 import viewmodel.ThuongHieuCustomer;
 
 
@@ -60,7 +61,7 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
     }
 
     @Override
-    public List<SanPhamCustom> getAllSanPham() {
+    public List<SanPhamCustom3> getAllSanPham() {
         return banHang.getAllSP();
     }
 
@@ -124,8 +125,8 @@ public class SanPHamSeviceImpl implements ISanPhamSevice {
 //
 
     @Override
-    public String updateSanPham(SanPham sp, String ten, int id, String ma) {
-        if (banHang.updateSp(sp, ten, id, ma)) {
+    public String updateSanPham(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu) {
+        if (banHang.updateSp(sp, ten, id, ma, ChucNang, dayDeo, kinh, matSo, may, xuatXu)) {
             return "Update  thành công";
         } else {
             return "Update thất bại";

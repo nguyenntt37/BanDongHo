@@ -64,6 +64,6 @@ public class ChiTietSPCustom {
     }
 
     public Object[] todataRowDS() {
-        return new Object[]{id,maSP, tenSP, giaBan, mau, ThuongHieu, dayDeo, kinh, xuatXu, soLuongTon,trangThai};
+        return new Object[]{id,maSP, tenSP, giaBan, mau, ThuongHieu, dayDeo, kinh, xuatXu, ngayTao,soLuongTon,trangThai};
     }
 }

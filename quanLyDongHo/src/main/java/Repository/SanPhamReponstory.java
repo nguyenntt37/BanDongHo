@@ -25,6 +25,7 @@ import viewmodel.DongSPCustom;
 import viewmodel.MauSacCustom;
 import viewmodel.NamSXCustom;
 import viewmodel.SanPhamCustom;
+import viewmodel.SanPhamCustom3;
 import viewmodel.ThuongHieuCustomer;
 
 /**
@@ -207,13 +208,19 @@ public class SanPhamReponstory {
         }
     }
 
-    public boolean updateSp(SanPham sp, String ten, int id, String ma) {
+    public boolean updateSp(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            Query query = session.createQuery("update SanPham s set s.ma =:ma,s.ten=:ten where s.id = :d");
+            Query query = session.createQuery("update SanPham s set s.ma =:ma,s.ten=:ten,s.ChucNang=:ChucNang,s.dayDeo=:dayDeo,s.kinh=:kinh,s.matSo=:matSo,s.may=:may,s.xuatXu=:xuatXu where s.id = :d");
             query.setParameter("ma", ma);
             query.setParameter("ten", ten);
+            query.setParameter("ChucNang", ChucNang);
+            query.setParameter("dayDeo", dayDeo);
+            query.setParameter("kinh", kinh);
+            query.setParameter("matSo", matSo);
+            query.setParameter("may", may);
+            query.setParameter("xuatXu", xuatXu);
             query.setParameter("d", id);
             query.executeUpdate();
             tran.commit();
@@ -356,10 +363,10 @@ public class SanPhamReponstory {
         }
     }
 
-    public List<SanPhamCustom> getAllSP() {
-        List<SanPhamCustom> list = new ArrayList<>();
+    public List<SanPhamCustom3> getAllSP() {
+        List<SanPhamCustom3> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            Query query = session.createQuery("select new viewmodel.SanPhamCustom(s.id,s.ma,s.ten)from model.sanpham.SanPham s ");
+            Query query = session.createQuery("select new viewmodel.SanPhamCustom3(s.id,s.ma,s.ten,s.ChucNang,s.dayDeo,s.kinh,s.matSo,s.may,s.xuatXu,s.ngayTao,s.trangthai)from model.sanpham.SanPham s ");
             list = query.list();
 
         } catch (HibernateException e) {
@@ -627,8 +634,8 @@ public class SanPhamReponstory {
     
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<ChiTietSPCustom> list = sp.getAll2(5);
-        for (ChiTietSPCustom o : list) {
+        List<SanPhamCustom3> list = sp.getAllSP();
+        for (SanPhamCustom3 o : list) {
 
             System.out.println(o);
         }
