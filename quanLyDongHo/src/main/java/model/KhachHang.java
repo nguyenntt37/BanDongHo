@@ -91,4 +91,8 @@ public class KhachHang {
     @OneToMany(mappedBy = "khachHang", fetch = FetchType.EAGER)
     private List<GioHang> listt = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return ho + " " + tenDem + " " + ten;
+    }
 }

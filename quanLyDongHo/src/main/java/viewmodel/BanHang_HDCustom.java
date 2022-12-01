@@ -7,6 +7,7 @@ package viewmodel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.KhachHang;
 
 /**
  *
@@ -19,5 +20,5 @@ public class BanHang_HDCustom {
     private String maHD;
     private String tgTao;
     private String nvTao;
-    private String khachHang;
+    private KhachHang khachHang;
 }

@@ -4,7 +4,6 @@
  */
 package View;
 
-import Repository.KhachHangRespository;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
+import service.IBanHangService;
 import service.KhachHangService;
+import service.impl.BanHangServiceImpl;
 import service.impl.KhachHangServiceImpl;
 import viewmodel.KhachHangCutoms;
 
@@ -24,6 +25,8 @@ import viewmodel.KhachHangCutoms;
  * @author admin
  */
 public class KhachHangJD extends javax.swing.JDialog {
+    IBanHangService bhService = new BanHangServiceImpl();
+    private KhachHang kh = new KhachHang();
 
     /**
      * Creates new form KhachHangJD
@@ -35,11 +38,7 @@ public class KhachHangJD extends javax.swing.JDialog {
     public KhachHangJD(java.awt.Frame parent, boolean modal) {
 
         super(parent, modal);
-        try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(KhachHangJD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setLaF();
         initComponents();
         tableDS.setModel(dtm);
         String[] name = {"ID", "Mã", "Tên", "Tên Đệm", "Họ", "SĐT", "Quốc Gia", "Thành Phố"};
@@ -54,6 +53,27 @@ public class KhachHangJD extends javax.swing.JDialog {
         for (KhachHangCutoms khr : kh) {
             dtm.addRow(khr.toDataRow());
         }
+    }
+
+    private void setLaF() {
+        try {
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(KhachHangJD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private KhachHang getSelectedKH() {
+        kh.setId(Integer.valueOf(dtm.getValueAt(tableDS.getSelectedRow(), 0).toString()));
+        kh.setMa(dtm.getValueAt(tableDS.getSelectedRow(), 1).toString());
+        kh.setHo(dtm.getValueAt(tableDS.getSelectedRow(), 4).toString());
+        kh.setTenDem(dtm.getValueAt(tableDS.getSelectedRow(), 3).toString());
+        kh.setTen(dtm.getValueAt(tableDS.getSelectedRow(), 2).toString());
+        return kh;
+    }
+    
+    private void updateKHOnHD() {
+        bhService.updateKhachHang(getSelectedKH().getId(), BanHangForm.getIdHD());
     }
 
     /**
@@ -72,7 +92,7 @@ public class KhachHangJD extends javax.swing.JDialog {
         tableDS = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
-        btnAdd1 = new javax.swing.JButton();
+        btnChon = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -134,12 +154,12 @@ public class KhachHangJD extends javax.swing.JDialog {
             }
         });
 
-        btnAdd1.setBackground(new java.awt.Color(0, 102, 204));
-        btnAdd1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd1.setText("Chọn");
-        btnAdd1.addActionListener(new java.awt.event.ActionListener() {
+        btnChon.setBackground(new java.awt.Color(0, 102, 204));
+        btnChon.setForeground(new java.awt.Color(255, 255, 255));
+        btnChon.setText("Chọn");
+        btnChon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdd1ActionPerformed(evt);
+                btnChonActionPerformed(evt);
             }
         });
 
@@ -151,7 +171,7 @@ public class KhachHangJD extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(203, 203, 203)
-                        .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +192,7 @@ public class KhachHangJD extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
 
@@ -395,9 +415,14 @@ public class KhachHangJD extends javax.swing.JDialog {
         txtTenDemKH.setText("");
     }//GEN-LAST:event_btnRestActionPerformed
 
-    private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
+    private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAdd1ActionPerformed
+        BanHangForm.setKhachHang(getSelectedKH());
+        if (BanHangForm.isTblHDSelected()) {
+            updateKHOnHD();
+        }
+        dispose();
+    }//GEN-LAST:event_btnChonActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
@@ -522,7 +547,7 @@ public class KhachHangJD extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnAdd1;
+    private javax.swing.JButton btnChon;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRest;
     private javax.swing.JButton btnUpdate;

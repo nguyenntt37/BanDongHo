@@ -40,7 +40,7 @@ public class BanHangServiceImpl implements IBanHangService {
         List<HoaDon> lstHD = hdRepo.getHDTheoTrangThai(0);
         List<BanHang_HDCustom> lstHDCustom = new ArrayList<>();
         for (HoaDon hd : lstHD) {
-            lstHDCustom.add(new BanHang_HDCustom(String.valueOf(hd.getMa()), hd.getTgTao(), hd.getNhanVien().getMa(), hd.getKhachHang().getHo() + " " + hd.getKhachHang().getTenDem() + " " + hd.getKhachHang().getTen()));
+            lstHDCustom.add(new BanHang_HDCustom(String.valueOf(hd.getMa()), hd.getTgTao(), hd.getNhanVien().getMa(), hd.getKhachHang()));
         }
         return lstHDCustom;
     }
@@ -108,5 +108,10 @@ public class BanHangServiceImpl implements IBanHangService {
     @Override
     public Object[] searchSP(String search) {
         return spRepo.searchSP(search);
+    }
+
+    @Override
+    public void updateKhachHang(int idKH, int idHD) {
+        hdRepo.updateKhachHang(idKH, idHD);
     }
 }

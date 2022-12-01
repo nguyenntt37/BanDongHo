@@ -517,7 +517,7 @@ public class SanPhamReponstory {
         Object[] o = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             o = session.createQuery("SELECT ctsp.id, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), ctsp.giaBan, ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
-                    + "FROM ChiTietSanPham ctsp").getResultList().toArray();
+                    + "FROM ChiTietSanPham ctsp WHERE ctsp.soLuongTon > 0").getResultList().toArray();
         } catch (Exception e) {
             e.printStackTrace();
         }

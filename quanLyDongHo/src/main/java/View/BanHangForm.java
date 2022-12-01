@@ -66,6 +66,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
+    private int selectedRow = -1;
 
     public BanHangForm() {
         setLookAndFeel();
@@ -113,7 +114,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         tblHDCTCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         tblHDCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         tblSPCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        
+
         tblSPColModel = tblSanPham.getColumnModel();
         tblHDColModel = tblHoaDonCho.getColumnModel();
         tblHDCTColModel = tblHDCT.getColumnModel();
@@ -202,15 +203,15 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void loadTableHDCT() {
         tblModelHDCT.setRowCount(0);
-        int maHD = Integer.parseInt(getIdHD());
-        for (Object o : bhService.getHDCT(maHD)) {
+        int idHD = getIdHD();
+        for (Object o : bhService.getHDCT(idHD)) {
             tblModelHDCT.addRow((Object[]) o);
         }
     }
 
     private void insertSPToHDCT(int sl) {
         try {
-            int idHD = Integer.parseInt(getIdHD());
+            int idHD = getIdHD();
             if (tblSanPham.getSelectedRowCount() >= 1) {
                 int idCTSP = Integer.parseInt(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0).toString());
                 bhService.insertSPToHDCT(idHD, sl, idCTSP);
@@ -278,7 +279,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         PhuongThucTT pttt;
         HinhThucGH htgh;
         try {
-            int idHD = Integer.parseInt(getIdHD());
+            int idHD = getIdHD();
             BigDecimal tongTien = new BigDecimal(lblTongTien.getText());
             BigDecimal tienTraLai = new BigDecimal(lblTienThuaTraKhach.getText());
             String ghiChu = txtghiChu.getText();
@@ -319,8 +320,8 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void huyHD() {
         try {
-            int maHD = Integer.parseInt(getIdHD());
-            bhService.huyHD(maHD);
+            int idHD = getIdHD();
+            bhService.huyHD(idHD);
             JOptionPane.showMessageDialog(this, "Đã huỷ hoá đơn");
             loadTableHDCho();
             tblModelHDCT.setRowCount(0);
@@ -347,6 +348,18 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             e.printStackTrace();
         }
     }
+    
+    public static boolean isTblHDSelected() {
+        if (tblHoaDonCho.getSelectionModel().isSelectionEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void setKhachHang(KhachHang kh) {
+        lblMaKH.setText(kh.getMa());
+        lblTenKH.setText(kh.getHo() + " " + kh.getTenDem() + " " + kh.getTen());
+    }
 
     private void resetGUI() {
         tblHoaDonCho.clearSelection();
@@ -363,8 +376,8 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         cboHinhThucGH.setSelectedIndex(0);
     }
 
-    public String getIdHD() {
-        return lblMaHoaDon.getText().substring(2);
+    public static int getIdHD() {
+        return Integer.parseInt(lblMaHoaDon.getText().substring(2));
     }
 
     @Override
@@ -734,7 +747,12 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         lblMaKH.setForeground(new java.awt.Color(255, 0, 0));
-        lblMaKH.setText("KH00");
+        lblMaKH.setText(" ");
+        lblMaKH.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                lblMaKHPropertyChange(evt);
+            }
+        });
 
         btnThayDoi.setBackground(new java.awt.Color(51, 102, 153));
         btnThayDoi.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -754,7 +772,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jLabel7.setText("Tên khách hàng:");
 
         lblTenKH.setForeground(new java.awt.Color(255, 0, 0));
-        lblTenKH.setText("Khách bán lẻ");
+        lblTenKH.setText(" ");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -1068,7 +1086,10 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void tblHoaDonChoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonChoMouseClicked
         // TODO add your handling code here:
+        KhachHang kh = (KhachHang) tblModelHD.getValueAt(tblHoaDonCho.getSelectedRow(), 3);
         lblMaHoaDon.setText((String) tblHoaDonCho.getValueAt(tblHoaDonCho.getSelectedRow(), 0));
+        lblMaKH.setText(kh.getMa());
+        lblTenKH.setText(kh.toString());
         loadTableHDCT();
         loadTongTien();
     }//GEN-LAST:event_tblHoaDonChoMouseClicked
@@ -1153,6 +1174,15 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             loadTableSP();
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
+    private void lblMaKHPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblMaKHPropertyChange
+        // TODO add your handling code here:
+//        if (tblModelHD != null) {
+//            selectedRow = tblHoaDonCho.getSelectedRow();
+//            loadTableHDCho();
+//            tblHoaDonCho.getSelectionModel().setSelectionInterval(selectedRow, selectedRow);
+//        }
+    }//GEN-LAST:event_lblMaKHPropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -1228,14 +1258,14 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JLabel lblMaHoaDon;
-    private javax.swing.JLabel lblMaKH;
-    private javax.swing.JLabel lblTenKH;
+    private static javax.swing.JLabel lblMaHoaDon;
+    private static javax.swing.JLabel lblMaKH;
+    private static javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblThanhToan;
     private javax.swing.JLabel lblTienThuaTraKhach;
     private javax.swing.JLabel lblTongTien;
     private javax.swing.JTable tblHDCT;
-    private javax.swing.JTable tblHoaDonCho;
+    private static javax.swing.JTable tblHoaDonCho;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextField txtTienKhachDua;
     private javax.swing.JTextField txtTimKiem;

@@ -100,4 +100,17 @@ public class HoaDonRepository {
             e.printStackTrace();
         }
     }
+
+    public void updateKhachHang(int idKH, int idHD) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query q = session.createQuery("UPDATE HoaDon hd SET hd.khachHang.id = :idKH WHERE hd.id = :idHD");
+            q.setParameter("idKH", idKH);
+            q.setParameter("idHD", idHD);
+            q.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -65,7 +65,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
-                              <Component id="btnAdd1" min="-2" pref="148" max="-2" attributes="0"/>
+                              <Component id="btnChon" min="-2" pref="148" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -94,7 +94,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="387" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnAdd1" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnChon" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -136,7 +136,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearchActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAdd1">
+            <Component class="javax.swing.JButton" name="btnChon">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="66" red="0" type="rgb"/>
@@ -147,7 +147,7 @@
                 <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdd1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
