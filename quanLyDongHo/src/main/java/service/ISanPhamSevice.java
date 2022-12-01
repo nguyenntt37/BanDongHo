@@ -56,7 +56,7 @@ public interface ISanPhamSevice {
 
 //    String addChiTietSP(ChiTietSanPham sp);
 
-    String updateSanPham(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu);
+    String updateSanPham(SanPham sp, String ten, int id, String ma, String ChucNang, String dayDeo, String kinh, String matSo, String may, String xuatXu, int trangthai);
     
     String updateThuongHieu(thuongHieu th, int id, String ma, String ten);
 

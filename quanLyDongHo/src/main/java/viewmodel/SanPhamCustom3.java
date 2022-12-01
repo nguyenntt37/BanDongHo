@@ -38,6 +38,6 @@ public class SanPhamCustom3 {
    }
     
     public Object[] toDataRow(){
-       return new Object[]{id,maSP,tenSP,ChucNang,dayDeo,kinh,matSo,may,xuatXu,ngayTao,trangthai};
+       return new Object[]{id,maSP,tenSP,ChucNang,dayDeo,kinh,matSo,may,xuatXu,ngayTao,trangthai == 0 ? "không còn" : "Còn"};
    }
 }
