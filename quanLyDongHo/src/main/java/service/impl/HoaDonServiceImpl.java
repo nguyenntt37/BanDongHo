@@ -4,8 +4,10 @@
  */
 package service.impl;
 
+import Repository.HinhThucGHRepository;
 import Repository.HoaDonCTRepository;
 import Repository.HoaDonRepository;
+import Repository.PhuongThucTTRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class HoaDonServiceImpl implements IHoaDonService {
 
     HoaDonRepository hdRepo = new HoaDonRepository();
     HoaDonCTRepository hdctRepo = new HoaDonCTRepository();
+    PhuongThucTTRepository ptttRepo = new PhuongThucTTRepository();
+    HinhThucGHRepository htghRepo = new HinhThucGHRepository();
 
     @Override
     public List<HoaDonCustom> getAllHD() {
@@ -32,7 +36,7 @@ public class HoaDonServiceImpl implements IHoaDonService {
         for (HoaDon hd : lstHoaDon) {
             tttt = String.valueOf(hd.getTrangThaiTT());
             lstHDCustom.add(new HoaDonCustom(
-                    hd.getId(),
+                    hd.getMa(),
                     hd.getTongTien() == null ? new BigDecimal(0) : hd.getTongTien(),
                     hd.getTienTraLai() == null ? new BigDecimal(0) : hd.getTienTraLai(),
                     hd.getPhuongThucTT() == null ? "Chưa có" : hd.getPhuongThucTT().getTen(),
@@ -82,4 +86,43 @@ public class HoaDonServiceImpl implements IHoaDonService {
 //        lstHDTheoTT = repo.getHDTheoTrangThai(trangThai);
 //        return lstHDTheoTT;
 //    }
+    @Override
+    public Object[] getAllPTTT() {
+        return ptttRepo.getAll();
+    }
+
+    @Override
+    public Object[] getAllHTGH() {
+        return htghRepo.getAll();
+    }
+
+    @Override
+    public Object[] getTGTaoTheoNam() {
+        return hdRepo.getTGTaoTheoNam().toArray();
+    }
+
+    @Override
+    public List<HoaDonCustom> getAllHDBySearching(String search) {
+        String tttt;
+        List<HoaDonCustom> lstHDCustom = new ArrayList<>();
+        List<HoaDon> lstHoaDon = hdRepo.searchHD(search);
+        for (HoaDon hd : lstHoaDon) {
+            tttt = String.valueOf(hd.getTrangThaiTT());
+            lstHDCustom.add(new HoaDonCustom(
+                    hd.getMa(),
+                    hd.getTongTien() == null ? new BigDecimal(0) : hd.getTongTien(),
+                    hd.getTienTraLai() == null ? new BigDecimal(0) : hd.getTienTraLai(),
+                    hd.getPhuongThucTT() == null ? "Chưa có" : hd.getPhuongThucTT().getTen(),
+                    hd.getHinhThucGH() == null ? "Chưa có" : hd.getHinhThucGH().getTen(),
+                    hd.getTgTao(),
+                    tttt.equals("-1") ? "Đã huỷ" : tttt.equals("0") ? "Chờ thanh toán" : "Đã thanh toán",
+                    hd.getNhanVien().getId(),
+                    hd.getNhanVien().getHo() + " " + hd.getNhanVien().getTenDem() + " " + hd.getNhanVien().getTen(),
+                    hd.getKhachHang().getId(),
+                    hd.getKhachHang().getHo() + " " + hd.getKhachHang().getTenDem() + " " + hd.getKhachHang().getTen(),
+                    hd.getGhiChu()
+            ));
+        }
+        return lstHDCustom;
+    }
 }

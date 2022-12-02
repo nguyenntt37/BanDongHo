@@ -15,6 +15,10 @@ import viewmodel.HoaDonCustom;
 public interface IHoaDonService {
     List<HoaDonCustom> getAllHD();
     List<HDCTCustom> getAllHDCT(int maHD);
+    Object[] getAllPTTT();
+    Object[] getAllHTGH();
+    Object[] getTGTaoTheoNam();
+    List<HoaDonCustom> getAllHDBySearching(String search);
 //    HoaDon getById(String id);
 //    List<HoaDon> getHDTheoTrangThai(byte trangThai);
 }

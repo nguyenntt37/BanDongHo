@@ -47,7 +47,7 @@ public class BanHangServiceImpl implements IBanHangService {
 
     @Override
     public Object[] getSPCustom() {
-        return spRepo.getBH_SPCustom();
+        return spRepo.getBH_SPCustom().toArray();
     }
 
     @Override
