@@ -9,6 +9,7 @@ import Util.MoneyUtil;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Color;
 import java.awt.Font;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -166,6 +167,204 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
     }
 
+    private void loadHDChoTT() {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoTrangThai(0);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDDaTT() {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoTrangThai(1);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDDaHuy() {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoTrangThai(-1);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDTheoPTTT(String tenPTTT) {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoPTTT(tenPTTT);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDTheoHTGH(String tenHTGH) {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoHTGH(tenHTGH);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDTheoTongTien(BigDecimal from, BigDecimal to) {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoTongTien(from, to);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDTheoThang(int thang) {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoThang(thang);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDTheoNam(int nam) {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoNam(nam);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
+    private void loadHDTheoThangNam(int thang, int nam) {
+        tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
+        tblModelHD.setRowCount(0);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoThangNam(thang, nam);
+        for (HoaDonCustom hd : lstHD) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
+                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                hd.getPttt() == null ? "" : hd.getPttt(),
+                hd.getHtgh(),
+                DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -288,9 +487,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel7.setText("Tháng:");
 
         cboThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
-        cboThang.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboThangItemStateChanged(evt);
+        cboThang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboThangActionPerformed(evt);
             }
         });
 
@@ -298,9 +497,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel8.setText("Năm:");
 
         cboNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        cboNam.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboNamItemStateChanged(evt);
+        cboNam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboNamActionPerformed(evt);
             }
         });
 
@@ -340,9 +539,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel4.setText("Tổng tiền:");
 
         cboTongTien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "< 3 triệu đồng", "3 - 8 triệu đồng", "8 - 15 triệu đồng", "15 - 30 triệu đồng", "30 - 60 triệu đồng", "> 60 triệu đồng" }));
-        cboTongTien.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboTongTienItemStateChanged(evt);
+        cboTongTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTongTienActionPerformed(evt);
             }
         });
 
@@ -374,9 +573,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel3.setText("Hình thức giao hàng");
 
         cboHinhThucGH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        cboHinhThucGH.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboHinhThucGHItemStateChanged(evt);
+        cboHinhThucGH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboHinhThucGHActionPerformed(evt);
             }
         });
 
@@ -408,9 +607,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel2.setText("Phương thức thanh toán");
 
         cboPhuongThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        cboPhuongThucTT.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboPhuongThucTTItemStateChanged(evt);
+        cboPhuongThucTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboPhuongThucTTActionPerformed(evt);
             }
         });
 
@@ -442,9 +641,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel1.setText("Trạng thái thanh toán:");
 
         cboTrangThaiTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Chờ thanh toán", "Đã thanh toán", "Đã huỷ" }));
-        cboTrangThaiTT.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboTrangThaiTTItemStateChanged(evt);
+        cboTrangThaiTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTrangThaiTTActionPerformed(evt);
             }
         });
 
@@ -567,29 +766,78 @@ public class HoaDonForm extends javax.swing.JFrame {
             loadTableHD();
     }//GEN-LAST:event_txtTimKiemHDKeyReleased
 
-    private void cboThangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboThangItemStateChanged
+    private void cboTrangThaiTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiTTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboThangItemStateChanged
+        if (cboTrangThaiTT.getSelectedIndex() == 1) {
+            loadHDChoTT();
+        } else if (cboTrangThaiTT.getSelectedIndex() == 2) {
+            loadHDDaTT();
+        } else if (cboTrangThaiTT.getSelectedIndex() == 3) {
+            loadHDDaHuy();
+        } else
+            loadTableHD();
+    }//GEN-LAST:event_cboTrangThaiTTActionPerformed
 
-    private void cboNamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboNamItemStateChanged
+    private void cboPhuongThucTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhuongThucTTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboNamItemStateChanged
+        String pttt = String.valueOf(cboModelPTTT.getSelectedItem());
+        if (cboPhuongThucTT.getSelectedIndex() == 0) {
+            loadTableHD();
+        } else
+            loadHDTheoPTTT(pttt);
+    }//GEN-LAST:event_cboPhuongThucTTActionPerformed
 
-    private void cboTongTienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTongTienItemStateChanged
+    private void cboHinhThucGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHinhThucGHActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboTongTienItemStateChanged
+        String htgh = String.valueOf(cboModelHTGH.getSelectedItem());
+        if (cboHinhThucGH.getSelectedIndex() == 0) {
+            loadTableHD();
+        } else
+            loadHDTheoHTGH(htgh);
+    }//GEN-LAST:event_cboHinhThucGHActionPerformed
 
-    private void cboHinhThucGHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHinhThucGHItemStateChanged
+    private void cboTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTongTienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboHinhThucGHItemStateChanged
+        if (cboTongTien.getSelectedIndex() == 1) {
+            loadHDTheoTongTien(BigDecimal.valueOf(1), BigDecimal.valueOf(2999999));
+        } else if (cboTongTien.getSelectedIndex() == 2) {
+            loadHDTheoTongTien(BigDecimal.valueOf(3000000), BigDecimal.valueOf(7999999));
+        } else if (cboTongTien.getSelectedIndex() == 3) {
+            loadHDTheoTongTien(BigDecimal.valueOf(8000000), BigDecimal.valueOf(14999999));
+        } else if (cboTongTien.getSelectedIndex() == 4) {
+            loadHDTheoTongTien(BigDecimal.valueOf(15000000), BigDecimal.valueOf(29999999));
+        } else if (cboTongTien.getSelectedIndex() == 5) {
+            loadHDTheoTongTien(BigDecimal.valueOf(30000000), BigDecimal.valueOf(59999999));
+        } else if (cboTongTien.getSelectedIndex() == 6) {
+            loadHDTheoTongTien(BigDecimal.valueOf(60000000), BigDecimal.valueOf(999999999).multiply(BigDecimal.valueOf(999999999)));
+        } else
+            loadTableHD();
+    }//GEN-LAST:event_cboTongTienActionPerformed
 
-    private void cboPhuongThucTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboPhuongThucTTItemStateChanged
+    private void cboThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboThangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboPhuongThucTTItemStateChanged
+        System.out.println(String.valueOf(cboThang.getSelectedItem()));
+        if (cboThang.getSelectedIndex() > 0) {
+            if (cboNam.getSelectedIndex() == 0) {
+                loadHDTheoThang(Integer.parseInt(cboThang.getSelectedItem().toString()));
+            } else {
+                loadHDTheoThangNam(Integer.parseInt(cboThang.getSelectedItem().toString()), Integer.parseInt(cboNam.getSelectedItem().toString()));
+            }
+        } else
+            loadTableHD();
+    }//GEN-LAST:event_cboThangActionPerformed
 
-    private void cboTrangThaiTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiTTItemStateChanged
+    private void cboNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNamActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboTrangThaiTTItemStateChanged
+        if (cboNam.getSelectedIndex() > 0) {
+            if (cboThang.getSelectedIndex() == 0) {
+                loadHDTheoNam(Integer.parseInt(cboNam.getSelectedItem().toString()));
+            } else {
+                loadHDTheoThangNam(Integer.parseInt(cboThang.getSelectedItem().toString()), Integer.parseInt(cboNam.getSelectedItem().toString()));
+            }
+        } else
+            loadTableHD();
+    }//GEN-LAST:event_cboNamActionPerformed
 
     /**
      * @param args the command line arguments

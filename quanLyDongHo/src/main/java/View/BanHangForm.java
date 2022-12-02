@@ -70,8 +70,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         setLookAndFeel();
         initComponents();
         init();
-        btnThanhToan.putClientProperty("JButton.buttonType", "help");
-        txtTimKiem.putClientProperty("JTextField.placeholderText", "abcxyz");
+        txtTimKiem.putClientProperty("JTextField.placeholderText", "Tìm đê");
         txtTienKhachDua.putClientProperty("JComponent.outline", "");
 //        initWebcam();
     }

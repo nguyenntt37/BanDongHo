@@ -54,15 +54,85 @@ public class HoaDonRepository {
 
     //Lay danh sach hoa don theo trang thai
     public List<HoaDon> getHDTheoTrangThai(int trangThai) {
-        List<HoaDon> lstHDTheoTT = new ArrayList<>();
+        List<HoaDon> lstHD = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstHDTheoTT = session.createQuery("FROM HoaDon hd WHERE hd.trangThaiTT = :trangThai").setParameter("trangThai", trangThai).getResultList();
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.trangThaiTT = :trangThai").setParameter("trangThai", trangThai).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lstHDTheoTT;
+        return lstHD;
     }
 
+    public List<HoaDon> getHDTheoPTTT(String tenPTTT) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.phuongThucTT.ten = :tenPTTT").setParameter("tenPTTT", tenPTTT).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+
+    public List<HoaDon> getHDTheoHTGH(String tenHTGH) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.HinhThucGH.ten = :tenHTGH").setParameter("tenHTGH", tenHTGH).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+
+    public List<HoaDon> getHDTheoTongTien(BigDecimal from, BigDecimal to) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.tongTien IS NOT NULL AND hd.tongTien BETWEEN :from AND :to")
+                    .setParameter("from", from)
+                    .setParameter("to", to)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+
+    public List<HoaDon> getHDTheoThang(int thang) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE MONTH(hd.tgTao) = :thang")
+                    .setParameter("thang", thang)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+
+    public List<HoaDon> getHDTheoNam(int nam) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE YEAR(hd.tgTao) = :nam")
+                    .setParameter("nam", nam)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+
+        public List<HoaDon> getHDTheoThangNam(int thang, int nam) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE YEAR(hd.tgTao) = :nam AND MONTH(hd.tgTao) = :thang")
+                    .setParameter("nam", nam)
+                    .setParameter("thang", thang)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+        
     public void huyHD(int idHD) {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();

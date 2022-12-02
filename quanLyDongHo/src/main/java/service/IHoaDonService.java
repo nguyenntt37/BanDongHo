@@ -4,6 +4,7 @@
  */
 package service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import viewmodel.HDCTCustom;
 import viewmodel.HoaDonCustom;
@@ -19,6 +20,11 @@ public interface IHoaDonService {
     Object[] getAllHTGH();
     Object[] getTGTaoTheoNam();
     List<HoaDonCustom> getAllHDBySearching(String search);
-//    HoaDon getById(String id);
-//    List<HoaDon> getHDTheoTrangThai(byte trangThai);
+    List<HoaDonCustom> getHDTheoTrangThai(int trangThai);
+    List<HoaDonCustom> getHDTheoPTTT(String tenPTTT);
+    List<HoaDonCustom> getHDTheoHTGH(String tenHTGH);
+    List<HoaDonCustom> getHDTheoTongTien(BigDecimal from, BigDecimal to);
+    List<HoaDonCustom> getHDTheoThang(int thang);
+    List<HoaDonCustom> getHDTheoNam(int nam);
+    List<HoaDonCustom> getHDTheoThangNam(int thang, int nam);
 }
