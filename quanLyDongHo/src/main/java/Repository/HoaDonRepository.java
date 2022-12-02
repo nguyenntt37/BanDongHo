@@ -75,6 +75,30 @@ public class HoaDonRepository {
         }
     }
 
+    public List getTGTaoTheoNam() {
+        List lstNam = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstNam = session.createQuery("SELECT DISTINCT YEAR(hd.tgTao) AS nam FROM HoaDon hd ORDER BY nam ASC").getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstNam;
+    }
+
+    public List<HoaDon> searchHD(String search) {
+        List<HoaDon> lstHD = new ArrayList<>();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.ma LIKE :search "
+                    + "OR hd.nhanVien.ma LIKE :search "
+                    + "OR CONCAT(hd.nhanVien.ho,' ',hd.nhanVien.tenDem,' ',hd.nhanVien.ten) LIKE :search "
+                    + "OR hd.khachHang.ma LIKE :search "
+                    + "OR CONCAT(hd.khachHang.ho,' ',hd.khachHang.tenDem,' ',hd.khachHang.ten) LIKE :search").setParameter("search", "%" + search + "%").getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+
     public void thanhToanHD(int idHD, String ngayTT, BigDecimal tongTien, BigDecimal tienTraLai, String ghiChu, int pttt, int htgh) {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();

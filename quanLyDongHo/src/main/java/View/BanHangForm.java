@@ -70,6 +70,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         setLookAndFeel();
         initComponents();
         init();
+        btnThanhToan.putClientProperty("JButton.buttonType", "help");
+        txtTimKiem.putClientProperty("JTextField.placeholderText", "abcxyz");
+        txtTienKhachDua.putClientProperty("JComponent.outline", "");
 //        initWebcam();
     }
 
@@ -211,7 +214,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         try {
             int idHD = getIdHD();
             if (tblSanPham.getSelectedRowCount() >= 1) {
-                int idCTSP = Integer.parseInt(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0).toString());
+                int idCTSP = getIdCTSP(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0).toString());
                 bhService.insertSPToHDCT(idHD, sl, idCTSP);
                 bhService.loadSLTon(sl, idCTSP);
                 loadTableHDCT();
@@ -293,7 +296,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     private void xoaSPOnHDCT() {
         try {
-            int idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(tblHDCT.getSelectedRow(), 0).toString());
+            int idCTSP = getIdCTSP(tblModelHDCT.getValueAt(tblHDCT.getSelectedRow(), 0).toString());
             int sl = Integer.parseInt(tblModelHDCT.getValueAt(tblHDCT.getSelectedRow(), 3).toString());
             bhService.deleteSPOnHDCT(idCTSP, sl);
         } catch (Exception e) {
@@ -306,7 +309,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         int idCTSP, sl;
         try {
             for (int i = 0; i < tblHDCT.getRowCount(); i++) {
-                idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(i, 0).toString());
+                idCTSP = getIdCTSP(tblModelHDCT.getValueAt(i, 0).toString());
                 sl = Integer.parseInt(tblModelHDCT.getValueAt(i, 3).toString());
                 bhService.deleteSPOnHDCT(idCTSP, sl);
             }
@@ -335,7 +338,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             int idCTSP, sl;
             if (tblModelHDCT.getRowCount() > 0) {
                 for (int i = 0; i < tblHDCT.getRowCount(); i++) {
-                    idCTSP = Integer.parseInt(tblModelHDCT.getValueAt(i, 0).toString());
+                    idCTSP = getIdCTSP(tblModelHDCT.getValueAt(i, 0).toString());
                     sl = Integer.parseInt(tblModelHDCT.getValueAt(i, 3).toString());
                     bhService.updateSLTon(idCTSP, sl);
                 }
@@ -347,11 +350,22 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         }
     }
 
+    private void insertNewHD() {
+        KhachHang kh = new KhachHang();
+        HoaDon hd = new HoaDon();
+        kh.setId(getIdKH());
+        hd.setKhachHang(kh);
+        hd.setNhanVien(nvService.getByMaNV(Login.getCurrentLoginUsername()));
+        hd.setTgTao(DatetimeUtil.getCurrentDateAndTime());
+        hd.setTrangThaiTT(0);
+        bhService.insert(hd);
+    }
+
     public static void setInfoKhachHang(KhachHang kh) {
         lblMaKH.setText(kh.getMa());
         lblTenKH.setText(kh.getHo() + " " + kh.getTenDem() + " " + kh.getTen());
     }
-    
+
     private void resetGUI() {
         tblHoaDonCho.clearSelection();
         tblHDCT.clearSelection();
@@ -373,6 +387,10 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
     public int getIdKH() {
         return Integer.parseInt(lblMaKH.getText().substring(2));
+    }
+
+    public int getIdCTSP(String idCTSP) {
+        return Integer.parseInt(idCTSP.substring(4));
     }
 
     @Override
@@ -1140,15 +1158,10 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private void btnTaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoActionPerformed
         // TODO add your handling code here:
         resetGUI();
-        KhachHang kh = new KhachHang();
-        HoaDon hd = new HoaDon();
-        kh.setId(getIdKH());
-        hd.setKhachHang(kh);
-        hd.setNhanVien(nvService.getByMaNV(Login.getCurrentLoginUsername()));
-        hd.setTgTao(DatetimeUtil.getCurrentDateAndTime());
-        hd.setTrangThaiTT(0);
-        bhService.insert(hd);
+        insertNewHD();
         loadTableHDCho();
+        tblHoaDonCho.scrollRectToVisible(tblHoaDonCho.getCellRect(tblModelHD.getRowCount()-1, tblModelHD.getRowCount()-1, true));
+        tblHoaDonCho.setRowSelectionInterval(tblModelHD.getRowCount()-1, tblModelHD.getRowCount()-1);
     }//GEN-LAST:event_btnTaoActionPerformed
 
     private void cboDongSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDongSPActionPerformed

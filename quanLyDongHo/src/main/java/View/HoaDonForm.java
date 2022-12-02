@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -29,11 +30,13 @@ import viewmodel.HoaDonCustom;
  * @author Nguyen
  */
 public class HoaDonForm extends javax.swing.JFrame {
+
     private DefaultTableCellRenderer tblHDCellRenderer, tblHDCTCellRenderer;
     private DefaultTableModel tblModelHD, tblModelHDCT;
     private TableColumnModel tblHDColModel, tblHDCTColModel;
     private JTableHeader tblHDHeader, tblHDCTHeader;
     private IHoaDonService hdService = new HoaDonServiceImpl();
+    private DefaultComboBoxModel cboModelPTTT, cboModelHTGH, cboModelNam;
 
     /**
      * Creates new form HoaDonForm
@@ -42,11 +45,14 @@ public class HoaDonForm extends javax.swing.JFrame {
         setLookAndFeel();
         initComponents();
         init();
-        loadTableHD();
     }
 
     private void init() {
         initTableStructure();
+        loadCboPTTT();
+        loadCboHTGH();
+        loadTableHD();
+        loadCboNam();
     }
 
     private void initTableStructure() {
@@ -56,12 +62,12 @@ public class HoaDonForm extends javax.swing.JFrame {
         tblHDHeader.setBackground(Color.LIGHT_GRAY);
         tblHDCTHeader.setFont(new Font("segoeui", Font.BOLD, 12));
         tblHDCTHeader.setBackground(Color.LIGHT_GRAY);
-        
+
         tblHDCellRenderer = (DefaultTableCellRenderer) tblHoaDon.getDefaultRenderer(this.getClass());
         tblHDCTCellRenderer = (DefaultTableCellRenderer) tblHDCT.getDefaultRenderer(this.getClass());
         tblHDCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         tblHDCTCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        
+
         tblHDColModel = tblHoaDon.getColumnModel();
         tblHDCTColModel = tblHDCT.getColumnModel();
         tblHDColModel.getColumn(0).setPreferredWidth(30);
@@ -78,6 +84,27 @@ public class HoaDonForm extends javax.swing.JFrame {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void loadCboNam() {
+        cboModelNam = (DefaultComboBoxModel) cboNam.getModel();
+        for (Object o : hdService.getTGTaoTheoNam()) {
+            cboModelNam.addElement(o);
+        }
+    }
+
+    private void loadCboPTTT() {
+        cboModelPTTT = (DefaultComboBoxModel) cboPhuongThucTT.getModel();
+        for (Object o : hdService.getAllPTTT()) {
+            cboModelPTTT.addElement(o);
+        }
+    }
+
+    private void loadCboHTGH() {
+        cboModelHTGH = (DefaultComboBoxModel) cboHinhThucGH.getModel();
+        for (Object o : hdService.getAllHTGH()) {
+            cboModelHTGH.addElement(o);
         }
     }
 
@@ -119,6 +146,26 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
     }
 
+    private void loadTableHDBySearching(String search) {
+        tblModelHD.setRowCount(0);
+        for (HoaDonCustom hd : hdService.getAllHDBySearching(search)) {
+            tblModelHD.addRow(new Object[]{
+                hd.getMaHD(),
+                hd.getTongTien(),
+                hd.getTienThua(),
+                hd.getPttt(),
+                hd.getHtgh(),
+                hd.getTgTao(),
+                hd.getTrangThaiTT(),
+                hd.getMaNV(),
+                hd.getTenNV(),
+                hd.getMaKH(),
+                hd.getTenKH(),
+                hd.getGhiChu()
+            });
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +182,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
-        txtTimKiem3 = new javax.swing.JTextField();
+        txtTimKiemHD = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -147,13 +194,13 @@ public class HoaDonForm extends javax.swing.JFrame {
         cboTongTien = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        cboHinhThucThanhToan = new javax.swing.JComboBox<>();
+        cboHinhThucGH = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        cboHinhThucGiaoHang = new javax.swing.JComboBox<>();
+        cboPhuongThucTT = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cboTrangThaiThanhToan = new javax.swing.JComboBox<>();
+        cboTrangThaiTT = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,9 +272,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tblHoaDon);
 
-        txtTimKiem3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTimKiemHD.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimKiem3KeyReleased(evt);
+                txtTimKiemHDKeyReleased(evt);
             }
         });
 
@@ -240,6 +287,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Tháng:");
 
+        cboThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
         cboThang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboThangItemStateChanged(evt);
@@ -249,6 +297,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Năm:");
 
+        cboNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
         cboNam.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboNamItemStateChanged(evt);
@@ -290,6 +339,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Tổng tiền:");
 
+        cboTongTien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "< 3 triệu đồng", "3 - 8 triệu đồng", "8 - 15 triệu đồng", "15 - 30 triệu đồng", "30 - 60 triệu đồng", "> 60 triệu đồng" }));
         cboTongTien.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboTongTienItemStateChanged(evt);
@@ -321,11 +371,12 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Hình thức thanh toán");
+        jLabel3.setText("Hình thức giao hàng");
 
-        cboHinhThucThanhToan.addItemListener(new java.awt.event.ItemListener() {
+        cboHinhThucGH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
+        cboHinhThucGH.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboHinhThucThanhToanItemStateChanged(evt);
+                cboHinhThucGHItemStateChanged(evt);
             }
         });
 
@@ -337,7 +388,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(cboHinhThucThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboHinhThucGH, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
         jPanel3Layout.setVerticalGroup(
@@ -346,7 +397,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboHinhThucThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboHinhThucGH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -354,11 +405,12 @@ public class HoaDonForm extends javax.swing.JFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Hình thức giao hàng");
+        jLabel2.setText("Phương thức thanh toán");
 
-        cboHinhThucGiaoHang.addItemListener(new java.awt.event.ItemListener() {
+        cboPhuongThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
+        cboPhuongThucTT.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboHinhThucGiaoHangItemStateChanged(evt);
+                cboPhuongThucTTItemStateChanged(evt);
             }
         });
 
@@ -370,7 +422,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(cboHinhThucGiaoHang, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboPhuongThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -379,7 +431,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboHinhThucGiaoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboPhuongThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -389,9 +441,10 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Trạng thái thanh toán:");
 
-        cboTrangThaiThanhToan.addItemListener(new java.awt.event.ItemListener() {
+        cboTrangThaiTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Chờ thanh toán", "Đã thanh toán", "Đã huỷ" }));
+        cboTrangThaiTT.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboTrangThaiThanhToanItemStateChanged(evt);
+                cboTrangThaiTTItemStateChanged(evt);
             }
         });
 
@@ -403,7 +456,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(cboTrangThaiThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboTrangThaiTT, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60))
         );
         jPanel8Layout.setVerticalGroup(
@@ -412,7 +465,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboTrangThaiThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboTrangThaiTT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -440,7 +493,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                         .addGap(147, 147, 147)
                         .addComponent(jLabel13)
                         .addGap(18, 18, 18)
-                        .addComponent(txtTimKiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTimKiemHD, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -448,7 +501,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTimKiemHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -502,13 +555,17 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
-        int i = (int) tblModelHD.getValueAt(tblHoaDon.getSelectedRow(), 0);
-        loadTableHDCT(i);
+        int maHD = Integer.parseInt(tblModelHD.getValueAt(tblHoaDon.getSelectedRow(), 0).toString().substring(2));
+        loadTableHDCT(maHD);
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
-    private void txtTimKiem3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiem3KeyReleased
+    private void txtTimKiemHDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemHDKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiem3KeyReleased
+        if (txtTimKiemHD.getText().trim().length() > 0) {
+            loadTableHDBySearching(txtTimKiemHD.getText().trim());
+        } else
+            loadTableHD();
+    }//GEN-LAST:event_txtTimKiemHDKeyReleased
 
     private void cboThangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboThangItemStateChanged
         // TODO add your handling code here:
@@ -522,17 +579,17 @@ public class HoaDonForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboTongTienItemStateChanged
 
-    private void cboHinhThucThanhToanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHinhThucThanhToanItemStateChanged
+    private void cboHinhThucGHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHinhThucGHItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboHinhThucThanhToanItemStateChanged
+    }//GEN-LAST:event_cboHinhThucGHItemStateChanged
 
-    private void cboHinhThucGiaoHangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHinhThucGiaoHangItemStateChanged
+    private void cboPhuongThucTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboPhuongThucTTItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboHinhThucGiaoHangItemStateChanged
+    }//GEN-LAST:event_cboPhuongThucTTItemStateChanged
 
-    private void cboTrangThaiThanhToanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiThanhToanItemStateChanged
+    private void cboTrangThaiTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiTTItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboTrangThaiThanhToanItemStateChanged
+    }//GEN-LAST:event_cboTrangThaiTTItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -570,12 +627,12 @@ public class HoaDonForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cboHinhThucGiaoHang;
-    private javax.swing.JComboBox<String> cboHinhThucThanhToan;
+    private javax.swing.JComboBox<String> cboHinhThucGH;
     private javax.swing.JComboBox<String> cboNam;
+    private javax.swing.JComboBox<String> cboPhuongThucTT;
     private javax.swing.JComboBox<String> cboThang;
     private javax.swing.JComboBox<String> cboTongTien;
-    private javax.swing.JComboBox<String> cboTrangThaiThanhToan;
+    private javax.swing.JComboBox<String> cboTrangThaiTT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -595,6 +652,6 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable tblHDCT;
     private javax.swing.JTable tblHoaDon;
-    private javax.swing.JTextField txtTimKiem3;
+    private javax.swing.JTextField txtTimKiemHD;
     // End of variables declaration//GEN-END:variables
 }

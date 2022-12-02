@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HoaDonCustom {
-    private int maHD;
+    private String maHD;
     private BigDecimal tongTien;
     private BigDecimal tienThua;
     private String pttt;
