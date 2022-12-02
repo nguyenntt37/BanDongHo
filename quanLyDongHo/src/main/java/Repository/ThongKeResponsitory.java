@@ -28,7 +28,7 @@ public class ThongKeResponsitory {
                     + "p.chiTietSP.sanPham.ten,"
                     + "p.soLuong,"
                     + "p.dongia,"
-                    + "p.ngayTao"
+                    + "p.hoaDon.tgTao"
                     + ")from model.hoadon.hoaDonChiTiet p ");
             list = query.getResultList();
 
@@ -45,7 +45,7 @@ public class ThongKeResponsitory {
                     + "p.chiTietSP.sanPham.ten,"
                     + "p.soLuong,"
                     + "p.dongia,"
-                    + "p.ngayTao"
+                    + "p.hoaDon.tgTao"
                     + ")from model.hoadon.hoaDonChiTiet p where p.chiTietSP.sanPham.ten like :ten");
             query.setParameter("ten", "%" + ten + "%");
             list = query.getResultList();
@@ -63,8 +63,8 @@ public class ThongKeResponsitory {
                     + "p.chiTietSP.sanPham.ten,"
                     + "p.soLuong,"
                     + "p.dongia,"
-                    + "p.ngayTao"
-                    + ")from model.hoadon.hoaDonChiTiet p where datepart(yyyy, p.ngayTao) like :nam");
+                    + "p.hoaDon.tgTao"
+                    + ")from model.hoadon.hoaDonChiTiet p where datepart(yyyy, p.hoaDon.tgTao) like :nam");
             query.setParameter("nam", "%" + nam + "%");
             list = query.getResultList();
 
@@ -131,7 +131,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p  GROUP BY datepart(yyyy, p.ngayTao)");
+            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p  GROUP BY datepart(yyyy, p.hoaDon.tgTao)");
 
             result = (BigDecimal) query.getResultList().get(0);
             transaction.commit();
@@ -144,7 +144,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p  GROUP BY datepart(mm, p.ngayTao)");
+            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p  GROUP BY datepart(mm, p.hoaDon.tgTao)");
 
             result = (BigDecimal) query.getResultList().get(0);
             transaction.commit();
@@ -157,7 +157,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p where datepart(mm, p.ngayTao) =:ngayTao  ");
+            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p where datepart(mm, p.hoaDon.tgTao) =:ngayTao  ");
             query.setParameter("ngayTao", ngayTao);
             result = (BigDecimal) query.getResultList().get(0);
             transaction.commit();
@@ -170,7 +170,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p where datepart(yyyy, p.ngayTao) =:ngayTao  ");
+            Query query = session.createQuery("select   sum(p.dongia * p.soLuong) from hoaDonChiTiet p where datepart(yyyy, p.hoaDon.tgTao) =:ngayTao  ");
             query.setParameter("ngayTao", ngayTao);
             result = (BigDecimal) query.getResultList().get(0);
             transaction.commit();
@@ -183,7 +183,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p where datepart(mm, p.ngayTao) =:ngayTao");
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p where datepart(mm,p.hoaDon.tgTao) =:ngayTao");
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
@@ -196,7 +196,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p where datepart(yyyy, p.ngayTao) =:ngayTao");
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p where datepart(yyyy,p.hoaDon.tgTao) =:ngayTao");
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
@@ -209,7 +209,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai and datepart(mm, p.ngayTao) =:ngayTao ");
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai and datepart(mm, p.hoaDon.tgTao) =:ngayTao ");
             query.setParameter("trangthai", trangthai);
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
@@ -223,7 +223,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai and datepart(yyyy, p.ngayTao) =:ngayTao ");
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai and datepart(yyyy, p.hoaDon.tgTao) =:ngayTao ");
             query.setParameter("trangthai", trangthai);
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
@@ -237,7 +237,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p where datepart(mm, p.ngayTao) =:ngayTao ");
+            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p where datepart(mm, p.hoaDon.tgTao) =:ngayTao ");
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
@@ -250,7 +250,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p where datepart(yyyy, p.ngayTao) =:ngayTao ");
+            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p where datepart(yyyy, p.hoaDon.tgTao) =:ngayTao ");
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
@@ -263,7 +263,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p GROUP BY  datepart(yyyy, p.ngayTao)");
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p GROUP BY  datepart(yyyy,p.hoaDon.tgTao)");
         //    query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
@@ -276,7 +276,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p GROUP BY  datepart(yyyy, p.ngayTao) ");
+            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p GROUP BY  datepart(yyyy,p.hoaDon.tgTao) ");
     //        query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
