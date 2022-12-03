@@ -75,7 +75,7 @@ public class SanPhamReponstory {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            session.saveOrUpdate(ct);
+            session.save(ct);
             tran.commit();
             return true;
         } catch (HibernateException e) {
@@ -172,7 +172,7 @@ public class SanPhamReponstory {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
 
             tran = session.beginTransaction();
-            session.saveOrUpdate(sp);
+            session.save(sp);
             tran.commit();
             return true;
         } catch (HibernateException e) {
@@ -297,12 +297,11 @@ public class SanPhamReponstory {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            session.saveOrUpdate(sp);
-
+            session.save(sp);
+            sp.setMa(String.valueOf("SP" + sp.getId()));
             tran.commit();
             return true;
         } catch (HibernateException e) {
-            tran.begin();
             return false;
         }
     }
@@ -436,7 +435,7 @@ public class SanPhamReponstory {
         Transaction tran = null;
         try ( Session sesion = HibernatUtil.getFACTORY().openSession()) {
             tran = sesion.beginTransaction();
-            sesion.saveOrUpdate(dp);
+            sesion.save(dp);
             tran.commit();
             return true;
         } catch (HibernateException e) {
@@ -449,7 +448,7 @@ public class SanPhamReponstory {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            session.saveOrUpdate(nsx);
+            session.save(nsx);
             tran.commit();
             return true;
         } catch (HibernateException e) {
