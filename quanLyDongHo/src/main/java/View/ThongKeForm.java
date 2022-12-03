@@ -168,6 +168,7 @@ public class ThongKeForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnGuiBaoCao = new javax.swing.JButton();
+        btnGuiBaoCao1 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         radioTatCa = new javax.swing.JRadioButton();
         radioThang = new javax.swing.JRadioButton();
@@ -384,15 +385,29 @@ public class ThongKeForm extends javax.swing.JFrame {
             }
         });
 
+        btnGuiBaoCao1.setBackground(new java.awt.Color(51, 102, 153));
+        btnGuiBaoCao1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnGuiBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuiBaoCao1.setText("Sơ đồ");
+        btnGuiBaoCao1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 153), 1, true));
+        btnGuiBaoCao1.setPreferredSize(new java.awt.Dimension(60, 30));
+        btnGuiBaoCao1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuiBaoCao1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane5)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(btnGuiBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(btnGuiBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuiBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -411,7 +426,8 @@ public class ThongKeForm extends javax.swing.JFrame {
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel1)
-                    .addComponent(btnGuiBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuiBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuiBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -902,6 +918,12 @@ public class ThongKeForm extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_panelBorder13MouseClicked
 
+    private void btnGuiBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiBaoCao1ActionPerformed
+         soDoTK view = new soDoTK(this, true);
+      //  this.dispose();
+        view.setVisible(true);
+    }//GEN-LAST:event_btnGuiBaoCao1ActionPerformed
+
     private void loadThongKeTheoCbbThang(String thang) {
         BigDecimal doanhThuTheoTungThangCBB = thongKeSevice.doanhThuTheoTungThangCBB(thang);
         Long soHoaDonTheoThang = thongKeSevice.soHoaDonTheoThang(thang);
@@ -999,6 +1021,7 @@ public class ThongKeForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuiBaoCao;
+    private javax.swing.JButton btnGuiBaoCao1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbNam;
     private javax.swing.JComboBox<String> cbbThang;
