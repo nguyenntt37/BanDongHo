@@ -34,7 +34,7 @@ public class soDoTK extends javax.swing.JDialog {
         setData() ;
     }
  private void setData() {
-       String query = "select datepart(mm, p.ngay_tao) as month, sum(p.don_gia * p.so_luong) as cost from hoa_don_chi_tiet  p group by  datepart(mm, p.ngay_tao)";
+       String query = "select datepart(mm, hd.tg_tao) as month, sum(p.don_gia * p.so_luong) as cost from hoa_don_chi_tiet   p  join hoa_don hd on p.id_hoa_don = hd.id group by  datepart(mm, hd.tg_tao)";
         try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<modelData> listKH = new ArrayList<>();
