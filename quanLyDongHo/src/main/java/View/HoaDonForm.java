@@ -9,6 +9,7 @@ import Util.MoneyUtil;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +22,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import model.HoaDon.HinhThucGH;
+import model.HoaDon.PhuongThucTT;
 import service.IHoaDonService;
 import service.impl.HoaDonServiceImpl;
 import viewmodel.HDCTCustom;
@@ -54,6 +57,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         loadCboHTGH();
         loadTableHD();
         loadCboNam();
+        txtTimKiemHD.putClientProperty("JTextField.placeholderText", "Nhập mã hoá đơn hoặc mã/tên nhân viên hoặc mã/tên khách hàng");
     }
 
     private void initTableStructure() {
@@ -233,10 +237,10 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
     }
 
-    private void loadHDTheoPTTT(String tenPTTT) {
+    private void loadHDTheoPTTT(int idPTTT) {
         tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
         tblModelHD.setRowCount(0);
-        List<HoaDonCustom> lstHD = hdService.getHDTheoPTTT(tenPTTT);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoPTTT(idPTTT);
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
@@ -255,10 +259,10 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
     }
 
-    private void loadHDTheoHTGH(String tenHTGH) {
+    private void loadHDTheoHTGH(int idHTGH) {
         tblModelHD = (DefaultTableModel) tblHoaDon.getModel();
         tblModelHD.setRowCount(0);
-        List<HoaDonCustom> lstHD = hdService.getHDTheoHTGH(tenHTGH);
+        List<HoaDonCustom> lstHD = hdService.getHDTheoHTGH(idHTGH);
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
@@ -502,9 +506,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel7.setText("Tháng:");
 
         cboThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
-        cboThang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboThangActionPerformed(evt);
+        cboThang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboThangItemStateChanged(evt);
             }
         });
 
@@ -512,9 +516,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel8.setText("Năm:");
 
         cboNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        cboNam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboNamActionPerformed(evt);
+        cboNam.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboNamItemStateChanged(evt);
             }
         });
 
@@ -554,9 +558,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel4.setText("Tổng tiền:");
 
         cboTongTien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "< 3 triệu đồng", "3 - 8 triệu đồng", "8 - 15 triệu đồng", "15 - 30 triệu đồng", "30 - 60 triệu đồng", "> 60 triệu đồng" }));
-        cboTongTien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboTongTienActionPerformed(evt);
+        cboTongTien.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTongTienItemStateChanged(evt);
             }
         });
 
@@ -588,9 +592,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel3.setText("Hình thức giao hàng");
 
         cboHinhThucGH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        cboHinhThucGH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboHinhThucGHActionPerformed(evt);
+        cboHinhThucGH.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboHinhThucGHItemStateChanged(evt);
             }
         });
 
@@ -622,9 +626,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel2.setText("Phương thức thanh toán");
 
         cboPhuongThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        cboPhuongThucTT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboPhuongThucTTActionPerformed(evt);
+        cboPhuongThucTT.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboPhuongThucTTItemStateChanged(evt);
             }
         });
 
@@ -656,9 +660,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel1.setText("Trạng thái thanh toán:");
 
         cboTrangThaiTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Chờ thanh toán", "Đã thanh toán", "Đã huỷ" }));
-        cboTrangThaiTT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboTrangThaiTTActionPerformed(evt);
+        cboTrangThaiTT.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTrangThaiTTItemStateChanged(evt);
             }
         });
 
@@ -993,84 +997,17 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void txtTimKiemHDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemHDKeyReleased
         // TODO add your handling code here:
+        cboTrangThaiTT.setSelectedIndex(0);
+        cboPhuongThucTT.setSelectedIndex(0);
+        cboHinhThucGH.setSelectedIndex(0);
+        cboTongTien.setSelectedIndex(0);
+        cboThang.setSelectedIndex(0);
+        cboNam.setSelectedIndex(0);
         if (txtTimKiemHD.getText().trim().length() > 0) {
             loadTableHDBySearching(txtTimKiemHD.getText().trim());
         } else
             loadTableHD();
     }//GEN-LAST:event_txtTimKiemHDKeyReleased
-
-    private void cboTrangThaiTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiTTActionPerformed
-        // TODO add your handling code here:
-        if (cboTrangThaiTT.getSelectedIndex() == 1) {
-            loadHDChoTT();
-        } else if (cboTrangThaiTT.getSelectedIndex() == 2) {
-            loadHDDaTT();
-        } else if (cboTrangThaiTT.getSelectedIndex() == 3) {
-            loadHDDaHuy();
-        } else
-            loadTableHD();
-    }//GEN-LAST:event_cboTrangThaiTTActionPerformed
-
-    private void cboPhuongThucTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPhuongThucTTActionPerformed
-        // TODO add your handling code here:
-        String pttt = String.valueOf(cboModelPTTT.getSelectedItem());
-        if (cboPhuongThucTT.getSelectedIndex() == 0) {
-            loadTableHD();
-        } else
-            loadHDTheoPTTT(pttt);
-    }//GEN-LAST:event_cboPhuongThucTTActionPerformed
-
-    private void cboHinhThucGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHinhThucGHActionPerformed
-        // TODO add your handling code here:
-        String htgh = String.valueOf(cboModelHTGH.getSelectedItem());
-        if (cboHinhThucGH.getSelectedIndex() == 0) {
-            loadTableHD();
-        } else
-            loadHDTheoHTGH(htgh);
-    }//GEN-LAST:event_cboHinhThucGHActionPerformed
-
-    private void cboTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTongTienActionPerformed
-        // TODO add your handling code here:
-        if (cboTongTien.getSelectedIndex() == 1) {
-            loadHDTheoTongTien(BigDecimal.valueOf(1), BigDecimal.valueOf(2999999));
-        } else if (cboTongTien.getSelectedIndex() == 2) {
-            loadHDTheoTongTien(BigDecimal.valueOf(3000000), BigDecimal.valueOf(7999999));
-        } else if (cboTongTien.getSelectedIndex() == 3) {
-            loadHDTheoTongTien(BigDecimal.valueOf(8000000), BigDecimal.valueOf(14999999));
-        } else if (cboTongTien.getSelectedIndex() == 4) {
-            loadHDTheoTongTien(BigDecimal.valueOf(15000000), BigDecimal.valueOf(29999999));
-        } else if (cboTongTien.getSelectedIndex() == 5) {
-            loadHDTheoTongTien(BigDecimal.valueOf(30000000), BigDecimal.valueOf(59999999));
-        } else if (cboTongTien.getSelectedIndex() == 6) {
-            loadHDTheoTongTien(BigDecimal.valueOf(60000000), BigDecimal.valueOf(999999999).multiply(BigDecimal.valueOf(999999999)));
-        } else
-            loadTableHD();
-    }//GEN-LAST:event_cboTongTienActionPerformed
-
-    private void cboThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboThangActionPerformed
-        // TODO add your handling code here:
-        System.out.println(String.valueOf(cboThang.getSelectedItem()));
-        if (cboThang.getSelectedIndex() > 0) {
-            if (cboNam.getSelectedIndex() == 0) {
-                loadHDTheoThang(Integer.parseInt(cboThang.getSelectedItem().toString()));
-            } else {
-                loadHDTheoThangNam(Integer.parseInt(cboThang.getSelectedItem().toString()), Integer.parseInt(cboNam.getSelectedItem().toString()));
-            }
-        } else
-            loadTableHD();
-    }//GEN-LAST:event_cboThangActionPerformed
-
-    private void cboNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNamActionPerformed
-        // TODO add your handling code here:
-        if (cboNam.getSelectedIndex() > 0) {
-            if (cboThang.getSelectedIndex() == 0) {
-                loadHDTheoNam(Integer.parseInt(cboNam.getSelectedItem().toString()));
-            } else {
-                loadHDTheoThangNam(Integer.parseInt(cboThang.getSelectedItem().toString()), Integer.parseInt(cboNam.getSelectedItem().toString()));
-            }
-        } else
-            loadTableHD();
-    }//GEN-LAST:event_cboNamActionPerformed
 
     private void panelBorder5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder5MouseClicked
         BanHangForm view = new BanHangForm();
@@ -1111,6 +1048,143 @@ public class HoaDonForm extends javax.swing.JFrame {
         this.dispose();
         view.setVisible(true);
     }//GEN-LAST:event_panelBorder13MouseClicked
+
+    private void cboTrangThaiTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiTTItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cboPhuongThucTT.setSelectedIndex(0);
+            cboHinhThucGH.setSelectedIndex(0);
+            cboTongTien.setSelectedIndex(0);
+            cboThang.setSelectedIndex(0);
+            cboNam.setSelectedIndex(0);
+            txtTimKiemHD.setText("");
+            switch (cboTrangThaiTT.getSelectedIndex()) {
+                case 1:
+                    loadHDChoTT();
+                    break;
+                case 2:
+                    loadHDDaTT();
+                    break;
+                case 3:
+                    loadHDDaHuy();
+                    break;
+                default:
+                    loadTableHD();
+                    break;
+            }
+        }
+    }//GEN-LAST:event_cboTrangThaiTTItemStateChanged
+
+    private void cboPhuongThucTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboPhuongThucTTItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cboTrangThaiTT.setSelectedIndex(0);
+            cboHinhThucGH.setSelectedIndex(0);
+            cboTongTien.setSelectedIndex(0);
+            cboThang.setSelectedIndex(0);
+            cboNam.setSelectedIndex(0);
+            txtTimKiemHD.setText("");
+            if (cboPhuongThucTT.getSelectedIndex() == 0) {
+                loadTableHD();
+            } else {
+                PhuongThucTT pttt = (PhuongThucTT) cboPhuongThucTT.getSelectedItem();
+                loadHDTheoPTTT(pttt.getId());
+            }
+        }
+    }//GEN-LAST:event_cboPhuongThucTTItemStateChanged
+
+    private void cboHinhThucGHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHinhThucGHItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cboTrangThaiTT.setSelectedIndex(0);
+            cboPhuongThucTT.setSelectedIndex(0);
+            cboTongTien.setSelectedIndex(0);
+            cboThang.setSelectedIndex(0);
+            cboNam.setSelectedIndex(0);
+            txtTimKiemHD.setText("");
+            if (cboHinhThucGH.getSelectedIndex() == 0) {
+                loadTableHD();
+            } else {
+                HinhThucGH htgh = (HinhThucGH) cboHinhThucGH.getSelectedItem();
+                loadHDTheoPTTT(htgh.getId());
+            }
+        }
+    }//GEN-LAST:event_cboHinhThucGHItemStateChanged
+
+    private void cboTongTienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTongTienItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cboTrangThaiTT.setSelectedIndex(0);
+            cboPhuongThucTT.setSelectedIndex(0);
+            cboHinhThucGH.setSelectedIndex(0);
+            cboThang.setSelectedIndex(0);
+            cboNam.setSelectedIndex(0);
+            txtTimKiemHD.setText("");
+            switch (cboTongTien.getSelectedIndex()) {
+                case 1:
+                    loadHDTheoTongTien(BigDecimal.valueOf(1), BigDecimal.valueOf(2999999));
+                    break;
+                case 2:
+                    loadHDTheoTongTien(BigDecimal.valueOf(3000000), BigDecimal.valueOf(7999999));
+                    break;
+                case 3:
+                    loadHDTheoTongTien(BigDecimal.valueOf(8000000), BigDecimal.valueOf(14999999));
+                    break;
+                case 4:
+                    loadHDTheoTongTien(BigDecimal.valueOf(15000000), BigDecimal.valueOf(29999999));
+                    break;
+                case 5:
+                    loadHDTheoTongTien(BigDecimal.valueOf(30000000), BigDecimal.valueOf(59999999));
+                    break;
+                case 6:
+                    loadHDTheoTongTien(BigDecimal.valueOf(60000000), BigDecimal.valueOf(999999999).multiply(BigDecimal.valueOf(1000)));
+                    break;
+                default:
+                    loadTableHD();
+                    break;
+            }
+        }
+    }//GEN-LAST:event_cboTongTienItemStateChanged
+
+    private void cboThangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboThangItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cboTrangThaiTT.setSelectedIndex(0);
+            cboPhuongThucTT.setSelectedIndex(0);
+            cboHinhThucGH.setSelectedIndex(0);
+            cboTongTien.setSelectedIndex(0);
+            txtTimKiemHD.setText("");
+            if (cboThang.getSelectedIndex() > 0) {
+                if (cboNam.getSelectedIndex() == 0) {
+                    loadHDTheoThang(Integer.parseInt(cboThang.getSelectedItem().toString()));
+                } else {
+                    loadHDTheoThangNam(Integer.parseInt(cboThang.getSelectedItem().toString()), Integer.parseInt(cboNam.getSelectedItem().toString()));
+                }
+            } else {
+                loadTableHD();
+            }
+        }
+    }//GEN-LAST:event_cboThangItemStateChanged
+
+    private void cboNamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboNamItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cboTrangThaiTT.setSelectedIndex(0);
+            cboPhuongThucTT.setSelectedIndex(0);
+            cboHinhThucGH.setSelectedIndex(0);
+            cboTongTien.setSelectedIndex(0);
+            txtTimKiemHD.setText("");
+            if (cboNam.getSelectedIndex() > 0) {
+                if (cboThang.getSelectedIndex() == 0) {
+                    loadHDTheoNam(Integer.parseInt(cboNam.getSelectedItem().toString()));
+                } else {
+                    loadHDTheoThangNam(Integer.parseInt(cboThang.getSelectedItem().toString()), Integer.parseInt(cboNam.getSelectedItem().toString()));
+                }
+            } else {
+                loadTableHD();
+            }
+        }
+    }//GEN-LAST:event_cboNamItemStateChanged
 
     /**
      * @param args the command line arguments

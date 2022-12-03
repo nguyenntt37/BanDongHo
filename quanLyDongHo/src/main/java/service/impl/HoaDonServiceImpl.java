@@ -138,9 +138,9 @@ public class HoaDonServiceImpl implements IHoaDonService {
     }
 
     @Override
-    public List<HoaDonCustom> getHDTheoPTTT(String tenPTTT) {
+    public List<HoaDonCustom> getHDTheoPTTT(int idPTTT) {
         String tttt;
-        List<HoaDon> lstHD = hdRepo.getHDTheoPTTT(tenPTTT);
+        List<HoaDon> lstHD = hdRepo.getHDTheoPTTT(idPTTT);
         List<HoaDonCustom> lstHDCustom = new ArrayList<>();
         for (HoaDon hd : lstHD) {
             tttt = String.valueOf(hd.getTrangThaiTT());
@@ -163,9 +163,9 @@ public class HoaDonServiceImpl implements IHoaDonService {
     }
 
     @Override
-    public List<HoaDonCustom> getHDTheoHTGH(String tenHTGH) {
+    public List<HoaDonCustom> getHDTheoHTGH(int idHTGH) {
         String tttt;
-        List<HoaDon> lstHD = hdRepo.getHDTheoHTGH(tenHTGH);
+        List<HoaDon> lstHD = hdRepo.getHDTheoHTGH(idHTGH);
         List<HoaDonCustom> lstHDCustom = new ArrayList<>();
         for (HoaDon hd : lstHD) {
             tttt = String.valueOf(hd.getTrangThaiTT());

@@ -52,20 +52,20 @@ public class HoaDonRepository {
         return lstHD;
     }
 
-    public List<HoaDon> getHDTheoPTTT(String tenPTTT) {
+    public List<HoaDon> getHDTheoPTTT(int idPTTT) {
         List<HoaDon> lstHD = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.phuongThucTT.ten = :tenPTTT").setParameter("tenPTTT", tenPTTT).getResultList();
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.phuongThucTT.id = :idPTTT").setParameter("idPTTT", idPTTT).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return lstHD;
     }
 
-    public List<HoaDon> getHDTheoHTGH(String tenHTGH) {
+    public List<HoaDon> getHDTheoHTGH(int idHTGH) {
         List<HoaDon> lstHD = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.HinhThucGH.ten = :tenHTGH").setParameter("tenHTGH", tenHTGH).getResultList();
+            lstHD = session.createQuery("FROM HoaDon hd WHERE hd.HinhThucGH.id = :idHTGH").setParameter("idHTGH", idHTGH).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }

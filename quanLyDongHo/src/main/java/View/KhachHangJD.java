@@ -188,7 +188,7 @@ public class KhachHangJD extends javax.swing.JDialog {
                 .addGap(17, 17, 17))
         );
 
-        jTabbedPane1.addTab("Danh Sách Khách Hàng", jPanel1);
+        jTabbedPane1.addTab("Danh sách khách hàng", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 

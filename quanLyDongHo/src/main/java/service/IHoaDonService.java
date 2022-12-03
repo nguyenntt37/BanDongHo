@@ -22,8 +22,8 @@ public interface IHoaDonService {
     Object[] getTGTaoTheoNam();
     List<HoaDonCustom> getAllHDBySearching(String search);
     List<HoaDonCustom> getHDTheoTrangThai(int trangThai);
-    List<HoaDonCustom> getHDTheoPTTT(String tenPTTT);
-    List<HoaDonCustom> getHDTheoHTGH(String tenHTGH);
+    List<HoaDonCustom> getHDTheoPTTT(int idPTTT);
+    List<HoaDonCustom> getHDTheoHTGH(int idHTGH);
     List<HoaDonCustom> getHDTheoTongTien(BigDecimal from, BigDecimal to);
     List<HoaDonCustom> getHDTheoThang(int thang);
     List<HoaDonCustom> getHDTheoNam(int nam);
