@@ -41,17 +41,6 @@ public class HoaDonRepository {
         return lstHoaDon;
     }
 
-    //Lay hoa don theo ID
-    public HoaDon getById(String id) {
-        HoaDon hd = new HoaDon();
-        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            hd = session.get(HoaDon.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return hd;
-    }
-
     //Lay danh sach hoa don theo trang thai
     public List<HoaDon> getHDTheoTrangThai(int trangThai) {
         List<HoaDon> lstHD = new ArrayList<>();
@@ -206,5 +195,15 @@ public class HoaDonRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public HoaDon getById(int id) {
+        HoaDon hd = new HoaDon();
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            hd = (HoaDon) session.createQuery("FROM HoaDon hd WHERE hd.id = :id").setParameter("id", id).getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hd;
     }
 }

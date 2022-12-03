@@ -72,14 +72,6 @@ public class HoaDonServiceImpl implements IHoaDonService {
         return lstHDCTCustom;
     }
 
-    //
-//    @Override
-//    public HoaDon getById(String id) {
-//        HoaDon hd;
-//        hd = repo.getById(id);
-//        return hd;
-//    }
-//
     @Override
     public List<HoaDonCustom> getHDTheoTrangThai(int trangThai) {
         String tttt;

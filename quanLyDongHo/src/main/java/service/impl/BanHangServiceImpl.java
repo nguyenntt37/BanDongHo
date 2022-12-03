@@ -114,4 +114,9 @@ public class BanHangServiceImpl implements IBanHangService {
     public void updateKhachHang(int idKH, int idHD) {
         hdRepo.updateKhachHang(idKH, idHD);
     }
+
+    @Override
+    public HoaDon getHDById(int id) {
+        return hdRepo.getById(id);
+    }
 }

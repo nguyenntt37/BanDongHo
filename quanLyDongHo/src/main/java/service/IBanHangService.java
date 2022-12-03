@@ -30,4 +30,5 @@ public interface IBanHangService {
     Object[] getAllPTTT();
     Object[] searchSP(String search);
     void updateKhachHang(int idKH, int idHD);
+    HoaDon getHDById(int id);
 }

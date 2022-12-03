@@ -19,9 +19,12 @@ import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -42,6 +45,13 @@ import model.HoaDon.HinhThucGH;
 import model.HoaDon.PhuongThucTT;
 import model.KhachHang;
 import model.hoadon.HoaDon;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import service.IBanHangService;
 import service.INhanVienService;
 import service.impl.BanHangServiceImpl;
@@ -137,6 +147,206 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jPanel2.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 150));
 
         executor.execute(this);
+    }
+
+    public void xuatFileHoaDon() {
+        HoaDon hd = bhService.getHDById(getIdHD());
+        File file = new File("src\\main\\java\\file\\HD" + getIdHD() + ".docx");
+        try {
+            try ( XWPFDocument document = new XWPFDocument()) {
+                FileOutputStream out = new FileOutputStream(file);
+
+                XWPFParagraph paragraph = document.createParagraph();
+                XWPFRun run = paragraph.createRun();
+                paragraph.setAlignment(ParagraphAlignment.CENTER);
+                run.setText("CỬA HÀNG ĐỒNG HỒ ĐỂU");
+                run.setFontFamily("Bahnschrift");
+                run.setFontSize(19);
+                run.setBold(true);
+
+                XWPFParagraph paragraph2 = document.createParagraph();
+                XWPFRun run2 = paragraph2.createRun();
+                paragraph2.setAlignment(ParagraphAlignment.CENTER);
+                run2.setText("ĐC: Số 69, đường Trần Duy Hưng, quận Paper Bridge, TP.Hà Nội");
+                run2.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph3 = document.createParagraph();
+                XWPFRun run3 = paragraph3.createRun();
+                paragraph3.setAlignment(ParagraphAlignment.CENTER);
+                run3.setText("ĐT: 0969.049.053");
+                run3.setFontFamily("Bahnschrift");
+                run3.setTextPosition(50);
+
+                XWPFParagraph paragraph4 = document.createParagraph();
+                XWPFRun run4 = paragraph4.createRun();
+                paragraph4.setAlignment(ParagraphAlignment.CENTER);
+                run4.setText("HÓA ĐƠN BÁN HÀNG");
+                run4.setFontFamily("Bahnschrift");
+                run4.setFontSize(26);
+                run4.setBold(true);
+
+                XWPFParagraph paragraph5 = document.createParagraph();
+                XWPFRun run5 = paragraph5.createRun();
+                paragraph5.setAlignment(ParagraphAlignment.CENTER);
+                run5.setText("Hóa đơn: " + hd.getMa());
+                run5.setFontFamily("Bahnschrift");
+                run5.setTextPosition(50);
+
+                XWPFParagraph paragraph6 = document.createParagraph();
+                XWPFRun run6 = paragraph6.createRun();
+                run6.setText("Khách hàng: " + hd.getKhachHang().getHo() + " " + hd.getKhachHang().getTenDem() + " " + hd.getKhachHang().getTen());
+                run6.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph7 = document.createParagraph();
+                XWPFRun run7 = paragraph7.createRun();
+                run7.setText("Địa chỉ: " + hd.getKhachHang().getDiaChi());
+                run7.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph8 = document.createParagraph();
+                XWPFRun run8 = paragraph8.createRun();
+                run8.setText("SĐT: " + hd.getKhachHang().getSdt());
+                run8.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph9 = document.createParagraph();
+                XWPFRun run9 = paragraph9.createRun();
+                run9.setText("Ngày lập: " + hd.getTgTao());
+                run9.setFontFamily("Bahnschrift");
+                run9.setTextPosition(20);
+
+                XWPFTable table = document.createTable(tblHDCT.getRowCount() + 2, 5);
+                table.setWidth(100);
+
+                XWPFTableRow row = table.getRow(0);
+                XWPFParagraph paragraph10 = row.getCell(0).addParagraph();
+                paragraph10.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run10 = paragraph10.createRun();
+                run10.setText("Mã sản phẩm");
+                run10.setFontFamily("Bahnschrift");
+                run10.setBold(true);
+                run10.setTextPosition(20);
+
+                XWPFParagraph paragraph11 = row.getCell(1).addParagraph();
+                paragraph11.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run11 = paragraph11.createRun();
+                run11.setText("Tên sản phẩm");
+                run11.setFontFamily("Bahnschrift");
+                run11.setBold(true);
+                run11.setTextPosition(20);
+
+                XWPFParagraph paragraph12 = row.getCell(2).addParagraph();
+                paragraph12.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run12 = paragraph12.createRun();
+                run12.setText("Số lượng");
+                run12.setFontFamily("Bahnschrift");
+                run12.setBold(true);
+                run12.setTextPosition(20);
+
+                XWPFParagraph paragraph13 = row.getCell(3).addParagraph();
+                paragraph13.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run13 = paragraph13.createRun();
+                run13.setText("Đơn giá");
+                run13.setFontFamily("Bahnschrift");
+                run13.setBold(true);
+                run13.setTextPosition(20);
+
+                XWPFParagraph paragraph14 = row.getCell(4).addParagraph();
+                paragraph14.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run14 = paragraph14.createRun();
+                run14.setText("Thành tiền");
+                run14.setFontFamily("Bahnschrift");
+                run14.setBold(true);
+                run14.setTextPosition(20);
+                
+                for (int i = 0; i < tblHDCT.getRowCount(); i++) {
+                    table.getRow(i + 1).getCell(0).setText(tblHDCT.getValueAt(i, 0).toString()); //Ma san pham
+                    table.getRow(i + 1).getCell(1).setText(tblHDCT.getValueAt(i, 1).toString()); //Ten san pham
+                    table.getRow(i + 1).getCell(2).setText(tblHDCT.getValueAt(i, 3).toString()); //So luong
+                    table.getRow(i + 1).getCell(3).setText(tblHDCT.getValueAt(i, 2).toString()); //Don gia
+                    table.getRow(i + 1).getCell(4).setText(String.valueOf(MoneyUtil.removeDecimalPart(tblHDCT.getValueAt(i, 3).toString()) * MoneyUtil.removeDecimalPart(tblHDCT.getValueAt(i, 2).toString()))); //Thanh tien
+                }
+
+                int tongSL = 0;
+                for (int i = 0; i < tblHDCT.getRowCount(); i++) {
+                    tongSL += Integer.parseInt(tblHDCT.getValueAt(i, 3) + "");
+                }
+
+                table.getRow(tblHDCT.getRowCount() + 1).getCell(0).setText("Tổng");
+                table.getRow(tblHDCT.getRowCount() + 1).getCell(1).setText("");
+                table.getRow(tblHDCT.getRowCount() + 1).getCell(2).setText(tongSL + "");
+                table.getRow(tblHDCT.getRowCount() + 1).getCell(3).setText("");
+                table.getRow(tblHDCT.getRowCount() + 1).getCell(4).setText(hd.getTongTien().toString());
+
+                XWPFParagraph paragraph22 = document.createParagraph();
+                paragraph22.setAlignment(ParagraphAlignment.LEFT);
+
+                XWPFParagraph paragraph15 = document.createParagraph();
+                paragraph15.setAlignment(ParagraphAlignment.LEFT);
+                XWPFRun run20 = paragraph15.createRun();
+                run20.setText("TỔNG TIỀN PHẢI THANH TOÁN: " + lblThanhToan.getText() + " VNĐ");
+                run20.setFontFamily("Bahnschrift");
+                run20.setBold(true);
+
+                XWPFParagraph paragraph24 = document.createParagraph();
+                paragraph24.setAlignment(ParagraphAlignment.LEFT);
+                XWPFRun run24 = paragraph24.createRun();
+                run24.setText("Tiền khách trả: " + txtTienKhachDua.getText() + " VNĐ");
+                run24.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph26 = document.createParagraph();
+                paragraph26.setAlignment(ParagraphAlignment.LEFT);
+                XWPFRun run26 = paragraph26.createRun();
+                run26.setText("Phương thức thanh toán: " + cboPhuongThucTT.getSelectedItem());
+                run26.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph25 = document.createParagraph();
+                paragraph25.setAlignment(ParagraphAlignment.LEFT);
+                XWPFRun run25 = paragraph25.createRun();
+                run25.setText("Tiền trả lại: " + lblTienThuaTraKhach.getText() + " VNĐ");
+                run25.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph23 = document.createParagraph();
+                paragraph23.setAlignment(ParagraphAlignment.RIGHT);
+                XWPFRun run23 = paragraph23.createRun();
+                run23.setText("-------------------------------------------------------------------------------------------------------------------------------------------");
+                run23.setFontFamily("Calibri");
+
+                XWPFParagraph paragraph16 = document.createParagraph();
+                paragraph16.setAlignment(ParagraphAlignment.RIGHT);
+                XWPFRun run16 = paragraph16.createRun();
+                run16.setText("Người bán hàng");
+                run16.setFontFamily("Bahnschrift");
+                run16.setBold(true);
+                run16.setFontSize(11);
+                run16.setTextPosition(30);
+
+                XWPFParagraph paragraph17 = document.createParagraph();
+                paragraph17.setAlignment(ParagraphAlignment.RIGHT);
+                XWPFRun run17 = paragraph17.createRun();
+                run17.setText(hd.getNhanVien().getHo() + " " + hd.getNhanVien().getTenDem() + " " + hd.getNhanVien().getTen());
+                run17.setFontFamily("Bahnschrift");
+                run17.setTextPosition(80);
+
+                XWPFParagraph paragraph18 = document.createParagraph();
+                paragraph18.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run18 = paragraph18.createRun();
+                run18.setText("Cảm ơn quý khách đã mua hàng!");
+                run18.setFontFamily("Bahnschrift");
+
+                XWPFParagraph paragraph19 = document.createParagraph();
+                paragraph19.setAlignment(ParagraphAlignment.CENTER);
+                XWPFRun run19 = paragraph19.createRun();
+                run19.setText("Hẹn gặp lại!");
+                run19.setFontFamily("Bahnschrift");
+
+                document.write(out);
+                out.close();
+            }
+            if (JOptionPane.showConfirmDialog(this, "Xuất file thành công. Mở file?") == JOptionPane.YES_OPTION) {
+                Desktop.getDesktop().open(file);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 
     private void loadAllCombobox() {
@@ -287,6 +497,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             pttt = (PhuongThucTT) cboModelPTTT.getSelectedItem();
             bhService.thanhToanHD(idHD, DatetimeUtil.getCurrentDateAndTime(), tongTien, tienTraLai, ghiChu, pttt.getId(), htgh.getId());
             JOptionPane.showMessageDialog(this, "Đã thanh toán");
+            if (JOptionPane.showConfirmDialog(this, "Xuất file hoá đơn?") == JOptionPane.YES_OPTION) {
+                xuatFileHoaDon();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hoá đơn cần thanh toán");
             e.printStackTrace();
@@ -421,6 +634,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
 
             if (result != null) {
                 txtTimKiem.setText(result.getText());
+                txtTimKiem.setCaretPosition(txtTimKiem.getText().length() - 1);
             }
         } while (true);
     }
@@ -1553,7 +1767,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private static javax.swing.JLabel lblMaHoaDon;
+    private javax.swing.JLabel lblMaHoaDon;
     private static javax.swing.JLabel lblMaKH;
     private static javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblThanhToan;
