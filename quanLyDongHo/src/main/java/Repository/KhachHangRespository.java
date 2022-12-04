@@ -112,7 +112,7 @@ public class KhachHangRespository {
                     + "m.ho,"
                     + "m.thanhPho,"
                     + "m.trangthai)"
-                    + "from model.KhachHang m WHERE m.ten LIKE :ten");
+                    + "from model.KhachHang m WHERE m.ten LIKE :ten or m.ma like :ten");
             query.setParameter("ten", "%" + ten + "%");
             list = query.list();
         } catch (HibernateException e) {

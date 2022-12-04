@@ -5,8 +5,23 @@
 package View;
 
 import Repository.KhachHangRespository;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +34,7 @@ import viewmodel.KhachHangCutoms;
  *
  * @author admin
  */
-public class KhachHangView extends javax.swing.JFrame {
+public class KhachHangView extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
     /**
      * Creates new form KhachHang
@@ -28,6 +43,9 @@ public class KhachHangView extends javax.swing.JFrame {
     List<KhachHangCutoms> listKH = new ArrayList<>();
     KhachHangServiceImpl service = new KhachHangServiceImpl();
     DefaultComboBoxModel dcmb = new DefaultComboBoxModel();
+    private WebcamPanel panel = null;
+    private Webcam webcam = null;
+    private Executor executor = Executors.newSingleThreadExecutor(this);
 
     public KhachHangView() {
         initComponents();
@@ -37,8 +55,9 @@ public class KhachHangView extends javax.swing.JFrame {
         listKH = service.getAllKH();
         showTB(listKH);
         txtID.setEnabled(false);
+        txtMa.setEnabled(false);
         loadCbb();
-
+       
     }
 
     public void showTB(List<KhachHangCutoms> kh) {
@@ -46,6 +65,62 @@ public class KhachHangView extends javax.swing.JFrame {
         for (KhachHangCutoms khr : kh) {
             dtm.addRow(khr.toDataRow());
         }
+    }
+
+    private void initWebcam() {
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0); //0 is default webcam
+        webcam.setViewSize(size);
+
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+
+        jPanel5.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 255, 250));
+
+        executor.execute(this);
+    }
+
+    @Override
+    public void run() {
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Result result = null;
+            BufferedImage image = null;
+
+            if (webcam.isOpen()) {
+                if ((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (NotFoundException e) {
+                //No result...
+            }
+
+            if (result != null) {
+                txtSearch.setText(result.getText().substring(0, 12));
+                txtSearch.setCaretPosition(txtSearch.getText().length() - 1);
+                //thay bằng txtSearch
+            }
+        } while (true);
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
     }
 
     public void loadCbb() {
@@ -157,6 +232,8 @@ public class KhachHangView extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        btnBat = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -368,6 +445,19 @@ public class KhachHangView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel5.setBackground(new java.awt.Color(250, 250, 250));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 230, 230)));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnBat.setBackground(new java.awt.Color(0, 102, 204));
+        btnBat.setForeground(new java.awt.Color(255, 255, 255));
+        btnBat.setText("On");
+        btnBat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -375,7 +465,7 @@ public class KhachHangView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -389,7 +479,7 @@ public class KhachHangView extends javax.swing.JFrame {
                                 .addComponent(txtMa)
                                 .addComponent(txtHo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel15)
@@ -407,7 +497,7 @@ public class KhachHangView extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtThanhPho, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(87, 87, 87))
+                        .addGap(31, 31, 31))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel8)
@@ -415,9 +505,13 @@ public class KhachHangView extends javax.swing.JFrame {
                         .addComponent(rdoHoatdong, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(rdoKhongHD, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(75, 75, 75)
+                        .addComponent(btnBat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,14 +557,17 @@ public class KhachHangView extends javax.swing.JFrame {
                                     .addComponent(txtTenDem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(rdoHoatdong)
-                            .addComponent(rdoKhongHD)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(rdoHoatdong)
+                                .addComponent(rdoKhongHD))
+                            .addComponent(btnBat)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGap(20, 20, 20)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -764,7 +861,7 @@ public class KhachHangView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(201, 201, 201)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -877,11 +974,49 @@ public class KhachHangView extends javax.swing.JFrame {
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
+    private void searhChing(String ten) {
+        dtm.setRowCount(0);
+        //  List<KhachHangCutoms> list = service.search(ten);
+        for (KhachHangCutoms o : service.search(ten)) {
+            dtm.addRow(o.toDataRow());
+            if (ten.matches("\\d+")) {
+                txtTen.setText(o.getPass());
+                txtID.setText(o.getId() + "");
+                txtHo.setText(o.getHo());
+                txtSDT.setText(o.getSdt());
+                txtTenDem.setText(o.getTenDem());
+                txtThanhPho.setText(o.getThanhPho());
+                txtMa.setText(o.getMa());
+                txtQuocGia.setText(o.getQuocGia());
+                int trangThai = o.getTrangthai();
+                if (trangThai == 1) {
+                    rdoHoatdong.setSelected(true);
+                } else {
+                    rdoKhongHD.setSelected(true);
+                }
 
+            } else {
+                txtTen.setText(" ");
+            }
+            //  txtTen.setText(kh.getPass());
+        }
+    }
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
         // TODO add your handling code here:
-        List<KhachHangCutoms> listSearch = service.search(txtSearch.getText());
-        showTB(listSearch);
+        if (txtSearch.getText().trim().length() > 0) {
+            searhChing(txtSearch.getText().trim());
+
+        } else {
+            txtTen.setText("");
+            txtID.setText("");
+            txtHo.setText("");
+            txtSDT.setText("");
+            txtTenDem.setText("");
+            txtThanhPho.setText("");
+            txtMa.setText("");
+            txtQuocGia.setText("");
+            showTB(listKH);
+        }
     }//GEN-LAST:event_txtSearchCaretUpdate
 
     private void panelBorder5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder5MouseClicked
@@ -926,6 +1061,11 @@ public class KhachHangView extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_panelBorder13MouseClicked
 
+    private void btnBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatActionPerformed
+        // TODO add your handling code here:
+         initWebcam();
+    }//GEN-LAST:event_btnBatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -964,6 +1104,7 @@ public class KhachHangView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBat;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
@@ -996,6 +1137,7 @@ public class KhachHangView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
