@@ -599,7 +599,13 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }
 
     private int getIdKH() {
-        return Integer.parseInt(lblMaKH.getText().substring(2));
+        int idKH = 0;
+        try {
+            idKH = Integer.parseInt(lblMaKH.getText().substring(2));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng");
+        }
+        return idKH;
     }
 
     private int getIdCTSP(String idCTSP) {
