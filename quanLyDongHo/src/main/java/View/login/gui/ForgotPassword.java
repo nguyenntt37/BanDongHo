@@ -6,12 +6,17 @@
 package View.login.gui;
 
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import service.IForgotPasswordService;
+import service.impl.ForgotPasswordServiceImpl;
 
 /**
  *
  * @author RAVEN
  */
 public class ForgotPassword extends javax.swing.JPanel {
+
+    IForgotPasswordService fpService = new ForgotPasswordServiceImpl();
 
     /**
      * Creates new form Login
@@ -26,6 +31,28 @@ public class ForgotPassword extends javax.swing.JPanel {
 
     public void addEventBackLogin(ActionListener event) {
         btnQuayLai.addActionListener(event);
+    }
+
+    private int parseUsernameToId(String s) {
+        return Integer.parseInt(s.trim().substring(2));
+    }
+
+    private boolean isUsernameExist() {
+        if (fpService.checkUsernameExistence(parseUsernameToId(txtUsername.getText())) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isEmailCorrect() {
+        if (fpService.getEmailById(parseUsernameToId(txtUsername.getText())) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private void sendOTP() {
+        
     }
 
     /**
@@ -62,6 +89,11 @@ public class ForgotPassword extends javax.swing.JPanel {
         btnXacNhan.setForeground(new java.awt.Color(40, 40, 40));
         btnXacNhan.setText("Xác nhận");
         btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
 
         btnQuayLai.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btnQuayLai.setForeground(new java.awt.Color(30, 122, 236));
@@ -105,6 +137,17 @@ public class ForgotPassword extends javax.swing.JPanel {
                 .addGap(30, 30, 30))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        // TODO add your handling code here:
+        if (isUsernameExist()) {
+            if (isEmailCorrect()) {
+                sendOTP();
+            }
+            JOptionPane.showMessageDialog(this, "Email không đúng");
+        } else
+            JOptionPane.showMessageDialog(this, "Mã nhân viên này không tồn tại trong hệ thống");
+    }//GEN-LAST:event_btnXacNhanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

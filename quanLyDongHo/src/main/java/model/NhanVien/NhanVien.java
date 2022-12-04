@@ -69,6 +69,9 @@ public class NhanVien {
 
     @Column(name = "MatKhau")
     private String matKhau;
+    
+    @Column(name = "Email", unique = true)
+    private String email;
 
     @Column(name = "IdGuiBC")
     private String idGuiBC;

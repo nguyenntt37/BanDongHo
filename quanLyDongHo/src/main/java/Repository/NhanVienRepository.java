@@ -86,7 +86,7 @@ public class NhanVienRepository {
             return nv;
         }
     }
-    
+
     public boolean updateTrangThai(NhanVien nv, String maNV) {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();
@@ -100,9 +100,9 @@ public class NhanVienRepository {
             e.printStackTrace();
             return false;
         }
-    } 
-    
-    public List<NhanVienCustom>Search(String sdt){
+    }
+
+    public List<NhanVienCustom> Search(String sdt) {
         List<NhanVienCustom> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("select new viewmodel.NhanVienCustom("
@@ -114,7 +114,7 @@ public class NhanVienRepository {
                     + "m.sdt,"
                     + "m.trangThai)"
                     + "from model.nhanvien.NhanVien m where m.sdt like :sdt");
-             query.setParameter("sdt","%"+sdt+"%");
+            query.setParameter("sdt", "%" + sdt + "%");
             list = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -122,7 +122,27 @@ public class NhanVienRepository {
         }
         return list;
     }
-    
+
+    public NhanVien getById(int idNV) {
+        NhanVien nv = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            nv = session.get(NhanVien.class, idNV);
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return nv;
+    }
+
+    public String getEmailById(int idNV) {
+        String s = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            s = (String) session.createQuery("SELECT nv.email FROM NhanVien nv WHERE nv.id = :id").getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return s;
+    }
+
     public static void main(String[] args) {
         NhanVienRepository nv = new NhanVienRepository();
         List<NhanVienCustom> list = nv.Search("0123456789");

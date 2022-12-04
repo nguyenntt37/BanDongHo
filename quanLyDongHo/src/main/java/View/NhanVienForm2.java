@@ -318,11 +318,12 @@ public class NhanVienForm2 extends javax.swing.JFrame {
                                 .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel7)
-                            .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel7)
+                                .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -708,6 +709,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
                     txtSDT.getText(),
                     "",
                     "",
+                    "",
                     radioDangLam.isSelected() ? 1 : 0,
                     null,
                     null,
@@ -743,6 +745,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
                 txtNgaySinh.getText(),
                 txtDiaChi.getText(),
                 txtSDT.getText(),
+                "",
                 "",
                 "",
                 radioDangLam.isSelected() ? 1 : 0,
@@ -837,6 +840,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
         NhanVien nv = new NhanVien(
                 null,
                 txtMaNV.getText(),
+                null,
                 null,
                 null,
                 null,
