@@ -177,10 +177,11 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         txtMota.setText(sp.getMoTa());
         txtNamBH.setText(String.valueOf(sp.getNBH()));
         txtSoLuong.setText(String.valueOf(sp.getSoLuongTon()));
-        cboSanPham.setSelectedItem(sp.getTenSP());
-        cboNSX.setSelectedItem(sp.getNSX());
-        cboMauSac.setSelectedItem(sp.getMau());
-        cboThuongHieu.setSelectedItem(sp.getThuongHieu());
+        cboSanPham.setSelectedIndex(index);
+        cboNSX.setSelectedIndex(index);
+        cboMauSac.setSelectedIndex(index);
+        cboThuongHieu.setSelectedIndex(index);
+        cboDongSP.setSelectedIndex(index);
         int trangThai = sp.getTrangThai();
         if (trangThai == 1) {
             rdoCon.setSelected(true);
@@ -575,16 +576,14 @@ public class ChiTietSPForm extends javax.swing.JFrame {
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel34)
                             .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel35))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel36)
                             .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNamBH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel35)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel37)))
+                    .addComponent(jLabel37))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
@@ -1178,7 +1177,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
             } else {
                 r = 0;
             }
-            sp.setTrangthai(r);
+            ctSp.setTrangThai(r);
             JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().addChiTietSP(ctSp));
             listSPPage = spSevice.getAll2((soTrang * 5) - 5);
             showDataRow(listSPPage);
