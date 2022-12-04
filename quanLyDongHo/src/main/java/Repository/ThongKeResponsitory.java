@@ -105,7 +105,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai");
+            Query query = session.createQuery("select COUNT(p.id) from HoaDon  p WHERE p.trangThaiTT =:trangthai");
             query.setParameter("trangthai", trangthai);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
@@ -209,9 +209,37 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai and datepart(mm, p.hoaDon.tgTao) =:ngayTao ");
+            Query query = session.createQuery("select COUNT(p.id) from HoaDon  p WHERE p.trangThaiTT =:trangthai and datepart(mm, p.tgTao) =:ngayTao ");
             query.setParameter("trangthai", trangthai);
             query.setParameter("ngayTao", ngayTao);
+            result = (Long) query.getResultList().get(0);
+            transaction.commit();
+        }
+        return result;
+    }
+    
+    public Long soHoaDonHuyTheoThangN() {
+        Long result = null;
+        Transaction transaction = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p  GROUP BY datepart(mm, p.hoaDon.tgTao) ");
+//            query.setParameter("trangthai", trangthai);
+//            query.setParameter("ngayTao", ngayTao);
+            result = (Long) query.getResultList().get(0);
+            transaction.commit();
+        }
+        return result;
+    }
+    
+    public Long soHoaDonHuyTheoNamN() {
+        Long result = null;
+        Transaction transaction = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p GROUP BY datepart(yyyy, p.hoaDon.tgTao)  ");
+//            query.setParameter("trangthai", trangthai);
+//            query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
         }
@@ -223,7 +251,7 @@ public class ThongKeResponsitory {
         Transaction transaction = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p WHERE p.trangthai =:trangthai and datepart(yyyy, p.hoaDon.tgTao) =:ngayTao ");
+            Query query = session.createQuery("select COUNT(p.id) from HoaDon  p WHERE p.trangThaiTT =:trangthai and datepart(yyyy, p.tgTao) =:ngayTao ");
             query.setParameter("trangthai", trangthai);
             query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
@@ -258,6 +286,19 @@ public class ThongKeResponsitory {
         return result;
     }
     
+    public Long soHoaDonTheoThangN() {
+        Long result = null;
+        Transaction transaction = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p GROUP BY  datepart(mm,p.hoaDon.tgTao)");
+        //    query.setParameter("ngayTao", ngayTao);
+            result = (Long) query.getResultList().get(0);
+            transaction.commit();
+        }
+        return result;
+    }
+    
     public Long soHoaDonTheoNamN() {
         Long result = null;
         Transaction transaction = null;
@@ -265,6 +306,19 @@ public class ThongKeResponsitory {
             transaction = session.beginTransaction();
             Query query = session.createQuery("select COUNT(p.id) from hoaDonChiTiet  p GROUP BY  datepart(yyyy,p.hoaDon.tgTao)");
         //    query.setParameter("ngayTao", ngayTao);
+            result = (Long) query.getResultList().get(0);
+            transaction.commit();
+        }
+        return result;
+    }
+    
+    public Long soSanPhamBanDuocTheoThangN() {
+        Long result = null;
+        Transaction transaction = null;
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("select COUNT( p.chiTietSP.id) from hoaDonChiTiet  p GROUP BY  datepart(mm,p.hoaDon.tgTao) ");
+    //        query.setParameter("ngayTao", ngayTao);
             result = (Long) query.getResultList().get(0);
             transaction.commit();
         }
@@ -286,7 +340,7 @@ public class ThongKeResponsitory {
 
     public static void main(String[] args) {
         ThongKeResponsitory th = new ThongKeResponsitory();
-         System.out.println("ok  " + th.doanhThuTheoTungThangCBB("06"));
+         System.out.println("ok  " + th.soHoaDonHuyTheoThang(-1,"10"));
 //        List<ThongKeCustom> list = th.searhNam("2021");
 //        for (ThongKeCustom o : list) {
 //            System.out.println(o.doanhThu());

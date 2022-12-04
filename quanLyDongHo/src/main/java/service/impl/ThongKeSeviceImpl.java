@@ -85,12 +85,12 @@ public class ThongKeSeviceImpl implements IThongKeSevice {
 
     @Override
     public Long soHoaDonHuyTheoThang(int trangthai, String ngayTao) {
-        return thongKe.soHoaDonHuyTheoThang(trangthai,ngayTao);
+        return thongKe.soHoaDonHuyTheoThang(trangthai, ngayTao);
     }
 
     @Override
     public Long soHoaDonHuyTheoNam(int trangthai, String ngayTao) {
-         return thongKe.soHoaDonHuyTheoNam(trangthai,ngayTao);
+        return thongKe.soHoaDonHuyTheoNam(trangthai, ngayTao);
     }
 
     @Override
@@ -105,12 +105,32 @@ public class ThongKeSeviceImpl implements IThongKeSevice {
 
     @Override
     public Long soHoaDonTheoNamN() {
-     return thongKe.soHoaDonTheoNamN();
-   }
+        return thongKe.soHoaDonTheoNamN();
+    }
 
     @Override
     public Long soSanPhamBanDuocTheoNamN() {
-    return thongKe.soSanPhamBanDuocTheoNamN();
+        return thongKe.soSanPhamBanDuocTheoNamN();
+    }
+
+    @Override
+    public Long soSanPhamBanDuocTheoThangN() {
+        return thongKe.soHoaDonTheoThangN();
+    }
+
+    @Override
+    public Long soHoaDonTheoThangN() {
+        return thongKe.soSanPhamBanDuocTheoThangN();
+    }
+
+    @Override
+    public Long soHoaDonHuyTheoThangN() {
+        return thongKe.soHoaDonTheoThangN();
+     }
+
+    @Override
+    public Long soHoaDonHuyTheoNamN() {
+         return thongKe.soHoaDonTheoThangN();
     }
 
 }

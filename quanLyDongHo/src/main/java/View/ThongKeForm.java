@@ -114,9 +114,12 @@ public class ThongKeForm extends javax.swing.JFrame {
         for (int i = 01; i <= 12; i++) {
             if (i < 10) {
                 dcbmThang.addElement("0" + i);
+
             } else {
                 dcbmThang.addElement(i);
+
             }
+            dcbmThang.setSelectedItem(10);
         }
 
     }
@@ -125,7 +128,9 @@ public class ThongKeForm extends javax.swing.JFrame {
         cbbNam.setModel(dcbmNam);
         for (int i = 2020; i <= 2023; i++) {
             dcbmNam.addElement(i);
+            dcbmNam.setSelectedItem(2022);
         }
+
     }
 
     private void cbbNam1() {
@@ -134,6 +139,7 @@ public class ThongKeForm extends javax.swing.JFrame {
             listnam.add(String.valueOf(i));
         }
         dcbmNam1.addAll(listnam);
+
     }
 
     /**
@@ -810,9 +816,9 @@ public class ThongKeForm extends javax.swing.JFrame {
 
     private void loadThongKeTheoThang() {
         BigDecimal doanhThuTheoTungThang = thongKeSevice.doanhThuTheoTungThang();
-        Long soHoaDonTheoThang = thongKeSevice.soHoaDonTheoThang(String.valueOf(cbbThang.getSelectedItem()));
+        Long soHoaDonTheoThang = thongKeSevice.soHoaDonTheoThangN();
         Long soHoaDonHuyTheoThang = thongKeSevice.soHoaDonHuyTheoThang(-1, String.valueOf(cbbThang.getSelectedItem()));
-        Long soSanPhamBanDuocTheoThang = thongKeSevice.soSanPhamBanDuocTheoThang(String.valueOf(cbbThang.getSelectedItem()));
+        Long soSanPhamBanDuocTheoThang = thongKeSevice.soSanPhamBanDuocTheoThangN();
 
         lbDoanhThu.setText(String.valueOf(MoneyUtil.formatMoney1(doanhThuTheoTungThang)));
         lbSoHoaDon.setText(String.valueOf(soHoaDonTheoThang));
@@ -846,6 +852,7 @@ public class ThongKeForm extends javax.swing.JFrame {
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true"); //TLS
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         //dang nhap gamil
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
@@ -919,8 +926,8 @@ public class ThongKeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_panelBorder13MouseClicked
 
     private void btnGuiBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiBaoCao1ActionPerformed
-         soDoTK view = new soDoTK(this, true);
-      //  this.dispose();
+        soDoTK view = new soDoTK(this, true);
+        //  this.dispose();
         view.setVisible(true);
     }//GEN-LAST:event_btnGuiBaoCao1ActionPerformed
 

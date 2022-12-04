@@ -13,10 +13,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,6 +75,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     private NamSanXuatServicelmpl nsxs = new NamSanXuatServicelmpl();
     private DongSPServicelmpl dsps = new DongSPServicelmpl();
     private int soTrang = 1;
+
     /**
      * Creates new form ChiTietSPForm
      */
@@ -1178,6 +1182,12 @@ public class ChiTietSPForm extends javax.swing.JFrame {
                 r = 0;
             }
             ctSp.setTrangThai(r);
+
+            Date date = new Date();
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy ");
+            String da = df.format(date);
+            ctSp.setNgayTao(da);
+
             JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().addChiTietSP(ctSp));
             listSPPage = spSevice.getAll2((soTrang * 5) - 5);
             showDataRow(listSPPage);
@@ -1230,7 +1240,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
 
     private void tblCTSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTSanPhamMouseClicked
         int row = tblCTSanPham.getSelectedRow();
-        listSPPage = spSevice.getAll2((soTrang*10)-10);
+        listSPPage = spSevice.getAll2((soTrang * 10) - 10);
         showDataRow(listSPPage);
         mose(row);
     }//GEN-LAST:event_tblCTSanPhamMouseClicked
@@ -1393,7 +1403,9 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void panelBorder5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder5MouseClicked
-        //        card.show(pnlCand1, "pnlCard2");
+        BanHangForm view = new BanHangForm();
+        this.dispose();
+        view.setVisible(true);
     }//GEN-LAST:event_panelBorder5MouseClicked
 
     private void panelBorder6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder6MouseClicked

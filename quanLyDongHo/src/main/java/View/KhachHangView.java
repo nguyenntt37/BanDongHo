@@ -57,7 +57,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         txtID.setEnabled(false);
         txtMa.setEnabled(false);
         loadCbb();
-       
+        initWebcam();
     }
 
     public void showTB(List<KhachHangCutoms> kh) {
@@ -233,7 +233,6 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         btnUpdate = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        btnBat = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -449,15 +448,6 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 230, 230)));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnBat.setBackground(new java.awt.Color(0, 102, 204));
-        btnBat.setForeground(new java.awt.Color(255, 255, 255));
-        btnBat.setText("On");
-        btnBat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBatActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -496,21 +486,18 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtThanhPho, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(31, 31, 31))
+                                    .addComponent(txtThanhPho, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(rdoHoatdong, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(rdoKhongHD, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnBat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
+                        .addComponent(rdoKhongHD, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -557,12 +544,10 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
                                     .addComponent(txtTenDem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(rdoHoatdong)
-                                .addComponent(rdoKhongHD))
-                            .addComponent(btnBat)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(rdoHoatdong)
+                            .addComponent(rdoKhongHD)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1023,48 +1008,50 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         BanHangForm view = new BanHangForm();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder5MouseClicked
 
     private void panelBorder6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder6MouseClicked
         HoaDonForm view = new HoaDonForm();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder6MouseClicked
 
     private void panelBorder11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder11MouseClicked
         NhanVienForm2 view = new NhanVienForm2();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder11MouseClicked
 
     private void panelBorder1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder1MouseClicked
         LoginForm view = new LoginForm();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder1MouseClicked
 
     private void panelBorder7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder7MouseClicked
         ChiTietSPForm view = new ChiTietSPForm();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder7MouseClicked
 
     private void panelBorder12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder12MouseClicked
         ThongKeForm view = new ThongKeForm();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder12MouseClicked
 
     private void panelBorder13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder13MouseClicked
         KhachHangView view = new KhachHangView();
         this.dispose();
         view.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_panelBorder13MouseClicked
-
-    private void btnBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatActionPerformed
-        // TODO add your handling code here:
-         initWebcam();
-    }//GEN-LAST:event_btnBatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1104,7 +1091,6 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnBat;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;

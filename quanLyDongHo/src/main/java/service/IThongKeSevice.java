@@ -51,4 +51,12 @@ public interface IThongKeSevice {
     Long soHoaDonTheoNamN();
 
     Long soSanPhamBanDuocTheoNamN();
+
+    Long soSanPhamBanDuocTheoThangN();
+
+    Long soHoaDonTheoThangN();
+
+    Long soHoaDonHuyTheoThangN();
+
+    Long soHoaDonHuyTheoNamN();
 }

@@ -299,7 +299,7 @@ public class SanPhamReponstory {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
             session.save(sp);
-            sp.setMa(String.valueOf("SP" + sp.getId()));
+            sp.setMa(String.valueOf("CSTP" + sp.getId()));
             tran.commit();
             return true;
         } catch (HibernateException e) {
