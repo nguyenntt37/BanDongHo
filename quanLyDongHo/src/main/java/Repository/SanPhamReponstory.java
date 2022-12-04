@@ -267,12 +267,12 @@ public class SanPhamReponstory {
 
     public boolean updateChitietSP(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX,
             BigDecimal giaBan, BigDecimal giaNhap,
-            int namBH, int soLuongTon) {
+            int namBH, int soLuongTon, int trangThai) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
             Query query = session.createQuery("update ChiTietSanPham c set c.sanPham.id=:idSP,c.dongsp.id=:idDongSP,c.mauSac.id =:idMau,"
-                    + "                        c.nSX.id=:idNamSX,c.giaBan=:giaBan,c.giaNhap=:giaNhap,c.namBH=:namBH,c.soLuongTon=:soLuong  "
+                    + "                        c.nSX.id=:idNamSX,c.giaBan=:giaBan,c.giaNhap=:giaNhap,c.namBH=:namBH,c.soLuongTon=:soLuong, c.trangThai=:trangThai  "
                     + "                       where c.id =:id ");
             query.setParameter("idSP", idSP);
             query.setParameter("idDongSP", idDongSP);
@@ -282,6 +282,7 @@ public class SanPhamReponstory {
             query.setParameter("giaNhap", giaNhap);
             query.setParameter("namBH", namBH);
             query.setParameter("soLuong", soLuongTon);
+            query.setParameter("trangThai", trangThai);
             query.setParameter("id", id);
             query.executeUpdate();
             tran.commit();
