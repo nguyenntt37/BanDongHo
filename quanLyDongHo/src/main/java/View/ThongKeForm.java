@@ -5,6 +5,7 @@
 package View;
 
 import Util.MoneyUtil;
+import View.login.gui.Login;
 import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -32,7 +33,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import service.IThongKeSevice;
+import service.impl.NhanVienServiceImpl;
 import service.impl.ThongKeSeviceImpl;
+import viewmodel.NhanVienCustom;
 import viewmodel.ThongKeCustom;
 
 /**
@@ -48,6 +51,8 @@ public class ThongKeForm extends javax.swing.JFrame {
     DefaultComboBoxModel dcbmNam1 = new DefaultComboBoxModel();
     List<String> listnam = new ArrayList<>();
     private ThongKeSeviceImpl thongKeSevice = new ThongKeSeviceImpl();
+    private List<NhanVienCustom> listNhanVien = new ArrayList<>();
+    private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
 
     /**
      * Creates new form ThongKeForm
@@ -64,6 +69,17 @@ public class ThongKeForm extends javax.swing.JFrame {
         loadThongKe();
         anCBB();
         panel();
+        tenNV();
+    }
+
+    private void tenNV() {
+        listNhanVien = serviceNV.get();
+        String ma = Login.getCurrentLoginUsername();
+        for (NhanVienCustom nv : listNhanVien) {
+            if (nv.getMaNV().equals(ma)) {
+                tenNV.setText(nv.getHoTen());
+            }
+        }
     }
 
     private void anCBB() {
@@ -196,6 +212,9 @@ public class ThongKeForm extends javax.swing.JFrame {
         jLabel47 = new javax.swing.JLabel();
         panelBorder13 = new view.Swing.PanelBorder();
         jLabel48 = new javax.swing.JLabel();
+        thongTinNhanVien = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        tenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -505,7 +524,7 @@ public class ThongKeForm extends javax.swing.JFrame {
                     .addComponent(radioNam)
                     .addComponent(cbbThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel14.setBackground(new java.awt.Color(0, 102, 204));
@@ -604,7 +623,7 @@ public class ThongKeForm extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addComponent(jLabel46)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -692,6 +711,35 @@ public class ThongKeForm extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
+        thongTinNhanVien.setBackground(new java.awt.Color(0, 102, 204));
+        thongTinNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                thongTinNhanVienMouseClicked(evt);
+            }
+        });
+
+        jLabel12.setIcon(new javax.swing.ImageIcon("D:\\quanLyBanDongHo\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
+
+        javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
+        thongTinNhanVien.setLayout(thongTinNhanVienLayout);
+        thongTinNhanVienLayout.setHorizontalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(thongTinNhanVienLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        thongTinNhanVienLayout.setVerticalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, thongTinNhanVienLayout.createSequentialGroup()
+                .addGap(0, 8, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        tenNV.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tenNV.setForeground(new java.awt.Color(255, 255, 255));
+        tenNV.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -703,11 +751,22 @@ public class ThongKeForm extends javax.swing.JFrame {
             .addComponent(panelBorder7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelBorder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBorder7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -844,8 +903,8 @@ public class ThongKeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbNamActionPerformed
 
     private void btnGuiBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiBaoCaoActionPerformed
-        final String username = "vinhnqph20805@fpt.edu.vn";
-        final String password = "vinhhd198c";
+        final String username = "duan1.watchstore@gmail.com";
+        final String password = "biinlswciivcbwyh";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -930,6 +989,11 @@ public class ThongKeForm extends javax.swing.JFrame {
         //  this.dispose();
         view.setVisible(true);
     }//GEN-LAST:event_btnGuiBaoCao1ActionPerformed
+
+    private void thongTinNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_thongTinNhanVienMouseClicked
+        ThongTinNhanVien2 view = new ThongTinNhanVien2(this, true);
+        view.setVisible(true);
+    }//GEN-LAST:event_thongTinNhanVienMouseClicked
 
     private void loadThongKeTheoCbbThang(String thang) {
         BigDecimal doanhThuTheoTungThangCBB = thongKeSevice.doanhThuTheoTungThangCBB(thang);
@@ -1035,6 +1099,7 @@ public class ThongKeForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboNam1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1071,6 +1136,8 @@ public class ThongKeForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioTatCa;
     private javax.swing.JRadioButton radioThang;
     private javax.swing.JTable tbThongKe;
+    private javax.swing.JLabel tenNV;
+    private javax.swing.JPanel thongTinNhanVien;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 

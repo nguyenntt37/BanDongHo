@@ -6,11 +6,13 @@ package View;
 
 import Util.DatetimeUtil;
 import Util.MoneyUtil;
+import View.login.gui.Login;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +28,10 @@ import model.HoaDon.HinhThucGH;
 import model.HoaDon.PhuongThucTT;
 import service.IHoaDonService;
 import service.impl.HoaDonServiceImpl;
+import service.impl.NhanVienServiceImpl;
 import viewmodel.HDCTCustom;
 import viewmodel.HoaDonCustom;
+import viewmodel.NhanVienCustom;
 
 /**
  *
@@ -41,6 +45,8 @@ public class HoaDonForm extends javax.swing.JFrame {
     private JTableHeader tblHDHeader, tblHDCTHeader;
     private IHoaDonService hdService = new HoaDonServiceImpl();
     private DefaultComboBoxModel cboModelPTTT, cboModelHTGH, cboModelNam;
+    private List<NhanVienCustom> listNhanVien = new ArrayList<>();
+    private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
 
     /**
      * Creates new form HoaDonForm
@@ -49,6 +55,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         setLookAndFeel();
         initComponents();
         init();
+        tenNV();
     }
 
     private void init() {
@@ -58,6 +65,16 @@ public class HoaDonForm extends javax.swing.JFrame {
         loadTableHD();
         loadCboNam();
         txtTimKiemHD.putClientProperty("JTextField.placeholderText", "Nhập mã hoá đơn hoặc mã/tên nhân viên hoặc mã/tên khách hàng");
+    }
+
+    private void tenNV() {
+        listNhanVien = serviceNV.get();
+        String ma = Login.getCurrentLoginUsername();
+        for (NhanVienCustom nv : listNhanVien) {
+            if (nv.getMaNV().equals(ma)) {
+                tenNV.setText(nv.getHoTen());
+            }
+        }
     }
 
     private void initTableStructure() {
@@ -419,6 +436,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel47 = new javax.swing.JLabel();
         panelBorder13 = new view.Swing.PanelBorder();
         jLabel48 = new javax.swing.JLabel();
+        thongTinNhanVien = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        tenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -850,7 +870,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addComponent(jLabel46)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -938,6 +958,35 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
+        thongTinNhanVien.setBackground(new java.awt.Color(0, 102, 204));
+        thongTinNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                thongTinNhanVienMouseClicked(evt);
+            }
+        });
+
+        jLabel12.setIcon(new javax.swing.ImageIcon("D:\\quanLyBanDongHo\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
+
+        javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
+        thongTinNhanVien.setLayout(thongTinNhanVienLayout);
+        thongTinNhanVienLayout.setHorizontalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(thongTinNhanVienLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        thongTinNhanVienLayout.setVerticalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, thongTinNhanVienLayout.createSequentialGroup()
+                .addGap(0, 8, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        tenNV.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tenNV.setForeground(new java.awt.Color(255, 255, 255));
+        tenNV.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -949,11 +998,23 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addComponent(panelBorder7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelBorder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBorder7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1186,6 +1247,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboNamItemStateChanged
 
+    private void thongTinNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_thongTinNhanVienMouseClicked
+        ThongTinNhanVien2 view = new ThongTinNhanVien2(this, true);
+        view.setVisible(true);
+    }//GEN-LAST:event_thongTinNhanVienMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1229,6 +1295,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboTongTien;
     private javax.swing.JComboBox<String> cboTrangThaiTT;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
@@ -1262,6 +1329,8 @@ public class HoaDonForm extends javax.swing.JFrame {
     private view.Swing.PanelBorder panelBorder7;
     private javax.swing.JTable tblHDCT;
     private javax.swing.JTable tblHoaDon;
+    private javax.swing.JLabel tenNV;
+    private javax.swing.JPanel thongTinNhanVien;
     private javax.swing.JTextField txtTimKiemHD;
     // End of variables declaration//GEN-END:variables
 }

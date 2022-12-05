@@ -5,6 +5,7 @@
 package View;
 
 import Util.ExportExcelChiTietSP;
+import View.login.gui.Login;
 import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -42,6 +43,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import service.impl.DongSPServicelmpl;
 import service.impl.NamSanXuatServicelmpl;
+import service.impl.NhanVienServiceImpl;
 import service.impl.SanPHamSeviceImpl;
 import viewmodel.ChiTietSPCustom;
 import viewmodel.DongSPCustom;
@@ -69,6 +71,8 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     List<ChiTietSPCustom> listSP = new ArrayList<>();
     List<SanPhamCustom3> listSPc = new ArrayList<>();
     List<MauSacCustom> listMau = new ArrayList<>();
+    private List<NhanVienCustom> listNhanVien = new ArrayList<>();
+    private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
     List<NamSXCustom> listNamSanXuats = new ArrayList<>();
     List<DongSPCustom> listDongSp = new ArrayList<>();
     private SanPHamSeviceImpl spSevice = new SanPHamSeviceImpl();
@@ -109,7 +113,17 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         btnFirst.setEnabled(false);
         btnBack.setEnabled(false);
         updPanel();
+        tenNV();
+    }
 
+    private void tenNV() {
+        listNhanVien = serviceNV.get();
+        String ma = Login.getCurrentLoginUsername();
+        for (NhanVienCustom nv : listNhanVien) {
+            if (nv.getMaNV().equals(ma)) {
+                tenNV.setText(nv.getHoTen());
+            }
+        }
     }
 
     private void showDataRow(List<ChiTietSPCustom> listSPPage) {
@@ -275,6 +289,9 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         jLabel47 = new javax.swing.JLabel();
         panelBorder13 = new view.Swing.PanelBorder();
         jLabel48 = new javax.swing.JLabel();
+        thongTinNhanVien = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        tenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -896,7 +913,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addComponent(jLabel46)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -984,6 +1001,35 @@ public class ChiTietSPForm extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
+        thongTinNhanVien.setBackground(new java.awt.Color(0, 102, 204));
+        thongTinNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                thongTinNhanVienMouseClicked(evt);
+            }
+        });
+
+        jLabel12.setIcon(new javax.swing.ImageIcon("D:\\quanLyBanDongHo\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
+
+        javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
+        thongTinNhanVien.setLayout(thongTinNhanVienLayout);
+        thongTinNhanVienLayout.setHorizontalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(thongTinNhanVienLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        thongTinNhanVienLayout.setVerticalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, thongTinNhanVienLayout.createSequentialGroup()
+                .addGap(0, 8, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        tenNV.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tenNV.setForeground(new java.awt.Color(255, 255, 255));
+        tenNV.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -995,11 +1041,24 @@ public class ChiTietSPForm extends javax.swing.JFrame {
             .addComponent(panelBorder7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelBorder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelBorder7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1444,6 +1503,11 @@ public class ChiTietSPForm extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_panelBorder13MouseClicked
 
+    private void thongTinNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_thongTinNhanVienMouseClicked
+        ThongTinNhanVien2 view = new ThongTinNhanVien2(this, true);
+        view.setVisible(true);
+    }//GEN-LAST:event_thongTinNhanVienMouseClicked
+
     private void updPanel() {
         int tongSoTrang = listSP.size() / 10;
         if (listSP.size() % 10 != 0) {
@@ -1512,6 +1576,7 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboSanPham;
     private javax.swing.JComboBox<String> cboThuongHieu;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
@@ -1554,6 +1619,8 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdoCon;
     private javax.swing.JRadioButton rdoKhongCon;
     private javax.swing.JTable tblCTSanPham;
+    private javax.swing.JLabel tenNV;
+    private javax.swing.JPanel thongTinNhanVien;
     private javax.swing.JTextField txtGiaBan;
     private javax.swing.JTextField txtGiaNhap;
     private javax.swing.JTextField txtID;

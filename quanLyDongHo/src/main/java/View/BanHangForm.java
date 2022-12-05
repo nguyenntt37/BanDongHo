@@ -27,6 +27,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -58,6 +59,7 @@ import service.impl.BanHangServiceImpl;
 import service.impl.NhanVienServiceImpl;
 import viewmodel.BanHang_HDCustom;
 import viewmodel.DongSPCustom;
+import viewmodel.NhanVienCustom;
 
 /**
  *
@@ -75,12 +77,15 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
+    private List<NhanVienCustom> listNhanVien = new ArrayList<>();
+    private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
 
     public BanHangForm() {
         setLookAndFeel();
         initComponents();
         init();
-//        initWebcam();
+        initWebcam();
+        tenNV();
     }
 
     private void setLookAndFeel() {
@@ -88,6 +93,16 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(HoaDonForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void tenNV() {
+        listNhanVien = serviceNV.get();
+        String ma = Login.getCurrentLoginUsername();
+        for (NhanVienCustom nv : listNhanVien) {
+            if (nv.getMaNV().equals(ma)) {
+                tenNV.setText(nv.getHoTen());
+            }
         }
     }
 
@@ -737,6 +752,9 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         jLabel47 = new javax.swing.JLabel();
         panelBorder13 = new view.Swing.PanelBorder();
         jLabel48 = new javax.swing.JLabel();
+        thongTinNhanVien = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        tenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -891,7 +909,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                         .addComponent(btnThemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(88, 88, 88)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1490,6 +1508,33 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
                 .addGap(23, 23, 23))
         );
 
+        thongTinNhanVien.setBackground(new java.awt.Color(0, 102, 204));
+        thongTinNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                thongTinNhanVienMouseClicked(evt);
+            }
+        });
+
+        jLabel18.setIcon(new javax.swing.ImageIcon("D:\\quanLyBanDongHo\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
+
+        javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
+        thongTinNhanVien.setLayout(thongTinNhanVienLayout);
+        thongTinNhanVienLayout.setHorizontalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, thongTinNhanVienLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+        thongTinNhanVienLayout.setVerticalGroup(
+            thongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, Short.MAX_VALUE)
+        );
+
+        tenNV.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tenNV.setForeground(new java.awt.Color(255, 255, 255));
+        tenNV.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1501,11 +1546,21 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             .addComponent(panelBorder7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBorder13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(thongTinNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelBorder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBorder7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1721,6 +1776,11 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         }
     }//GEN-LAST:event_cboDongSPItemStateChanged
 
+    private void thongTinNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_thongTinNhanVienMouseClicked
+        ThongTinNhanVien2 view = new ThongTinNhanVien2(this, true);
+        view.setVisible(true);
+    }//GEN-LAST:event_thongTinNhanVienMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1778,6 +1838,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel29;
@@ -1821,6 +1882,8 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     private javax.swing.JTable tblHDCT;
     private static javax.swing.JTable tblHoaDonCho;
     private javax.swing.JTable tblSanPham;
+    private javax.swing.JLabel tenNV;
+    private javax.swing.JPanel thongTinNhanVien;
     private javax.swing.JTextField txtTienKhachDua;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextArea txtghiChu;
