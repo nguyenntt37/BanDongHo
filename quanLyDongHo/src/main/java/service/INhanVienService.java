@@ -19,4 +19,5 @@ public interface INhanVienService {
     NhanVien getByMaNV(String maNV);
     String updateTrangThai(NhanVien nv, String maNV);
     List<NhanVienCustom>Search(String sdt);
+    String updateMatKhau(NhanVien nv, String maNV, String matKhau);
 }

@@ -67,6 +67,15 @@ public class NhanVienServiceImpl implements INhanVienService {
     public List<NhanVienCustom> Search(String sdt) {
         return repo.Search(sdt);
     }
+
+    @Override
+    public String updateMatKhau(NhanVien nv, String maNV, String matKhau) {
+        boolean check = repo.updateMatKhau(nv, maNV, matKhau);
+        if(check){
+            return "Đổi mật khẩu thành công";
+        }
+        else return "Đổi mật khẩu thất bại";
+    }
     
 
 }

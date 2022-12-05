@@ -19,6 +19,22 @@ import viewmodel.NhanVienCustom;
  */
 public class NhanVienRepository {
 
+    public boolean updateMatKhau(NhanVien nv, String maNV, String matKhau) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createQuery("UPDATE NhanVien nv SET nv.matKhau = :matKhau WHERE nv.ma = :ma");
+            query.setParameter("matKhau" , matKhau);
+            query.setParameter("ma", maNV);
+            
+            query.executeUpdate();
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public List<NhanVienCustom> get() {
         List<NhanVienCustom> list = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
