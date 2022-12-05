@@ -103,25 +103,25 @@ public class ForgotPassword extends javax.swing.JPanel {
     private void sendOTP() throws NoSuchAlgorithmException {
         NhanVien nv = getNhanVien(idNV);
         otp = new OTPGenerator().generate(6);
-        System.out.println(otp);
-//        String content = "<!DOCTYPE html>\n"
-//                + "<html lang=\"vi\">\n"
-//                + "<head>\n"
-//                + "    <meta charset=\"UTF-8\">\n"
-//                + "</head>\n"
-//                + "<body>\n"
-//                + "    <p>Xin chào " + nv.getHo() + " " + nv.getTenDem() + " " + nv.getTen() + ",</p>\n"
-//                + "    <p style=\"color: red; font-weight: bold\">Đây là email chứa mã xác thực, vui lòng không chia sẻ cho bất kì ai!</p>\n"
-//                + "    <p>Mã xác thực của bạn là:</p>\n"
-//                + "    <p style=\"font-weight: bold; font-size: larger; padding-left: 10%;\">" + otp + "</p>\n"
-//                + "    <p>Lưu ý: Mã xác thực chỉ tồn tại trong vòng 3 phút.</p>\n"
-//                + "    <p>Trân trọng,</p>\n"
-//                + "    <p>\n"
-//                + "        <em>Cửa hàng Đồng Hồ Đểu.</em> <br />\n"
-//                + "    </p>\n"
-//                + "</body>\n"
-//                + "</html>";
-//        SendMailUtil.sendMail(txtEmail.getText().trim(), "[WatchStore] - Mã xác thực tài khoản", content);
+//        System.out.println(otp);
+        String content = "<!DOCTYPE html>\n"
+                + "<html lang=\"vi\">\n"
+                + "<head>\n"
+                + "    <meta charset=\"UTF-8\">\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "    <p>Xin chào " + nv.getHo() + " " + nv.getTenDem() + " " + nv.getTen() + ",</p>\n"
+                + "    <p style=\"color: red; font-weight: bold\">Đây là email chứa mã xác thực, vui lòng không chia sẻ cho bất kì ai!</p>\n"
+                + "    <p>Mã xác thực của bạn là:</p>\n"
+                + "    <p style=\"font-weight: bold; font-size: larger; padding-left: 10%;\">" + otp + "</p>\n"
+                + "    <p>Lưu ý: Mã xác thực chỉ tồn tại trong vòng 3 phút.</p>\n"
+                + "    <p>Trân trọng,</p>\n"
+                + "    <p>\n"
+                + "        <em>Cửa hàng Đồng Hồ Đểu.</em> <br />\n"
+                + "    </p>\n"
+                + "</body>\n"
+                + "</html>";
+        SendMailUtil.sendMail(txtEmail.getText().trim(), "[WatchStore] - Mã xác thực tài khoản", content);
     }
 
     private void autoCloseMessageDialog() {
