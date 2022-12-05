@@ -18,33 +18,33 @@ import javax.mail.internet.MimeMessage;
  * @author TN
  */
 public class SendMailUtil {
-
-    public void sendMail(String to, String subject, String content) {
-        final String username = "", password = "";
-
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
-
-        Session s = Session.getInstance(props, new Authenticator() {
+    
+    public static void sendMail(String to, String subject, String content) {
+        final String username = "duan1.watchstore@gmail.com", password = "biinlswciivcbwyh";
+        
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        
+        Session session = Session.getInstance(prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
         });
-
+        
         try {
-            Message msg = new MimeMessage(s);
-            msg.setFrom(new InternetAddress(username));
-            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            msg.setSubject(subject);
-            msg.setText(content);
-            Transport.send(msg);
-            System.out.println("Mail sended!");
+            MimeMessage mimeMessage = new MimeMessage(session);
+            mimeMessage.setFrom(new InternetAddress(username));
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            mimeMessage.setSubject(subject, "UTF-8");
+            mimeMessage.setContent(content, "text/html; charset=UTF-8");
+            Transport.send(mimeMessage);
+            System.out.println("Mail sended");
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }

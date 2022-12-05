@@ -16,12 +16,17 @@ public class ForgotPasswordServiceImpl implements IForgotPasswordService {
     NhanVienRepository nvRepo = new NhanVienRepository();
 
     @Override
-    public NhanVien checkUsernameExistence(int idNV) {
+    public NhanVien getNV(int idNV) {
         return nvRepo.getById(idNV);
     }
 
     @Override
     public String getEmailById(int idNV) {
         return nvRepo.getEmailById(idNV);
+    }
+
+    @Override
+    public void changePassword(int idNV, String password) {
+        nvRepo.changePassword(idNV, password);
     }
 }

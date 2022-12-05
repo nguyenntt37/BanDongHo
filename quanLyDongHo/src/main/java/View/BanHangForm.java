@@ -80,7 +80,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         setLookAndFeel();
         initComponents();
         init();
-       initWebcam();
+//        initWebcam();
     }
 
     private void setLookAndFeel() {
@@ -1255,7 +1255,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
@@ -1671,42 +1671,42 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         HoaDonForm view = new HoaDonForm();
         this.dispose();
         view.setVisible(true);
-         webcam.close();
+        webcam.close();
     }//GEN-LAST:event_panelBorder6MouseClicked
 
     private void panelBorder11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder11MouseClicked
         NhanVienForm2 view = new NhanVienForm2();
         this.dispose();
         view.setVisible(true);
-         webcam.close();
+        webcam.close();
     }//GEN-LAST:event_panelBorder11MouseClicked
 
     private void panelBorder1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder1MouseClicked
         LoginForm view = new LoginForm();
         this.dispose();
         view.setVisible(true);
-         webcam.close();
+        webcam.close();
     }//GEN-LAST:event_panelBorder1MouseClicked
 
     private void panelBorder7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder7MouseClicked
         ChiTietSPForm view = new ChiTietSPForm();
         this.dispose();
         view.setVisible(true);
-         webcam.close();
+        webcam.close();
     }//GEN-LAST:event_panelBorder7MouseClicked
 
     private void panelBorder12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder12MouseClicked
         ThongKeForm view = new ThongKeForm();
         this.dispose();
         view.setVisible(true);
-         webcam.close();
+        webcam.close();
     }//GEN-LAST:event_panelBorder12MouseClicked
 
     private void panelBorder13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder13MouseClicked
         KhachHangView view = new KhachHangView();
         this.dispose();
         view.setVisible(true);
-         webcam.close();
+        webcam.close();
     }//GEN-LAST:event_panelBorder13MouseClicked
 
     private void cboDongSPItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDongSPItemStateChanged

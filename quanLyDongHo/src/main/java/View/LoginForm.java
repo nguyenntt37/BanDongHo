@@ -20,15 +20,15 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
 //        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         Login login = new Login();
-        ForgotPassword register = new ForgotPassword();
+        ForgotPassword forgotPassword = new ForgotPassword();
         slide.setAnimate(5);
-        slide.init(login, register);
+        slide.init(login, forgotPassword);
         login.addEventRegister((ActionEvent ae) -> {
             //  Show register form
             slide.show(1);
-            register.register();
+            forgotPassword.forgotPassword();
         });
-        register.addEventBackLogin((ActionEvent ae) -> {
+        forgotPassword.addEventBackLogin((ActionEvent ae) -> {
             slide.show(0);
             login.login();
         });

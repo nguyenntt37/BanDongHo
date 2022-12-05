@@ -136,11 +136,24 @@ public class NhanVienRepository {
     public String getEmailById(int idNV) {
         String s = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            s = (String) session.createQuery("SELECT nv.email FROM NhanVien nv WHERE nv.id = :id").getSingleResult();
+            s = (String) session.createQuery("SELECT nv.email FROM NhanVien nv WHERE nv.id = :id").setParameter("id", idNV).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return s;
+    }
+    
+    public void changePassword(int idNV, String password) {
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            session.getTransaction().begin();
+            session.createQuery("UPDATE NhanVien nv SET nv.matKhau = :password WHERE nv.id = :idNV")
+                    .setParameter("password", password)
+                    .setParameter("idNV", idNV)
+                    .executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
     }
 
     public static void main(String[] args) {

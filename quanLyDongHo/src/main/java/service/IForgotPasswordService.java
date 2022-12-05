@@ -12,6 +12,7 @@ import model.nhanvien.NhanVien;
  */
 public interface IForgotPasswordService {
 
-    NhanVien checkUsernameExistence(int idNV);
+    NhanVien getNV(int idNV);
     String getEmailById(int idNV);
+    void changePassword(int idNV, String password);
 }

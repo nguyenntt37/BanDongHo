@@ -6,8 +6,15 @@
 package View.login.gui;
 
 import View.BanHangForm;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import service.impl.LoginSeviceImpl;
 
 /**
@@ -15,12 +22,18 @@ import service.impl.LoginSeviceImpl;
  * @author RAVEN
  */
 public class Login extends javax.swing.JPanel {
+
     private static String currentLoginUsername;
 
     /**
      * Creates new form Login
      */
     public Login() {
+        try {
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ForgotPassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         txtUsername.setText("nv01"); //Set tạm
         txtPassword.setText("123"); //Set tạm
@@ -53,12 +66,13 @@ public class Login extends javax.swing.JPanel {
         txtPassword = new View.login.MyPassword();
         jLabel3 = new javax.swing.JLabel();
         btnLogin = new View.login.MyButton();
-        btnQuenMK = new javax.swing.JButton();
+        btnThoat = new javax.swing.JButton();
         lblLogin = new javax.swing.JLabel();
-        btnQuenMK1 = new javax.swing.JButton();
+        btnQuenMK = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Tên đăng nhập");
 
         jLabel2.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
@@ -66,6 +80,7 @@ public class Login extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Đăng nhập");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Mật khẩu");
 
         btnLogin.setBackground(new java.awt.Color(125, 229, 251));
@@ -78,9 +93,22 @@ public class Login extends javax.swing.JPanel {
             }
         });
 
+        btnThoat.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        btnThoat.setForeground(new java.awt.Color(255, 102, 0));
+        btnThoat.setText("Thoát");
+        btnThoat.setContentAreaFilled(false);
+        btnThoat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+
+        lblLogin.setText(" ");
+
         btnQuenMK.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        btnQuenMK.setForeground(new java.awt.Color(255, 102, 0));
-        btnQuenMK.setText("Thoát");
+        btnQuenMK.setForeground(new java.awt.Color(30, 122, 236));
+        btnQuenMK.setText("Quên mật khẩu?");
         btnQuenMK.setContentAreaFilled(false);
         btnQuenMK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnQuenMK.addActionListener(new java.awt.event.ActionListener() {
@@ -88,14 +116,6 @@ public class Login extends javax.swing.JPanel {
                 btnQuenMKActionPerformed(evt);
             }
         });
-
-        lblLogin.setText(" ");
-
-        btnQuenMK1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        btnQuenMK1.setForeground(new java.awt.Color(30, 122, 236));
-        btnQuenMK1.setText("Quên mật khẩu?");
-        btnQuenMK1.setContentAreaFilled(false);
-        btnQuenMK1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -107,9 +127,9 @@ public class Login extends javax.swing.JPanel {
                     .addComponent(lblLogin)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnQuenMK1)
+                            .addComponent(btnQuenMK)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnQuenMK))
+                            .addComponent(btnThoat))
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -137,8 +157,8 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(lblLogin)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnQuenMK)
-                    .addComponent(btnQuenMK1))
+                    .addComponent(btnThoat)
+                    .addComponent(btnQuenMK))
                 .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -153,7 +173,7 @@ public class Login extends javax.swing.JPanel {
         } else {
             lblLogin.setText(" ");
         }
-        
+
         if (pass.isEmpty()) {
             lblLogin.setText("Mật khẩu không được để trống");
         } else {
@@ -162,9 +182,10 @@ public class Login extends javax.swing.JPanel {
         if (!user.isEmpty() && !pass.isEmpty()) {
             boolean get = lgin.getLogin(user, pass);
             if (get) {
-               JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
                 currentLoginUsername = txtUsername.getText();
                 setVisible(false);
+                SwingUtilities.getWindowAncestor(this).dispose();
                 new BanHangForm().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
@@ -172,16 +193,20 @@ public class Login extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void btnQuenMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenMKActionPerformed
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
         System.exit(0);
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnQuenMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenMKActionPerformed
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnQuenMKActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.login.MyButton btnLogin;
     private javax.swing.JButton btnQuenMK;
-    private javax.swing.JButton btnQuenMK1;
+    private javax.swing.JButton btnThoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
