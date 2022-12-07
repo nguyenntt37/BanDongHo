@@ -49,8 +49,8 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
-     private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
-       private List<NhanVienCustom> listNhanVien = new ArrayList<>();
+    private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
+    private List<NhanVienCustom> listNhanVien = new ArrayList<>();
 
     public KhachHangView() {
         initComponents();
@@ -63,7 +63,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         txtMa.setEnabled(false);
         loadCbb();
         initWebcam();
-       tenNV();
+        tenNV();
     }
 
     private void tenNV() {
@@ -75,6 +75,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
             }
         }
     }
+
     public void showTB(List<KhachHangCutoms> kh) {
         dtm.setRowCount(0);
         for (KhachHangCutoms khr : kh) {
@@ -1076,10 +1077,14 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     }//GEN-LAST:event_panelBorder6MouseClicked
 
     private void panelBorder11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder11MouseClicked
-        NhanVienForm2 view = new NhanVienForm2();
-        this.dispose();
-        view.setVisible(true);
-        webcam.close();
+        if (Login.getPermission()) {
+            NhanVienForm2 view = new NhanVienForm2();
+            this.dispose();
+            view.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có quyền truy cập!");
+        }
     }//GEN-LAST:event_panelBorder11MouseClicked
 
     private void panelBorder1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder1MouseClicked
@@ -1090,10 +1095,14 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     }//GEN-LAST:event_panelBorder1MouseClicked
 
     private void panelBorder7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder7MouseClicked
-        ChiTietSPForm view = new ChiTietSPForm();
-        this.dispose();
-        view.setVisible(true);
-        webcam.close();
+        if (Login.getPermission()) {
+            ChiTietSPForm view = new ChiTietSPForm();
+            this.dispose();
+            view.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có quyền truy cập!");
+        }
     }//GEN-LAST:event_panelBorder7MouseClicked
 
     private void panelBorder12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder12MouseClicked

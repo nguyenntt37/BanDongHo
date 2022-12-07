@@ -19,7 +19,7 @@ public class LoginRepository {
         NhanVien user = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
-            user = (NhanVien) session.createQuery("from NhanVien where ma =:fn").setParameter("fn", useName).uniqueResult();
+            user = (NhanVien) session.createQuery("from NhanVien where ma = :fn").setParameter("fn", useName).uniqueResult();
             if (user != null && user.getMatKhau().equals(pass)) {
                 return true;
             }

@@ -925,9 +925,13 @@ public class NhanVienForm2 extends javax.swing.JFrame {
     }//GEN-LAST:event_panelBorder6MouseClicked
 
     private void panelBorder11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder11MouseClicked
-        NhanVienForm2 view = new NhanVienForm2();
-        this.dispose();
-        view.setVisible(true);
+        if (Login.getPermission()) {
+            NhanVienForm2 view = new NhanVienForm2();
+            this.dispose();
+            view.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có quyền truy cập!");
+        }
     }//GEN-LAST:event_panelBorder11MouseClicked
 
     private void panelBorder1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder1MouseClicked
@@ -937,9 +941,13 @@ public class NhanVienForm2 extends javax.swing.JFrame {
     }//GEN-LAST:event_panelBorder1MouseClicked
 
     private void panelBorder7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder7MouseClicked
-        ChiTietSPForm view = new ChiTietSPForm();
-        this.dispose();
-        view.setVisible(true);
+        if (Login.getPermission()) {
+            ChiTietSPForm view = new ChiTietSPForm();
+            this.dispose();
+            view.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có quyền truy cập!");
+        }
     }//GEN-LAST:event_panelBorder7MouseClicked
 
     private void panelBorder12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder12MouseClicked

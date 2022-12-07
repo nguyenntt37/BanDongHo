@@ -10,4 +10,5 @@ package service;
  */
 public interface LoginService {
     boolean getLogin(String useName,String pass);
+    boolean checkQuyen(String maNV);
 }

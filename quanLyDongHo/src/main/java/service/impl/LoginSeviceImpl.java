@@ -6,6 +6,8 @@ package service.impl;
 
 import service.LoginService;
 import Repository.LoginRepository;
+import Repository.NhanVienRepository;
+import model.nhanvien.NhanVien;
 
 /**
  *
@@ -13,6 +15,7 @@ import Repository.LoginRepository;
  */
 public class LoginSeviceImpl implements LoginService {
 
+    private NhanVienRepository nvRepo = new NhanVienRepository();
     private LoginRepository login = new LoginRepository();
 
     @Override
@@ -26,4 +29,13 @@ public class LoginSeviceImpl implements LoginService {
         }
     }
 
+    @Override
+    public boolean checkQuyen(String maNV) {
+        NhanVien nv = nvRepo.getByMaNV(maNV);
+        if (nv.getChucVu().getId() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -23,7 +23,9 @@ import service.impl.LoginSeviceImpl;
  */
 public class Login extends javax.swing.JPanel {
 
+    private LoginSeviceImpl lgin = new LoginSeviceImpl();
     private static String currentLoginUsername;
+    private static boolean permission;
 
     /**
      * Creates new form Login
@@ -39,6 +41,10 @@ public class Login extends javax.swing.JPanel {
         txtPassword.setText("123"); //Set tạm
     }
 
+    public static boolean getPermission() {
+        return permission;
+    }
+
     public void login() {
         txtUsername.grabFocus();
     }
@@ -49,6 +55,12 @@ public class Login extends javax.swing.JPanel {
 
     public static String getCurrentLoginUsername() {
         return currentLoginUsername;
+    }
+    
+    private void setQuyen() {
+        if (lgin.checkQuyen(txtUsername.getText().trim())) {
+            permission = true;
+        } else permission = false;
     }
 
     /**
@@ -165,7 +177,6 @@ public class Login extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        LoginSeviceImpl lgin = new LoginSeviceImpl();
         String user = txtUsername.getText();
         String pass = txtPassword.getText();
         if (user.isEmpty()) {
@@ -183,6 +194,7 @@ public class Login extends javax.swing.JPanel {
             boolean get = lgin.getLogin(user, pass);
             if (get) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                setQuyen();
                 currentLoginUsername = txtUsername.getText();
                 setVisible(false);
                 SwingUtilities.getWindowAncestor(this).dispose();

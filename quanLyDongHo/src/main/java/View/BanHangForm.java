@@ -1730,10 +1730,13 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }//GEN-LAST:event_panelBorder6MouseClicked
 
     private void panelBorder11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder11MouseClicked
-        NhanVienForm2 view = new NhanVienForm2();
-        this.dispose();
-        view.setVisible(true);
-        webcam.close();
+        if (Login.getPermission()) {
+            NhanVienForm2 view = new NhanVienForm2();
+            this.dispose();
+            view.setVisible(true);
+            webcam.close();
+        } else
+            JOptionPane.showMessageDialog(this, "Không có quyền truy cập!");
     }//GEN-LAST:event_panelBorder11MouseClicked
 
     private void panelBorder1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder1MouseClicked
@@ -1744,10 +1747,14 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
     }//GEN-LAST:event_panelBorder1MouseClicked
 
     private void panelBorder7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder7MouseClicked
-        ChiTietSPForm view = new ChiTietSPForm();
-        this.dispose();
-        view.setVisible(true);
-        webcam.close();
+        if (Login.getPermission()) {
+            ChiTietSPForm view = new ChiTietSPForm();
+            this.dispose();
+            view.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có quyền truy cập!");
+        }
     }//GEN-LAST:event_panelBorder7MouseClicked
 
     private void panelBorder12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBorder12MouseClicked
