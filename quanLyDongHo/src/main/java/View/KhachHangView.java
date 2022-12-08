@@ -1106,6 +1106,10 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
+        listKH = service.search(txtSearch.getText());
+        showTB(listKH);
+        updPanel();
+                
     }//GEN-LAST:event_txtSearchActionPerformed
     private void searhChing(String ten) {
         dtm.setRowCount(0);
