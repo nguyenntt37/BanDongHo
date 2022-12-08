@@ -575,7 +575,7 @@ public class SanPhamReponstory {
             Query query = session.createQuery("select  "
                     + " new viewmodel.ChiTietSPCustom("
                     + " m.id ,"
-                    + " m.sanPham.ma ,"
+                    + " m.ma ,"
                     + "m.sanPham.ten ,"
                     + " m.namBH ,"
                     + "m.thuongHieu.ten ,"
@@ -594,7 +594,7 @@ public class SanPhamReponstory {
                     + "m.sanPham.ChucNang, "
                     + "m.hinhAnh "
                     + ") "
-                    + "from model.sanpham.ChiTietSanPham m order by m.ngayTao");
+                    + "from model.sanpham.ChiTietSanPham m order by m.ngayTao desc");
             lists = query.setFirstResult(heSo).getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -638,10 +638,11 @@ public class SanPhamReponstory {
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<ChiTietSPCustom> list = sp.getAll();
+        List<ChiTietSPCustom> list = sp.getAll2(5);
         for (ChiTietSPCustom o : list) {
-            System.out.println(o);
+            System.out.println(o.getNgayTao());
         }
     }
+
 
 }
