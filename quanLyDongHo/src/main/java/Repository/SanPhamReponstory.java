@@ -105,7 +105,7 @@ public class SanPhamReponstory {
             Query query = session.createQuery("select  "
                     + " new viewmodel.ChiTietSPCustom("
                     + " m.id ,"
-                    + " m.sanPham.ma ,"
+                    + " m.ma ,"
                     + "m.sanPham.ten ,"
                     + " m.namBH ,"
                     + "m.thuongHieu.ten ,"
@@ -625,9 +625,10 @@ public class SanPhamReponstory {
                     + "m.sanPham.xuatXu, "
                     + "m.sanPham.kinh, "
                     + "m.sanPham.dayDeo, "
-                    + "m.sanPham.ChucNang "
+                    + "m.sanPham.ChucNang, "
+                    + "m.hinhAnh "
                     + ") "
-                    + "from model.sanpham.ChiTietSanPham m where m.sanPham.ten like :ten ");
+                    + "from model.sanpham.ChiTietSanPham m where m.sanPham.ten like :ten or m.ma like :ten");
             query.setParameter("ten", "%" + ten + "%");
             lists = query.list();
         } catch (HibernateException e) {
@@ -638,7 +639,7 @@ public class SanPhamReponstory {
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<ChiTietSPCustom> list = sp.getAll2(5);
+        List<ChiTietSPCustom> list = sp.search("ABC");
         for (ChiTietSPCustom o : list) {
             System.out.println(o.getNgayTao());
         }
