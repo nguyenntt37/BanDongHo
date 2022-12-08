@@ -53,6 +53,8 @@ public class ChiTietSPCustom {
     private String dayDeo;
 
     private String chucNang;
+    
+    private String hinhAnh;
 
     @Override
     public String toString() {

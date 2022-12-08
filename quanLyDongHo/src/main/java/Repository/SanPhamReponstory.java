@@ -121,7 +121,8 @@ public class SanPhamReponstory {
                     + "m.sanPham.xuatXu, "
                     + "m.sanPham.kinh, "
                     + "m.sanPham.dayDeo, "
-                    + "m.sanPham.ChucNang "
+                    + "m.sanPham.ChucNang, "
+                    + "m.hinhAnh "
                     + ") "
                     + "from model.sanpham.ChiTietSanPham m order by m.ngayTao desc");
             lists = query.list();
@@ -267,12 +268,13 @@ public class SanPhamReponstory {
 
     public boolean updateChitietSP(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX,
             BigDecimal giaBan, BigDecimal giaNhap,
-            int namBH, int soLuongTon, int trangThai) {
+            int namBH, int soLuongTon, int trangThai, String hinhAnh) {
         Transaction tran = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             tran = session.beginTransaction();
             Query query = session.createQuery("update ChiTietSanPham c set c.sanPham.id=:idSP,c.dongsp.id=:idDongSP,c.mauSac.id =:idMau,"
-                    + "                        c.nSX.id=:idNamSX,c.giaBan=:giaBan,c.giaNhap=:giaNhap,c.namBH=:namBH,c.soLuongTon=:soLuong, c.trangThai=:trangThai  "
+                    + "                        c.nSX.id=:idNamSX,c.giaBan=:giaBan,c.giaNhap=:giaNhap,c.namBH=:namBH,c.soLuongTon=:soLuong, "
+                    + "                         c.trangThai=:trangThai, c.hinhAnh=:hinhAnh"
                     + "                       where c.id =:id ");
             query.setParameter("idSP", idSP);
             query.setParameter("idDongSP", idDongSP);
@@ -283,6 +285,7 @@ public class SanPhamReponstory {
             query.setParameter("namBH", namBH);
             query.setParameter("soLuong", soLuongTon);
             query.setParameter("trangThai", trangThai);
+            query.setParameter("hinhAnh", hinhAnh);
             query.setParameter("id", id);
             query.executeUpdate();
             tran.commit();
@@ -588,7 +591,8 @@ public class SanPhamReponstory {
                     + "m.sanPham.xuatXu, "
                     + "m.sanPham.kinh, "
                     + "m.sanPham.dayDeo, "
-                    + "m.sanPham.ChucNang "
+                    + "m.sanPham.ChucNang, "
+                    + "m.hinhAnh "
                     + ") "
                     + "from model.sanpham.ChiTietSanPham m order by m.ngayTao");
             lists = query.setFirstResult(heSo).getResultList();
@@ -634,9 +638,8 @@ public class SanPhamReponstory {
 
     public static void main(String[] args) {
         SanPhamReponstory sp = new SanPhamReponstory();
-        List<SanPhamCustom3> list = sp.getAllSP();
-        for (SanPhamCustom3 o : list) {
-
+        List<ChiTietSPCustom> list = sp.getAll();
+        for (ChiTietSPCustom o : list) {
             System.out.println(o);
         }
     }

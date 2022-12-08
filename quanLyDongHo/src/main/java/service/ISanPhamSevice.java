@@ -67,7 +67,7 @@ public interface ISanPhamSevice {
     String updateMauSac(MauSac ms, int id, String ma, String ten);
 
     String updateSPCT(ChiTietSanPham ct, int id, int idSP, int idDongSP, int idMau, int idNamSX, BigDecimal giaBan, BigDecimal giaNhap,
-            int namBH, int soLuongTon, int trangThai);
+            int namBH, int soLuongTon, int trangThai, String hinhAnh);
 
     String deleteChitietSP(ChiTietSanPham sp, int id);
 
