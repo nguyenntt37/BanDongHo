@@ -1318,34 +1318,34 @@ public class ChiTietSPForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cboThuongHieuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-//        if (txtNamBH.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Năm BH không được để trống");
-//            return;
-//        } else if (txtNamBH.getText().matches("[0-9]+") == false) {
-//            JOptionPane.showMessageDialog(this, "Năm BH phải là số");
-//            return;
-//        } else if (txtMota.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Mô tả không được để trống");
-//            return;
-//        } else if (txtSoLuong.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Số lượng tồn không được để trống");
-//            return;
-//        } else if (txtSoLuong.getText().matches("[0-9]+") == false) {
-//            JOptionPane.showMessageDialog(this, "Số lượng tồn phải là số");
-//            return;
-//        } else if (txtGiaNhap.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Gía nhập không được để trống");
-//            return;
-//        } else if (txtGiaNhap.getText().matches("[0-9]+") == false) {
-//            JOptionPane.showMessageDialog(this, "Gía nhập phải là số");
-//            return;
-//        } else if (txtGiaBan.getText().isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Gía bán không được để trống");
-//            return;
-//        } else if (txtGiaBan.getText().matches("[0-9]+") == false) {
-//            JOptionPane.showMessageDialog(this, "Gía bán phải là số");
-//            return;
-//        } else {
+        if (txtNamBH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Năm BH không được để trống");
+            return;
+        } else if (txtNamBH.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "Năm BH phải là số");
+            return;
+        } else if (txtMota.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mô tả không được để trống");
+            return;
+        } else if (txtSoLuong.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Số lượng tồn không được để trống");
+            return;
+        } else if (txtSoLuong.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "Số lượng tồn phải là số");
+            return;
+        } else if (txtGiaNhap.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Gía nhập không được để trống");
+            return;
+        } else if (txtGiaNhap.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "Gía nhập phải là số");
+            return;
+        } else if (txtGiaBan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Gía bán không được để trống");
+            return;
+        } else if (txtGiaBan.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "Gía bán phải là số");
+            return;
+        } else {
             ChiTietSanPham ct = new ChiTietSanPham();
             boolean trangThai = rdoCon.isSelected();
             int r = 0;
@@ -1355,13 +1355,14 @@ public class ChiTietSPForm extends javax.swing.JFrame {
                 r = 0;
             }
             ct.setTrangThai(r);
+            ct.setHinhAnh(personalImage.toString());
             JOptionPane.showMessageDialog(this, spSevice.updateSPCT(ct, Integer.parseInt(txtIdChiTietSP.getText()), Integer.parseInt(lblIdSanPham.getText()),
                     Integer.parseInt(lblIdDongSp.getText()), Integer.parseInt(lblIdMauSac.getText()), Integer.parseInt(lblIdNamSX.getText()), BigDecimal.valueOf(Double.valueOf(txtGiaBan.getText())),
                     BigDecimal.valueOf(Double.valueOf(txtGiaNhap.getText())), Integer.valueOf(txtNamBH.getText()), Integer.valueOf(txtSoLuong.getText()), r, personalImage.toString()));
             listSPPage = spSevice.getAll2((soTrang * 10) - 10);
             showDataRow(listSPPage);
             updPanel();
-//        }
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void tblCTSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTSanPhamMouseClicked
