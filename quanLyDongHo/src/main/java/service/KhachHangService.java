@@ -25,5 +25,5 @@ public interface KhachHangService {
     List<KhachHangCutoms> search(String ten);
 
     List<KhachHangCutoms> locTrangThai(int trangThai);
-
+    List<KhachHangCutoms>getAll(int heSo);
 }

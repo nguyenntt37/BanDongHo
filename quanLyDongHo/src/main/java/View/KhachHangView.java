@@ -46,11 +46,13 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     List<KhachHangCutoms> listKH = new ArrayList<>();
     KhachHangServiceImpl service = new KhachHangServiceImpl();
     DefaultComboBoxModel dcmb = new DefaultComboBoxModel();
+    List<KhachHangCutoms> lisKHC = new ArrayList<>();
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
     private NhanVienServiceImpl serviceNV = new NhanVienServiceImpl();
     private List<NhanVienCustom> listNhanVien = new ArrayList<>();
+    private int soTrang = 1;
 
     public KhachHangView() {
         initComponents();
@@ -58,11 +60,24 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         String[] name = {"ID", "Mã", "Tên", "Tên Đệm", "Họ", "SĐT", "Quốc Gia", "Thành Phố", "Trạng thái"};
         dtm.setColumnIdentifiers(name);
         listKH = service.getAllKH();
-        showTB(listKH);
         txtID.setEnabled(false);
         txtMa.setEnabled(false);
         loadCbb();
         initWebcam();
+
+        lisKHC = service.getAllKH();
+        int heSo = (soTrang * 5) - 5;
+        listKH = service.getAll(heSo);
+        showTB(listKH);
+        if (listKH.size() == 0) {
+            btnFirst2.setEnabled(false);
+            btnNext2.setEnabled(false);
+            btnBack2.setEnabled(false);
+            btnLast2.setEnabled(false);
+        }
+        btnFirst2.setEnabled(false);
+        btnBack2.setEnabled(false);
+        updPanel();
         tenNV();
     }
 
@@ -204,6 +219,13 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         }
     }
 
+    private void setTruePhanTrang() {
+        btnFirst2.setEnabled(true);
+        btnNext2.setEnabled(true);
+        btnBack2.setEnabled(true);
+        btnLast2.setEnabled(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,6 +245,11 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableKH = new javax.swing.JTable();
+        btnFirst2 = new javax.swing.JButton();
+        btnBack2 = new javax.swing.JButton();
+        btnNext2 = new javax.swing.JButton();
+        btnLast2 = new javax.swing.JButton();
+        txtSoTrang5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
@@ -353,20 +380,76 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         });
         jScrollPane1.setViewportView(tableKH);
 
+        btnFirst2.setBackground(new java.awt.Color(0, 102, 204));
+        btnFirst2.setForeground(new java.awt.Color(255, 255, 255));
+        btnFirst2.setText("|<<");
+        btnFirst2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirst2ActionPerformed(evt);
+            }
+        });
+
+        btnBack2.setBackground(new java.awt.Color(0, 102, 204));
+        btnBack2.setForeground(new java.awt.Color(255, 255, 255));
+        btnBack2.setText("<<");
+        btnBack2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBack2ActionPerformed(evt);
+            }
+        });
+
+        btnNext2.setBackground(new java.awt.Color(0, 102, 204));
+        btnNext2.setForeground(new java.awt.Color(255, 255, 255));
+        btnNext2.setText(">>");
+        btnNext2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNext2ActionPerformed(evt);
+            }
+        });
+
+        btnLast2.setBackground(new java.awt.Color(0, 102, 204));
+        btnLast2.setForeground(new java.awt.Color(255, 255, 255));
+        btnLast2.setText(">>|");
+        btnLast2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLast2ActionPerformed(evt);
+            }
+        });
+
+        txtSoTrang5.setText("SoTrang");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 866, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(0, 27, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(btnFirst2)
+                .addGap(53, 53, 53)
+                .addComponent(btnBack2)
+                .addGap(93, 93, 93)
+                .addComponent(txtSoTrang5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110)
+                .addComponent(btnNext2)
+                .addGap(59, 59, 59)
+                .addComponent(btnLast2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFirst2)
+                    .addComponent(btnBack2)
+                    .addComponent(txtSoTrang5)
+                    .addComponent(btnNext2)
+                    .addComponent(btnLast2))
+                .addGap(31, 31, 31))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -570,7 +653,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -639,7 +722,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel14.setBackground(new java.awt.Color(0, 102, 204));
@@ -833,8 +916,6 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
             }
         });
 
-        jLabel16.setIcon(new javax.swing.ImageIcon("D:\\quanLyBanDongHo\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
-
         javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
         thongTinNhanVien.setLayout(thongTinNhanVienLayout);
         thongTinNhanVienLayout.setHorizontalGroup(
@@ -940,8 +1021,11 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         }
         kh.setTrangthai(tt);
         JOptionPane.showMessageDialog(this, service.add(kh));
-        listKH = service.getAllKH();
+//        listKH = service.getAllKH();
+//        showTB(listKH);
+        listKH = service.getAll((soTrang * 5) - 5);
         showTB(listKH);
+        updPanel();
         reset();
 
     }//GEN-LAST:event_btnAddActionPerformed
@@ -954,6 +1038,9 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     private void tableKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableKHMouseClicked
         // TODO add your handling code here:
         int row = tableKH.getSelectedRow();
+        listKH = service.getAll((soTrang * 5) - 5);
+        showTB(listKH);
+
         fillData(row);
     }//GEN-LAST:event_tableKHMouseClicked
 
@@ -986,8 +1073,11 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         kh.setTrangthai(tt);
         JOptionPane.showMessageDialog(this, service.update(kh, txtMa.getText(), tt, txtHo.getText(), txtQuocGia.getText(), txtSDT.getText(), txtTen.getText(), txtTenDem.getText(), txtThanhPho.getText(), Integer.valueOf(txtID.getText())));
 //        JOptionPane.showMessageDialog(this, service.update(kh2, ma, ho, quocGia, sdt, ten, tenDem, thanhPho, id));
-        listKH = service.getAllKH();
+//        listKH = service.getAllKH();
+//        showTB(listKH);
+        listKH = service.getAll((soTrang * 5) - 5);
         showTB(listKH);
+        updPanel();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -1124,6 +1214,93 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         view.setVisible(true);
     }//GEN-LAST:event_thongTinNhanVienMouseClicked
 
+    private void btnFirst2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirst2ActionPerformed
+
+       setTruePhanTrang();
+        int tongSoTrang = lisKHC.size() / 5;
+        if (lisKHC.size() % 5 != 0) {
+            tongSoTrang += 1;
+        }
+        listKH.removeAll(listKH);
+        soTrang = 1;
+        btnBack2.setEnabled(false);
+        btnFirst2.setEnabled(false);
+        int heSo = (soTrang * 10) - 10;
+        listKH = service.getAll(heSo);
+        showTB(listKH);
+        updPanel();
+        txtSoTrang5.setText(String.valueOf(soTrang) + "/" + tongSoTrang);
+    }//GEN-LAST:event_btnFirst2ActionPerformed
+
+    private void btnBack2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack2ActionPerformed
+      setTruePhanTrang();
+        int tongSoTrang = lisKHC.size() / 5;
+        if (lisKHC.size() % 5 != 0) {
+            tongSoTrang += 1;
+        }
+        if (soTrang == 1) {
+            showTB(listKH);
+        } else {
+            listKH.removeAll(listKH);
+            soTrang -= 1;
+            if (soTrang == 1) {
+                btnFirst2.setEnabled(false);
+                btnBack2.setEnabled(false);
+            }
+            int heSo = (soTrang * 5) - 5;
+            listKH = service.getAll(heSo);
+            showTB(listKH);
+            txtSoTrang5.setText(String.valueOf(soTrang) + "/" + tongSoTrang);
+        }
+    }//GEN-LAST:event_btnBack2ActionPerformed
+
+    private void btnNext2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext2ActionPerformed
+        setTruePhanTrang();
+        int tongSoTrang = lisKHC.size() / 5;
+        if (lisKHC.size() % 5 != 0) {
+            tongSoTrang += 1;
+        }
+        if (soTrang == tongSoTrang) {
+            showTB(listKH);
+
+        } else {
+            listKH.removeAll(listKH);
+            soTrang += 1;
+            if (soTrang == tongSoTrang) {
+                btnNext2.setEnabled(false);
+                btnLast2.setEnabled(false);
+            }
+            int heSo = (soTrang * 5) - 5;
+            listKH = service.getAll(heSo);
+            showTB(listKH);
+            txtSoTrang5.setText(String.valueOf(soTrang) + "/" + tongSoTrang);
+        }
+    }//GEN-LAST:event_btnNext2ActionPerformed
+
+    private void btnLast2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLast2ActionPerformed
+       setTruePhanTrang();
+        int tongSoTrang = lisKHC.size() / 5;
+        if (lisKHC.size() % 5 != 0) {
+            tongSoTrang += 1;
+        }
+        btnNext2.setEnabled(false);
+        btnLast2.setEnabled(false);
+        listKH.removeAll(listKH);
+        soTrang = tongSoTrang;
+        int heSo = (soTrang * 5) - 5;
+        listKH = service.getAll(heSo);
+        showTB(listKH);
+        txtSoTrang5.setText(String.valueOf(soTrang) + "/" + tongSoTrang);
+
+    }//GEN-LAST:event_btnLast2ActionPerformed
+    private void updPanel() {
+        int tongSoTrang = lisKHC.size() / 5;
+        if (lisKHC.size() % 5 != 0) {
+            tongSoTrang += 1;
+        }
+        txtSoTrang5.setText(String.valueOf(soTrang) + "/" + tongSoTrang);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -1162,8 +1339,14 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBack2;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnFirst2;
+    private javax.swing.JButton btnLast;
+    private javax.swing.JButton btnLast1;
+    private javax.swing.JButton btnLast2;
+    private javax.swing.JButton btnNext2;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbTrangThai;
@@ -1217,6 +1400,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     private javax.swing.JTextField txtQuocGia;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtSearch;
+    private javax.swing.JLabel txtSoTrang5;
     private javax.swing.JTextField txtTen;
     private javax.swing.JTextField txtTenDem;
     private javax.swing.JTextField txtThanhPho;

@@ -5,6 +5,7 @@
 package service.impl;
 
 import Repository.KhachHangRespository;
+import java.util.ArrayList;
 import java.util.List;
 import model.KhachHang;
 import service.KhachHangService;
@@ -59,4 +60,19 @@ public class KhachHangServiceImpl implements KhachHangService {
         return khr.locTrangThai(trangThai);
     }
 
-}
+    @Override
+    public List<KhachHangCutoms> getAll(int heSo) {
+    List<KhachHangCutoms>likhc = new ArrayList<>();
+     int i = 0;
+        for (KhachHangCutoms khachHangCutoms : khr.getAll(heSo)) {
+            likhc.add(khachHangCutoms);
+            i++;
+            if (i==5) {
+               break;
+            }
+        }
+         return likhc;
+        
+    } }
+
+
