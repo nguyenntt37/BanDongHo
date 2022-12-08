@@ -609,7 +609,7 @@ public class SanPhamReponstory {
             Query query = session.createQuery("select  "
                     + " new viewmodel.ChiTietSPCustom("
                     + " m.id ,"
-                    + " m.sanPham.ma ,"
+                    + " m.ma ,"
                     + "m.sanPham.ten ,"
                     + " m.namBH ,"
                     + "m.thuongHieu.ten ,"
@@ -627,7 +627,7 @@ public class SanPhamReponstory {
                     + "m.sanPham.dayDeo, "
                     + "m.sanPham.ChucNang "
                     + ") "
-                    + "from model.sanpham.ChiTietSanPham m where m.sanPham.ten like :ten or m.sanPham.ma like :ten");
+                    + "from model.sanpham.ChiTietSanPham m where m.sanPham.ten like :ten ");
             query.setParameter("ten", "%" + ten + "%");
             lists = query.list();
         } catch (HibernateException e) {
