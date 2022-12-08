@@ -168,17 +168,47 @@ public class KhachHangRespository {
         }
     }
 
+    public List<KhachHangCutoms> getAll(int heSo) {
+        List<KhachHangCutoms> list = new ArrayList<>();
+        //   KhachHang kh = new KhachHang();
+
+        try ( Session session = HibernatUtil.getFACTORY().openSession()) {
+            Query query = session.createQuery("select new viewmodel.KhachHangCutoms("
+                    + "m.id,"
+                    + "m.ma,"
+                    + "m.ten,"
+                    + "m.sdt,"
+                    + "m.quocGia,"
+                    + "m.tenDem,"
+                    + "m.ho,"
+                    + "m.thanhPho,"
+                    + "m.trangthai)"
+                    + "from model.KhachHang m ");
+            // query.setParameter("d", ten);
+            list = query.setFirstResult(heSo).getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         KhachHangRespository kh = new KhachHangRespository();
         KhachHang khachHang = new KhachHang();
-        boolean up = kh.update(khachHang, "ph1", 1, "lên", "vn", "1111111", "vinhdz", "nguyễn", "hn", 2);
-//        for (KhachHangCutoms khachHangCutoms : list) {
-//            System.out.println(khachHangCutoms.getMa());
+//        boolean up = kh.update(khachHang, "ph1", 1, "lên", "vn", "1111111", "vinhdz", "nguyễn", "hn", 2);
+////        for (KhachHangCutoms khachHangCutoms : list) {
+////            System.out.println(khachHangCutoms.getMa());
+////        }
+//        if (up) {
+//            System.out.println("ok");
+//        } else {
+//            System.out.println("no");
 //        }
-        if (up) {
-            System.out.println("ok");
-        } else {
-            System.out.println("no");
+        List<KhachHangCutoms> likh = new ArrayList<>();
+        likh = kh.getAll(1);
+        for (KhachHangCutoms khachHangCutoms : likh) {
+            System.out.println(khachHangCutoms.getMa());
         }
     }
 }
