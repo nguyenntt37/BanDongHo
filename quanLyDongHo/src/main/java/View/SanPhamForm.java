@@ -4,7 +4,10 @@
  */
 package View;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -352,53 +355,119 @@ public class SanPhamForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        SanPham sp = new SanPham();
-        sp.setMa(txtMaSP.getText());
-        sp.setTen(txtTenSp.getText());
-        sp.setChucNang(txtChucNang.getText());
-        sp.setDayDeo(txtDayDeo.getText());
-        sp.setKinh(txtKinh.getText());
-        sp.setMatSo(txtMatSo.getText());
-        sp.setMay(txtMay.getText());
-        sp.setXuatXu(txtXuatXu.getText());
-        boolean trangThai = rdoCon.isSelected();
-        int r = 0;
-        if (trangThai == true) {
-            r = 1;
+        if (txtMaSP.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã sản phẩm không được để trống");
+            return;
+        } else if (txtTenSp.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên sản phẩm không được để trống");
+            return;
+        } else if (txtChucNang.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chức năng không được để trống");
+            return;
+        } else if (txtDayDeo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Dây đeo không được để trống");
+            return;
+        } else if (txtKinh.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kính không được để trống");
+            return;
+        } else if (txtMatSo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mắt số không được để trống");
+            return;
+        } else if (txtMay.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Máy không được để trống");
+            return;
+        } else if (txtXuatXu.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Xuất xứ không được để trống");
+            return;
         } else {
-            r = 0;
+            SanPham sp = new SanPham();
+            sp.setMa(txtMaSP.getText());
+            sp.setTen(txtTenSp.getText());
+            sp.setChucNang(txtChucNang.getText());
+            sp.setDayDeo(txtDayDeo.getText());
+            sp.setKinh(txtKinh.getText());
+            sp.setMatSo(txtMatSo.getText());
+            sp.setMay(txtMay.getText());
+            sp.setXuatXu(txtXuatXu.getText());
+            boolean trangThai = rdoCon.isSelected();
+            int r = 0;
+            if (trangThai == true) {
+                r = 1;
+            } else {
+                r = 0;
+            }
+            sp.setTrangthai(r);
+            JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().updateSanPham(sp, txtTenSp.getText(), Integer.parseInt(lbIdSP.getText()), txtMaSP.getText(), txtChucNang.getText(), txtDayDeo.getText(), txtKinh.getText(), txtMatSo.getText(), txtMay.getText(), txtXuatXu.getText(), r));
+            showDataRow(list);
         }
-        sp.setTrangthai(r);
-        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().updateSanPham(sp, txtTenSp.getText(), Integer.parseInt(lbIdSP.getText()), txtMaSP.getText() , txtChucNang.getText(), txtDayDeo.getText(), txtKinh.getText(), txtMatSo.getText(), txtMay.getText(), txtXuatXu.getText(), r));
-        showDataRow(list);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        SanPham sp = new SanPham();
-        sp.setMa(txtMaSP.getText());
-        sp.setTen(txtTenSp.getText());
-        sp.setChucNang(txtChucNang.getText());
-        sp.setDayDeo(txtDayDeo.getText());
-        sp.setKinh(txtKinh.getText());
-        sp.setMatSo(txtMatSo.getText());
-        sp.setMay(txtMay.getText());
-        sp.setXuatXu(txtXuatXu.getText());
-        boolean trangThai = rdoCon.isSelected();
-        int r = 0;
-        if (trangThai == true) {
-            r = 1;
+        if (txtMaSP.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã sản phẩm không được để trống");
+            return;
+        } else if (txtTenSp.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên sản phẩm không được để trống");
+            return;
+        } else if (txtChucNang.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chức năng không được để trống");
+            return;
+        } else if (txtDayDeo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Dây đeo không được để trống");
+            return;
+        } else if (txtKinh.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kính không được để trống");
+            return;
+        } else if (txtMatSo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mắt số không được để trống");
+            return;
+        } else if (txtMay.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Máy không được để trống");
+            return;
+        } else if (txtXuatXu.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Xuất xứ không được để trống");
+            return;
         } else {
-            r = 0;
+            SanPham sp = new SanPham();
+            sp.setMa(txtMaSP.getText());
+            sp.setTen(txtTenSp.getText());
+            sp.setChucNang(txtChucNang.getText());
+            sp.setDayDeo(txtDayDeo.getText());
+            sp.setKinh(txtKinh.getText());
+            sp.setMatSo(txtMatSo.getText());
+            sp.setMay(txtMay.getText());
+            sp.setXuatXu(txtXuatXu.getText());
+            boolean trangThai = rdoCon.isSelected();
+            int r = 0;
+            if (trangThai == true) {
+                r = 1;
+            } else {
+                r = 0;
+            }
+            sp.setTrangthai(r);
+            Date date = new Date();
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            String da = df.format(date);
+            sp.setNgayTao(da);
+            JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().addSanPham(sp));
+            showDataRow(list);
         }
-        sp.setTrangthai(r);
-        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().addSanPham(sp));
-        showDataRow(list);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        SanPham sp = new SanPham();
-        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().deleteSP(sp, Integer.parseInt(lbIdSP.getText())));
-        showDataRow(list);
+        int row = tblSP.getSelectedRow();
+        if (row <= 0) {
+            JOptionPane.showMessageDialog(this, "Yêu cầu chọn thông tin trong bảng");
+        } else {
+            int click = JOptionPane.showConfirmDialog(null, "Bạn muốn xóa ?", "Xóa", JOptionPane.YES_NO_OPTION);
+            if (click == JOptionPane.YES_OPTION) {
+                SanPham sp = new SanPham();
+                JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().deleteSP(sp, Integer.parseInt(lbIdSP.getText())));
+                showDataRow(list);
+            } else {
+                
+            }
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
