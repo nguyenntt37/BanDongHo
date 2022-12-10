@@ -20,6 +20,7 @@ public class MauSacForm extends javax.swing.JFrame {
 
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<MauSacCustom> list = new ArrayList<>();
+
     /**
      * Creates new form MauSacForm
      */
@@ -44,13 +45,14 @@ public class MauSacForm extends javax.swing.JFrame {
             dtm.addRow(o.toDataRow());
         }
     }
-    
+
     private void mose(int index) {
         MauSacCustom ms = list.get(index);
         txtMaMS.setText(ms.getMa());
         lbIdSP.setText(ms.getId().toString());
         txtTenMs.setText(ms.getTen());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -236,6 +238,16 @@ public class MauSacForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (txtMaMS.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã màu sắc không được để trống");
+            return;
+        } else if (txtMaMS.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "mã màu sắc  phải là số");
+            return;
+        } else if (txtTenMs.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống");
+            return;
+        }
         MauSac ms = new MauSac();
         ms.setMa(txtMaMS.getText());
         ms.setTen(txtTenMs.getText());
@@ -244,16 +256,27 @@ public class MauSacForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (txtMaMS.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã màu sắc không được để trống");
+            return;
+        } else if (txtMaMS.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "mã màu sắc  phải là số");
+            return;
+        } else if (txtTenMs.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống");
+            return;
+        }
         MauSac ms = new MauSac();
         ms.setMa(txtMaMS.getText());
         ms.setTen(txtTenMs.getText());
         JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().addMauSac(ms));
         listLoad();
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         MauSac ms = new MauSac();
-        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().deleteMauSac(ms,Integer.parseInt(lbIdSP.getText())));
+        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().deleteMauSac(ms, Integer.parseInt(lbIdSP.getText())));
         listLoad();
     }//GEN-LAST:event_btnDeleteActionPerformed
 

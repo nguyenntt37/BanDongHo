@@ -21,6 +21,7 @@ public class ThuongHieuForm extends javax.swing.JFrame {
 
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<ThuongHieuCustomer> list = new ArrayList<>();
+
     /**
      * Creates new form ThuongHieuForm
      */
@@ -44,14 +45,14 @@ public class ThuongHieuForm extends javax.swing.JFrame {
             dtm.addRow(o.toDataRow());
         }
     }
-    
+
     private void mose(int index) {
         ThuongHieuCustomer ms = list.get(index);
         txtMaTH.setText(ms.getMa());
         lbIdSP.setText(ms.getId().toString());
         txtTenTH.setText(ms.getTen());
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -231,6 +232,17 @@ public class ThuongHieuForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (txtMaTH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã thương hiệu không được để trống");
+            return;
+        } else if (txtMaTH.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "mã thương hiệu  phải là số");
+            return;
+        } else if (txtTenTH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống");
+            return;
+        }
+
         thuongHieu ms = new thuongHieu();
         ms.setMa(txtMaTH.getText());
         ms.setTen(txtTenTH.getText());
@@ -239,6 +251,16 @@ public class ThuongHieuForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (txtMaTH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã thương hiệu không được để trống");
+            return;
+        } else if (txtMaTH.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "mã thương hiệu  phải là số");
+            return;
+        } else if (txtTenTH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống");
+            return;
+        }
         thuongHieu ms = new thuongHieu();
         ms.setMa(txtMaTH.getText());
         ms.setTen(txtTenTH.getText());
@@ -248,7 +270,7 @@ public class ThuongHieuForm extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         thuongHieu ms = new thuongHieu();
-        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().deleteThuongHieu(ms,Integer.parseInt(lbIdSP.getText())));
+        JOptionPane.showMessageDialog(this, new SanPHamSeviceImpl().deleteThuongHieu(ms, Integer.parseInt(lbIdSP.getText())));
         listLoad();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
