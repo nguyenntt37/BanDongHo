@@ -7,6 +7,7 @@ package viewmodel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.nhanvien.ChucVu;
 
 /**
  *
@@ -22,5 +23,6 @@ public class NhanVienCustom {
     private String ngaySinh;
     private String diaChi;
     private String soDT;
+    private String tenChucVu;
     private int trangThai;
 }

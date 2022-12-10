@@ -5,6 +5,7 @@
 package service.impl;
 
 import Repository.NhanVienRepository;
+import java.util.ArrayList;
 import java.util.List;
 import model.nhanvien.NhanVien;
 import service.INhanVienService;
@@ -17,6 +18,7 @@ import viewmodel.NhanVienCustom;
 public class NhanVienServiceImpl implements INhanVienService {
 
     NhanVienRepository repo = new NhanVienRepository();
+    private List<String>listEmail = new ArrayList();
 
     @Override
     public List<NhanVienCustom> get() {
@@ -25,8 +27,30 @@ public class NhanVienServiceImpl implements INhanVienService {
 
     @Override
     public String add(NhanVien nv) {
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$";
         if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
             return "Vui lòng nhập đủ dữ liệu";
+        }
+        List<NhanVienCustom>list = repo.get();
+        for(NhanVienCustom nv4 : list){
+            NhanVien nv5 = repo.getByMaNV(nv4.getMaNV());
+            listEmail.add(nv5.getEmail());
+        }
+        for(int i =0; i<listEmail.size(); i++){
+            if(nv.getEmail().equals(listEmail.get(i))){
+                return "Không thể thêm nhân viên trùng email";
+            }
+        }
+        if(nv.getTrangThai()!=1){
+            return "Không thể thêm nhân viên đã nghỉ việc";
+        }
+        if(!nv.getEmail().matches(regex)){
+            return "Email bạn nhập vào không đúng định dạng";
+        }
+        for(NhanVienCustom nv3 : list){
+            if(nv3.getMaNV().equals(nv.getMa())){
+                return "Không thể thêm nhân viên trùng mã";
+            }
         }
         boolean check = repo.add(nv);
         if(check){
@@ -39,6 +63,16 @@ public class NhanVienServiceImpl implements INhanVienService {
     public String update(NhanVien nv, String maNV) {
         if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
             return "Vui lòng nhập đủ dữ liệu";
+        }
+        List<NhanVienCustom>list = repo.get();
+        for(NhanVienCustom nv4 : list){
+            NhanVien nv5 = repo.getByMaNV(nv4.getMaNV());
+            listEmail.add(nv5.getEmail());
+        }
+        for(int i =0; i<listEmail.size(); i++){
+            if(nv.getEmail().equals(listEmail.get(i))){
+                return "Không thể sửa nhân viên trùng email";
+            }
         }
         boolean check = repo.update(nv, maNV);
         if(check){

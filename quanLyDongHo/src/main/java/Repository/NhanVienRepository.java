@@ -45,6 +45,7 @@ public class NhanVienRepository {
                     + "m.ngaySinh,"
                     + "m.diaChi,"
                     + "m.sdt,"
+                    + "m.chucVu.ten,"
                     + "m.trangThai)"
                     + "from model.nhanvien.NhanVien m ");
             // query.setParameter("d", ten);
@@ -174,7 +175,7 @@ public class NhanVienRepository {
 
     public static void main(String[] args) {
         NhanVienRepository nv = new NhanVienRepository();
-        List<NhanVienCustom> list = nv.Search("0123456789");
+        List<NhanVienCustom> list = nv.get();
         for (NhanVienCustom nv1 : list) {
             System.out.println(nv1.toString());
         }
