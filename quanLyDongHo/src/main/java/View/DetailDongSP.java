@@ -220,18 +220,34 @@ public class DetailDongSP extends javax.swing.JDialog {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        DongSp dp = new DongSp();
-        JOptionPane.showMessageDialog(this, new DongSPServicelmpl().update(dp, Integer.parseInt(lbId.getText()), txtMa.getText(), txtTen.getText()));
-        showDataRow(list);
+        if (txtMa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã dòng sản phẩm không được để trống");
+            return;
+        } else if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Dòng sản phẩm không được để trống");
+            return;
+        } else {
+            DongSp dp = new DongSp();
+            JOptionPane.showMessageDialog(this, new DongSPServicelmpl().update(dp, Integer.parseInt(lbId.getText()), txtMa.getText(), txtTen.getText()));
+            showDataRow(list);
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        DongSp dp = new DongSp();
-        dp.setMa(txtMa.getText());
-        dp.setTen(txtTen.getText());
-        JOptionPane.showMessageDialog(this, new DongSPServicelmpl().add(dp));
-        showDataRow(list);
+        if (txtMa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã dòng sản phẩm không được để trống");
+            return;
+        } else if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Dòng sản phẩm không được để trống");
+            return;
+        } else {
+            DongSp dp = new DongSp();
+            dp.setMa(txtMa.getText());
+            dp.setTen(txtTen.getText());
+            JOptionPane.showMessageDialog(this, new DongSPServicelmpl().add(dp));
+            showDataRow(list);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -243,7 +259,7 @@ public class DetailDongSP extends javax.swing.JDialog {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_formMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

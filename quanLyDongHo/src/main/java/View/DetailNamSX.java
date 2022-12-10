@@ -222,26 +222,41 @@ public class DetailNamSX extends javax.swing.JDialog {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        NamSanXuat nsx = new NamSanXuat();
-        JOptionPane.showMessageDialog(this, new NamSanXuatServicelmpl().Update(nsx, Integer.parseInt(lbIdSP.getText()), txtMa.getText(), txtTen.getText()));
-        showDataRow(list);
+        if (txtMa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã năm sản xuất không được để trống");
+            return;
+        } else if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Năm sản xuất không được để trống");
+            return;
+        } else if (txtTen.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "Năm sản xuất phải là số");
+            return;
+        } else {
+            NamSanXuat nsx = new NamSanXuat();
+            JOptionPane.showMessageDialog(this, new NamSanXuatServicelmpl().Update(nsx, Integer.parseInt(lbIdSP.getText()), txtMa.getText(), txtTen.getText()));
+            showDataRow(list);
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        NamSanXuat nsx = new NamSanXuat();
-        String txt = txtMa.getText();
-
-//        for (int i = 1; i < 2; i++) {
-//            int t = Integer.valueOf(txt.charAt(txt.length() - 1)) + i;
-//            String w = txt.substring(0, txt.length() - 1) + t;
-//            txt = w;
-//            txtMa.setText(txt);
-//        }
-        nsx.setMa(txt);
-        nsx.setTen(txtTen.getText());
-        JOptionPane.showMessageDialog(this, new NamSanXuatServicelmpl().addNamSanXuat(nsx));
-        showDataRow(list);
+        if (txtMa.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã năm sản xuất không được để trống");
+            return;
+        } else if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Năm sản xuất không được để trống");
+            return;
+        } else if (txtTen.getText().matches("[0-9]+") == false) {
+            JOptionPane.showMessageDialog(this, "Năm sản xuất phải là số");
+            return;
+        } else {
+            NamSanXuat nsx = new NamSanXuat();
+            String txt = txtMa.getText();
+            nsx.setMa(txt);
+            nsx.setTen(txtTen.getText());
+            JOptionPane.showMessageDialog(this, new NamSanXuatServicelmpl().addNamSanXuat(nsx));
+            showDataRow(list);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -253,7 +268,7 @@ public class DetailNamSX extends javax.swing.JDialog {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_formMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -266,6 +281,7 @@ public class DetailNamSX extends javax.swing.JDialog {
         int click = JOptionPane.showConfirmDialog(null, "Bạn muốn thoát ?", "Thoát", JOptionPane.YES_NO_OPTION);
         if (click == JOptionPane.YES_OPTION) {
             dispose();
+            JOptionPane.showMessageDialog(this, "Thoát thành công");
         } else {
 
         }
