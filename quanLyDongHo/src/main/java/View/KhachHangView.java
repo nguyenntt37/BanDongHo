@@ -1005,6 +1005,25 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         KhachHang kh = new KhachHang();
+        boolean max = txtTen.getText().length() >= 51;
+        if (max) {
+            JOptionPane.showMessageDialog(rootPane, "Tên khách hàng tối đa 50 kí tự!");
+            return;
+        }
+        if (!Validate.checkEmtry(txtHo.getText(), txtTen.getText(), txtTenDem.getText(), txtSDT.getText(), txtThanhPho.getText(), txtQuocGia.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "Dữ liệu trống");
+            return;
+        } //        else if (!txtSDT.matches("^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$")) {
+        //            JOptionPane.showMessageDialog(rootPane, "Số điện thoại không hợp lệ");
+        //            return;
+        //        }
+        else if (!Validate.checkName(txtHo.getText(), txtTen.getText(), txtTenDem.getText(), txtThanhPho.getText(), txtQuocGia.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "Tên hoặc tên đệm hoặc thành phố hoặc quốc gia không hợp lệ!");
+            return;
+        } else if (txtSDT.getText().matches("^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$") == false) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại phải là số hoặc không hợp lệ!");
+            return;
+        }
         kh.setMa(txtMa.getText());
         kh.setHo(txtHo.getText());
         kh.setQuocGia(txtQuocGia.getText());
@@ -1047,6 +1066,25 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         //      KhachHangCutoms khc = getData();
+        boolean max = txtTen.getText().length() >= 51;
+        if (max) {
+            JOptionPane.showMessageDialog(rootPane, "Tên khách hàng tối đa 50 kí tự!");
+            return;
+        }
+        if (!Validate.checkEmtry(txtHo.getText(), txtTen.getText(), txtTenDem.getText(), txtSDT.getText(), txtThanhPho.getText(), txtQuocGia.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "Dữ liệu trống");
+            return;
+        } //        else if (!txtSDT.matches("^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$")) {
+        //            JOptionPane.showMessageDialog(rootPane, "Số điện thoại không hợp lệ");
+        //            return;
+        //        }
+        else if (!Validate.checkName(txtHo.getText(), txtTen.getText(), txtTenDem.getText(), txtThanhPho.getText(), txtQuocGia.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "Tên hoặc tên đệm hoặc thành phố hoặc quốc gia không hợp lệ!");
+            return;
+        } else if (txtSDT.getText().matches("^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$") == false) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại phải là số hoặc không hợp lệ!");
+            return;
+        }
         KhachHang kh = new KhachHang();
 //        if (khc == null) {
 //            return;
@@ -1109,7 +1147,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
         listKH = service.search(txtSearch.getText());
         showTB(listKH);
         updPanel();
-                
+
     }//GEN-LAST:event_txtSearchActionPerformed
     private void searhChing(String ten) {
         dtm.setRowCount(0);
@@ -1220,7 +1258,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
 
     private void btnFirst2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirst2ActionPerformed
 
-       setTruePhanTrang();
+        setTruePhanTrang();
         int tongSoTrang = lisKHC.size() / 5;
         if (lisKHC.size() % 5 != 0) {
             tongSoTrang += 1;
@@ -1237,7 +1275,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     }//GEN-LAST:event_btnFirst2ActionPerformed
 
     private void btnBack2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack2ActionPerformed
-      setTruePhanTrang();
+        setTruePhanTrang();
         int tongSoTrang = lisKHC.size() / 5;
         if (lisKHC.size() % 5 != 0) {
             tongSoTrang += 1;
@@ -1282,7 +1320,7 @@ public class KhachHangView extends javax.swing.JFrame implements Runnable, Threa
     }//GEN-LAST:event_btnNext2ActionPerformed
 
     private void btnLast2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLast2ActionPerformed
-       setTruePhanTrang();
+        setTruePhanTrang();
         int tongSoTrang = lisKHC.size() / 5;
         if (lisKHC.size() % 5 != 0) {
             tongSoTrang += 1;

@@ -113,7 +113,7 @@ public class KhachHangCutoms {
         return "KhachHangCutoms{" + "id=" + id + ", ma=" + ma + ", pass=" + pass + ", sdt=" + sdt + ", quocGia=" + quocGia + ", tenDem=" + tenDem + ", ho=" + ho + ", thanhPho=" + thanhPho + '}';
     }
     public Object[] toDataRow(){
-        return  new Object[]{id, ma, pass, tenDem, ho, sdt, quocGia,thanhPho,trangthai};
+        return  new Object[]{id, ma, pass, tenDem, ho, sdt, quocGia,thanhPho,trangthai == 1?"Hoạt động":"Không hoạt động"};
     }
     
 
