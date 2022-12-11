@@ -80,6 +80,7 @@ public class NhanVienServiceImpl implements INhanVienService {
 
     @Override
     public String update(NhanVien nv, String maNV) {
+        try{
         if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
             return "Vui lòng nhập đủ dữ liệu";
         }
@@ -88,8 +89,9 @@ public class NhanVienServiceImpl implements INhanVienService {
             return "Email bạn nhập vào không đúng định dạng";
         }
         List<NhanVienCustom>list = repo.get();
+        NhanVien nv6 = repo.getByMaNV(maNV);
         for(NhanVienCustom nv3 : list){
-            if(nv3.getMaNV().equals(nv.getMa())){
+            if(nv3.getMaNV().equals(nv.getMa())&&!nv.getMa().equals(nv6.getMa())){
                 return "Không thể thêm nhân viên trùng mã";
             }
         }
@@ -107,11 +109,20 @@ public class NhanVienServiceImpl implements INhanVienService {
         if(!nv.getSdt().matches("\\d+")){
             return "SDT phải toàn là số";
         }
+        String ngayThang = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(ngayThang);
+        df.setLenient(false);
+        df.parse(nv.getNgaySinh());
         boolean check = repo.update(nv, maNV);
         if(check){
             return "Sua thanh cong";
         }
         else return "Sua that bai";
+        }
+        catch (ParseException e) {
+            return "Sửa thất bại, ngày sinh không hợp lệ \n"
+                    + "Ngày sinh hợp lệ có định dạng yyyy-MM-dd";
+        }
     }
 
     @Override

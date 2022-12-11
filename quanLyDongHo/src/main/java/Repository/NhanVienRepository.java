@@ -73,7 +73,7 @@ public class NhanVienRepository {
     public boolean update(NhanVien nv, String maNV) {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();
-            Query query = session.createQuery("UPDATE NhanVien nv SET nv.ho = :ho, nv.tenDem = :tenDem, nv.ten = :ten, nv.gioiTinh = :gioiTinh, nv.ngaySinh = :ngaySinh, nv.diaChi = :diaChi, nv.sdt = :sdt, nv.trangThai = :trangThai WHERE nv.ma = :ma");
+            Query query = session.createQuery("UPDATE NhanVien nv SET nv.ho = :ho, nv.tenDem = :tenDem, nv.ten = :ten, nv.gioiTinh = :gioiTinh, nv.ngaySinh = :ngaySinh, nv.diaChi = :diaChi, nv.sdt = :sdt, nv.email = :email, nv.trangThai = :trangThai WHERE nv.ma = :ma");
             query.setParameter("ho", nv.getHo());
             query.setParameter("tenDem", nv.getTenDem());
             query.setParameter("ten", nv.getTen());
@@ -81,6 +81,7 @@ public class NhanVienRepository {
             query.setParameter("ngaySinh", nv.getNgaySinh());
             query.setParameter("diaChi", nv.getDiaChi());
             query.setParameter("sdt", nv.getSdt());
+            query.setParameter("email", nv.getEmail());
             query.setParameter("trangThai", nv.getTrangThai());
             query.setParameter("ma", maNV);
             query.executeUpdate();

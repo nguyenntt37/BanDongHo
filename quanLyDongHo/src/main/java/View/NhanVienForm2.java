@@ -17,7 +17,6 @@ import viewmodel.NhanVienCustom;
 import model.nhanvien.ChucVu;
 import service.INhanVienService;
 
-
 /**
  *
  * @author Acer
@@ -37,7 +36,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
         initComponents();
         table.setModel(dtm);
         table2.setModel(dtm2);
-        String[] header = {"Mã NV", "Họ tên", "Giới tính", "Ngày sinh", "Địa Chỉ", "SDT","Chức vụ", "Trạng thái"};
+        String[] header = {"Mã NV", "Họ tên", "Giới tính", "Ngày sinh", "Địa Chỉ", "SDT", "Chức vụ", "Trạng thái"};
         dtm.setColumnIdentifiers(header);
         dtm2.setColumnIdentifiers(header);
         listNhanVien = service.get();
@@ -786,7 +785,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
     private void themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themActionPerformed
 
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             ChucVu cv = new ChucVu();
             cv.setTen(radioNhanVien.isSelected() ? "Nhân viên" : "Quản lý");
@@ -812,20 +811,24 @@ public class NhanVienForm2 extends javax.swing.JFrame {
                     null,
                     null,
                     null
-            ); 
+            );
             JOptionPane.showMessageDialog(rootPane, service.add(nv));
             listNhanVien = service.get();
             loadTable(listNhanVien);
 
-        } catch (NumberFormatException e ) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Dữ liệu bị lỗi");
             return;
         }
     }//GEN-LAST:event_themActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
-        Date date = new Date(); 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        ChucVu cv = new ChucVu();
+        cv.setTen(radioNhanVien.isSelected() ? "Nhân viên" : "Quản lý");
+        cv.setMa(radioNhanVien.isSelected() ? "1" : "2");
+        cv.setId(radioNhanVien.isSelected() ? 1 : 2);
         NhanVien nv = new NhanVien(
                 null,
                 txtMaNV.getText(),
@@ -841,7 +844,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
                 "",
                 radioDangLam.isSelected() ? 1 : 0,
                 null,
-                null,
+                cv,
                 null,
                 formatter.format(date),
                 null,
@@ -883,9 +886,10 @@ public class NhanVienForm2 extends javax.swing.JFrame {
         txtDiaChi.setText(nv.getDiaChi());
         if (nv.getTrangThai() == 0) {
             radioDaNghi.setSelected(true);
-        } else
+        } else {
             radioDangLam.setSelected(true);
-        
+        }
+
     }//GEN-LAST:event_tableMouseClicked
 
     private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
