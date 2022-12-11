@@ -355,6 +355,14 @@ public class SanPhamForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (txtMaSP.getText().length() >= 51) {
+            JOptionPane.showMessageDialog(this, "Mã sản phẩm giới hạn chỉ 50 kí tự");
+            return;
+        }
+        if (txtTenSp.getText().length() >= 51) {
+            JOptionPane.showMessageDialog(this, "Tên sản phẩm giới hạn chỉ 50 kí tự");
+            return;
+        }
         if (txtMaSP.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mã sản phẩm không được để trống");
             return;
@@ -403,6 +411,14 @@ public class SanPhamForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (txtMaSP.getText().length() >= 51) {
+            JOptionPane.showMessageDialog(this, "Mã sản phẩm giới hạn chỉ 50 kí tự");
+            return;
+        }
+        if (txtTenSp.getText().length() >= 51) {
+            JOptionPane.showMessageDialog(this, "Tên sản phẩm giới hạn chỉ 50 kí tự");
+            return;
+        }
         if (txtMaSP.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mã sản phẩm không được để trống");
             return;
@@ -479,6 +495,7 @@ public class SanPhamForm extends javax.swing.JFrame {
         int click = JOptionPane.showConfirmDialog(null, "Bạn muốn thoát ?", "Thoát", JOptionPane.YES_NO_OPTION);
         if (click == JOptionPane.YES_OPTION) {
             dispose();
+            JOptionPane.showMessageDialog(this, "Thoát thành công");
         } else {
 
         }
