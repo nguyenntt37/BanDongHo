@@ -932,6 +932,7 @@ public class NhanVienForm2 extends javax.swing.JFrame {
         txtSDT.setText(null);
         txtEmail.setText(null);
         buttonGroup2.clearSelection();
+        buttonGroup4.clearSelection();
     }//GEN-LAST:event_lamMoiActionPerformed
 
     private void xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xoaActionPerformed
