@@ -83,7 +83,7 @@ public class NhanVienServiceImpl implements INhanVienService {
         if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
             return "Vui lòng nhập đủ dữ liệu";
         }
-        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$";
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
         if(!nv.getEmail().matches(regex)){
             return "Email bạn nhập vào không đúng định dạng";
         }
