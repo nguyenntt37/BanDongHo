@@ -235,6 +235,14 @@ public class DetailDongSP extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        if (txtMa.getText().length() >= 51) {
+            JOptionPane.showMessageDialog(this, "Mã dòng sản phẩm giới hạn chỉ 50 kí tự");
+            return;
+        }
+        if (txtTen.getText().length() >= 51) {
+            JOptionPane.showMessageDialog(this, "Tên dòng sản phẩm giới hạn chỉ 50 kí tự");
+            return;
+        }
         if (txtMa.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mã dòng sản phẩm không được để trống");
             return;
