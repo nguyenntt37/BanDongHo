@@ -5,9 +5,14 @@
 package service.impl;
 
 import Repository.NhanVienRepository;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import model.nhanvien.NhanVien;
+import static org.apache.poi.hssf.usermodel.HeaderFooter.date;
+import static org.hibernate.type.descriptor.java.JdbcDateTypeDescriptor.DATE_FORMAT;
 import service.INhanVienService;
 import viewmodel.NhanVienCustom;
 
@@ -27,7 +32,8 @@ public class NhanVienServiceImpl implements INhanVienService {
 
     @Override
     public String add(NhanVien nv) {
-        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$";
+        try{
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
         if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
             return "Vui lòng nhập đủ dữ liệu";
         }
@@ -52,11 +58,24 @@ public class NhanVienServiceImpl implements INhanVienService {
                 return "Không thể thêm nhân viên trùng mã";
             }
         }
+        if(!nv.getSdt().matches("\\d+")){
+            return "SDT phải toàn là số";
+        }
+        String ngayThang = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(ngayThang);
+        df.setLenient(false);
+        df.parse(nv.getNgaySinh());
         boolean check = repo.add(nv);
         if(check){
             return "Thêm thành công";
+            
         }
         else return "Thêm thất bại";
+        }
+        catch (ParseException e) {
+            return "Thêm thất bại, ngày sinh không hợp lệ \n"
+                    + "Ngày sinh hợp lệ có định dạng yyyy-MM-dd";
+        }
     }
 
     @Override
@@ -64,15 +83,29 @@ public class NhanVienServiceImpl implements INhanVienService {
         if(String.valueOf(nv.getMa()).isEmpty()||String.valueOf(nv.getGioiTinh()).isEmpty()||nv.getHo().isEmpty()||nv.getTen().isEmpty()||nv.getTenDem().isEmpty()||nv.getDiaChi().isEmpty()||nv.getSdt().isEmpty()||String.valueOf(nv.getTrangThai()).isEmpty()){
             return "Vui lòng nhập đủ dữ liệu";
         }
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$";
+        if(!nv.getEmail().matches(regex)){
+            return "Email bạn nhập vào không đúng định dạng";
+        }
         List<NhanVienCustom>list = repo.get();
+        for(NhanVienCustom nv3 : list){
+            if(nv3.getMaNV().equals(nv.getMa())){
+                return "Không thể thêm nhân viên trùng mã";
+            }
+        }
         for(NhanVienCustom nv4 : list){
             NhanVien nv5 = repo.getByMaNV(nv4.getMaNV());
             listEmail.add(nv5.getEmail());
         }
+        NhanVien nv3 =repo.getByMaNV(maNV);
         for(int i =0; i<listEmail.size(); i++){
-            if(nv.getEmail().equals(listEmail.get(i))){
+            if(nv.getEmail().equals(listEmail.get(i))&&!nv3.getEmail().equals(nv.getEmail())){
+                if(nv3.getEmail().equals(listEmail.get(i)))
                 return "Không thể sửa nhân viên trùng email";
             }
+        }
+        if(!nv.getSdt().matches("\\d+")){
+            return "SDT phải toàn là số";
         }
         boolean check = repo.update(nv, maNV);
         if(check){
