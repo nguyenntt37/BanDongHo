@@ -62,6 +62,7 @@ public class NhanVienRepository {
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
             session.getTransaction().begin();
             session.save(nv);
+             nv.setMa(String.valueOf("NV" + nv.getId()));
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
