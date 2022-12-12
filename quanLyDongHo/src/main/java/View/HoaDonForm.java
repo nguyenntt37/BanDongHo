@@ -810,7 +810,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         });
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel30.setText(" hóa đơn");
+        jLabel30.setText(" Hóa đơn");
 
         javax.swing.GroupLayout panelBorder6Layout = new javax.swing.GroupLayout(panelBorder6);
         panelBorder6.setLayout(panelBorder6Layout);
@@ -862,7 +862,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         });
 
         jLabel46.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel46.setText("Đăng Xuất");
+        jLabel46.setText("Đăng xuất");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -871,7 +871,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addComponent(jLabel46)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -965,8 +965,6 @@ public class HoaDonForm extends javax.swing.JFrame {
                 thongTinNhanVienMouseClicked(evt);
             }
         });
-
-        jLabel12.setIcon(new javax.swing.ImageIcon("D:\\quanLyBanDongHo\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
 
         javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
         thongTinNhanVien.setLayout(thongTinNhanVienLayout);
