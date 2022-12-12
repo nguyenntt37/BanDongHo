@@ -50,6 +50,7 @@ public class KhachHangRespository {
 
             tran = session.beginTransaction();
             session.save(kh);
+            kh.setMa(String.valueOf("KH" + kh.getId()));
             tran.commit();
             return true;
         } catch (HibernateException e) {

@@ -180,16 +180,11 @@ public class Login extends javax.swing.JPanel {
         String user = txtUsername.getText();
         String pass = txtPassword.getText();
         if (user.isEmpty()) {
-            lblLogin.setText("Tên đăng nhập không được để trống");
-        } else {
-            lblLogin.setText(" ");
-        }
-
+            JOptionPane.showMessageDialog(this,"Tên đăng nhập không được để trống");
+        } 
         if (pass.isEmpty()) {
-            lblLogin.setText("Mật khẩu không được để trống");
-        } else {
-            lblLogin.setText(" ");
-        }
+            JOptionPane.showMessageDialog(this,"Mật khẩu không được để trống");
+        } 
         if (!user.isEmpty() && !pass.isEmpty()) {
             boolean get = lgin.getLogin(user, pass);
             if (get) {
