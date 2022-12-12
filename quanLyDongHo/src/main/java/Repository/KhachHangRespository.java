@@ -33,7 +33,8 @@ public class KhachHangRespository {
                     + "m.tenDem,"
                     + "m.ho,"
                     + "m.thanhPho,"
-                    + "m.trangthai)"
+                    + "m.trangthai,"
+                    + "m.ngaySua)"
                     + "from model.KhachHang m ");
             // query.setParameter("d", ten);
             list = query.list();
@@ -112,8 +113,9 @@ public class KhachHangRespository {
                     + "m.tenDem,"
                     + "m.ho,"
                     + "m.thanhPho,"
-                    + "m.trangthai)"
-                    + "from model.KhachHang m WHERE m.ten LIKE :ten or m.ma like :ten");
+                    + "m.trangthai,"
+                    + "m.ngaySua)"
+                    + "from model.KhachHang m WHERE m.ten LIKE :ten or m.ngaySua like :ten");
             query.setParameter("ten", "%" + ten + "%");
             list = query.list();
         } catch (HibernateException e) {
@@ -136,7 +138,8 @@ public class KhachHangRespository {
                     + "m.tenDem,"
                     + "m.ho,"
                     + "m.thanhPho,"
-                    + "m.trangthai)"
+                    + "m.trangthai,"
+                    + "m.ngaySua)"
                     + "from model.KhachHang m WHERE m.trangthai = :trangThai");
             query.setParameter("trangThai", trangThai);
             list = query.list();
@@ -183,7 +186,8 @@ public class KhachHangRespository {
                     + "m.tenDem,"
                     + "m.ho,"
                     + "m.thanhPho,"
-                    + "m.trangthai)"
+                    + "m.trangthai,"
+                    + "m.ngaySua)"
                     + "from model.KhachHang m ");
             // query.setParameter("d", ten);
             list = query.setFirstResult(heSo).getResultList();
@@ -207,7 +211,7 @@ public class KhachHangRespository {
 //            System.out.println("no");
 //        }
         List<KhachHangCutoms> likh = new ArrayList<>();
-        likh = kh.getAll(1);
+        likh = kh.search("0012");
         for (KhachHangCutoms khachHangCutoms : likh) {
             System.out.println(khachHangCutoms.getMa());
         }
