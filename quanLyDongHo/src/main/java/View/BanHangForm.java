@@ -35,7 +35,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -86,7 +85,7 @@ public class BanHangForm extends javax.swing.JFrame implements Runnable, ThreadF
         setLookAndFeel();
         initComponents();
         init();
-//        initWebcam();
+        initWebcam();
         tenNV();
     }
 
