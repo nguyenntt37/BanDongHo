@@ -138,8 +138,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -163,8 +163,8 @@ public class HoaDonForm extends javax.swing.JFrame {
                 hdct.getMaCTSP(),
                 hdct.getTenCTSP(),
                 hdct.getSoLuong(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hdct.getDonGia())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hdct.getThanhTien()))
+                MoneyUtil.formatMoney(hdct.getDonGia()),
+                MoneyUtil.formatMoney(hdct.getThanhTien())
             });
         }
     }
@@ -196,8 +196,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -218,8 +218,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -240,8 +240,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -262,8 +262,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -284,8 +284,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -306,8 +306,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -328,8 +328,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -350,8 +350,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),
@@ -372,8 +372,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         for (HoaDonCustom hd : lstHD) {
             tblModelHD.addRow(new Object[]{
                 hd.getMaHD(),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTongTien())),
-                MoneyUtil.removeDecimalPart(String.valueOf(hd.getTienThua())),
+                MoneyUtil.formatMoney(hd.getTongTien()),
+                MoneyUtil.formatMoney(hd.getTienThua()),
                 hd.getPttt() == null ? "" : hd.getPttt(),
                 hd.getHtgh(),
                 DatetimeUtil.convertDatetimeFormat(hd.getTgTao()),

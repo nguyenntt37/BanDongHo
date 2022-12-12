@@ -7,6 +7,7 @@ package Util;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
@@ -15,9 +16,11 @@ import java.util.Locale;
  */
 public class MoneyUtil {
 
-    public static Long formatMoney2(String money) {
-        String moneyReplace = money.replace(".", "");
-        return Long.valueOf(moneyReplace);
+    static Locale localeVN = new Locale("vi", "VN");
+    static NumberFormat vn = NumberFormat.getInstance(localeVN);
+
+    public static String formatMoney(BigDecimal money) {
+        return vn.format(money);
     }
 
     public static Long removeDecimalPart(String money) {
@@ -30,16 +33,6 @@ public class MoneyUtil {
         DecimalFormat fomat = (DecimalFormat) DecimalFormat.getCurrencyInstance(lo);
         DecimalFormatSymbols formatSyblos = new DecimalFormatSymbols();
         formatSyblos.setCurrencySymbol("");
-        fomat.setDecimalFormatSymbols(formatSyblos);
-        String t = fomat.format(money);
-        return t;
-    }
-
-    public static String formatMoneyVND(BigDecimal money) {
-        Locale lo = new Locale("vi", "VN");
-        DecimalFormat fomat = (DecimalFormat) DecimalFormat.getCurrencyInstance(lo);
-        DecimalFormatSymbols formatSyblos = new DecimalFormatSymbols();
-        formatSyblos.setCurrencySymbol("VND");
         fomat.setDecimalFormatSymbols(formatSyblos);
         String t = fomat.format(money);
         return t;
