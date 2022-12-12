@@ -30,7 +30,7 @@ public class HoaDonCTRepository {
     public Object[] getBH_HDCTCustom(int idHD) {
         Object[] o = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            o = session.createQuery("SELECT hdct.chiTietSP.ma, CONCAT(hdct.chiTietSP.dongsp.ten,' ',hdct.chiTietSP.thuongHieu.ten,' ',hdct.chiTietSP.sanPham.ten),hdct.chiTietSP.giaBan,hdct.soLuong FROM hoaDonChiTiet hdct "
+            o = session.createQuery("SELECT hdct.chiTietSP.ma, CONCAT(hdct.chiTietSP.dongsp.ten,' ',hdct.chiTietSP.thuongHieu.ten,' ',hdct.chiTietSP.sanPham.ten),FLOOR(hdct.chiTietSP.giaBan),hdct.soLuong FROM hoaDonChiTiet hdct "
                     + "WHERE hdct.hoaDon.id = :idHD").setParameter("idHD", idHD).getResultList().toArray();
         } catch (Exception e) {
             e.printStackTrace();

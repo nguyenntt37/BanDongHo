@@ -526,7 +526,7 @@ public class SanPhamReponstory {
     public List<BanHang_SPCustom> getBH_SPCustom() {
         List<BanHang_SPCustom> lstSPCustom = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstSPCustom = session.createQuery("SELECT ctsp.ma, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), ctsp.giaBan, ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
+            lstSPCustom = session.createQuery("SELECT ctsp.ma, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), FLOOR(ctsp.giaBan), ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
                     + "FROM ChiTietSanPham ctsp WHERE ctsp.soLuongTon > 0").getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -537,7 +537,7 @@ public class SanPhamReponstory {
     public Object[] getBH_SPCustomByDongSP(int idDSP) {
         Object[] o = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            o = session.createQuery("SELECT ctsp.ma, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), ctsp.giaBan, ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
+            o = session.createQuery("SELECT ctsp.ma, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), FLOOR(ctsp.giaBan), ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
                     + "FROM ChiTietSanPham ctsp WHERE ctsp.dongsp.id = :idDSP").setParameter("idDSP", idDSP).getResultList().toArray();
         } catch (Exception e) {
             e.printStackTrace();
@@ -561,7 +561,7 @@ public class SanPhamReponstory {
     public Object[] searchSP(String search) {
         Object[] o = null;
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            o = session.createQuery("SELECT ctsp.ma, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), ctsp.giaBan, ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
+            o = session.createQuery("SELECT ctsp.ma, CONCAT(ctsp.dongsp.ten,' ',ctsp.thuongHieu.ten,' ',ctsp.sanPham.ten), FLOOR(ctsp.giaBan), ctsp.mauSac.ten, ctsp.sanPham.may, ctsp.sanPham.kinh, ctsp.sanPham.xuatXu, ctsp.soLuongTon "
                     + "FROM ChiTietSanPham ctsp WHERE ctsp.thuongHieu.ten LIKE :search OR ctsp.sanPham.ten LIKE :search OR ctsp.ma LIKE :search").setParameter("search", "%" + search + "%").getResultList().toArray();
         } catch (Exception e) {
             e.printStackTrace();

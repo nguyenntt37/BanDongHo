@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -72,10 +73,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         listNhanVien = serviceNV.get();
         String ma = Login.getCurrentLoginUsername();
         for (NhanVienCustom nv : listNhanVien) {
-            if (nv.getMaNV().equals(ma)) {
+            if (nv.getMaNV().equalsIgnoreCase(ma)) {
                 tenNV.setText(nv.getHoTen());
             }
         }
+        jLabel12.setIcon(new ImageIcon("src/main/java/View/ttpthanh.png"));
     }
 
     private void initTableStructure() {
@@ -147,7 +149,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 hd.getMaNV(),
                 hd.getTenNV(),
                 hd.getMaKH(),
-                hd.getTenKH(),
+                hd.getTenKH().replace("null", ""),
                 hd.getGhiChu()
             });
         }
@@ -843,7 +845,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         panelBorder11Layout.setHorizontalGroup(
             panelBorder11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder11Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(66, 66, 66)
                 .addComponent(jLabel45)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -921,16 +923,16 @@ public class HoaDonForm extends javax.swing.JFrame {
         panelBorder12Layout.setHorizontalGroup(
             panelBorder12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder12Layout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addGap(71, 71, 71)
                 .addComponent(jLabel47)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder12Layout.setVerticalGroup(
             panelBorder12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder12Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder12Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jLabel47)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         panelBorder13.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -946,17 +948,17 @@ public class HoaDonForm extends javax.swing.JFrame {
         panelBorder13.setLayout(panelBorder13Layout);
         panelBorder13Layout.setHorizontalGroup(
             panelBorder13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder13Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder13Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel48)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(62, 62, 62))
         );
         panelBorder13Layout.setVerticalGroup(
             panelBorder13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder13Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel48)
-                .addGap(23, 23, 23))
+                .addGap(24, 24, 24))
         );
 
         thongTinNhanVien.setBackground(new java.awt.Color(0, 102, 204));
@@ -965,8 +967,6 @@ public class HoaDonForm extends javax.swing.JFrame {
                 thongTinNhanVienMouseClicked(evt);
             }
         });
-
-        jLabel12.setIcon(new javax.swing.ImageIcon("D:\\DuAn1\\quanLyDongHo\\src\\main\\java\\View\\ttpthanh.png")); // NOI18N
 
         javax.swing.GroupLayout thongTinNhanVienLayout = new javax.swing.GroupLayout(thongTinNhanVien);
         thongTinNhanVien.setLayout(thongTinNhanVienLayout);
@@ -1121,7 +1121,7 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void cboTrangThaiTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiTTItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
             cboPhuongThucTT.setSelectedIndex(0);
             cboHinhThucGH.setSelectedIndex(0);
             cboTongTien.setSelectedIndex(0);
@@ -1142,12 +1142,12 @@ public class HoaDonForm extends javax.swing.JFrame {
                     loadTableHD();
                     break;
             }
-        }
+//        }
     }//GEN-LAST:event_cboTrangThaiTTItemStateChanged
 
     private void cboPhuongThucTTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboPhuongThucTTItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
             cboTrangThaiTT.setSelectedIndex(0);
             cboHinhThucGH.setSelectedIndex(0);
             cboTongTien.setSelectedIndex(0);
@@ -1160,12 +1160,12 @@ public class HoaDonForm extends javax.swing.JFrame {
                 PhuongThucTT pttt = (PhuongThucTT) cboPhuongThucTT.getSelectedItem();
                 loadHDTheoPTTT(pttt.getId());
             }
-        }
+//        }
     }//GEN-LAST:event_cboPhuongThucTTItemStateChanged
 
     private void cboHinhThucGHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboHinhThucGHItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
             cboTrangThaiTT.setSelectedIndex(0);
             cboPhuongThucTT.setSelectedIndex(0);
             cboTongTien.setSelectedIndex(0);
@@ -1178,12 +1178,12 @@ public class HoaDonForm extends javax.swing.JFrame {
                 HinhThucGH htgh = (HinhThucGH) cboHinhThucGH.getSelectedItem();
                 loadHDTheoPTTT(htgh.getId());
             }
-        }
+//        }
     }//GEN-LAST:event_cboHinhThucGHItemStateChanged
 
     private void cboTongTienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTongTienItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
             cboTrangThaiTT.setSelectedIndex(0);
             cboPhuongThucTT.setSelectedIndex(0);
             cboHinhThucGH.setSelectedIndex(0);
@@ -1213,12 +1213,12 @@ public class HoaDonForm extends javax.swing.JFrame {
                     loadTableHD();
                     break;
             }
-        }
+//        }
     }//GEN-LAST:event_cboTongTienItemStateChanged
 
     private void cboThangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboThangItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
             cboTrangThaiTT.setSelectedIndex(0);
             cboPhuongThucTT.setSelectedIndex(0);
             cboHinhThucGH.setSelectedIndex(0);
@@ -1233,12 +1233,12 @@ public class HoaDonForm extends javax.swing.JFrame {
             } else {
                 loadTableHD();
             }
-        }
+//        }
     }//GEN-LAST:event_cboThangItemStateChanged
 
     private void cboNamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboNamItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
             cboTrangThaiTT.setSelectedIndex(0);
             cboPhuongThucTT.setSelectedIndex(0);
             cboHinhThucGH.setSelectedIndex(0);
@@ -1253,7 +1253,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             } else {
                 loadTableHD();
             }
-        }
+//        }
     }//GEN-LAST:event_cboNamItemStateChanged
 
     private void thongTinNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_thongTinNhanVienMouseClicked

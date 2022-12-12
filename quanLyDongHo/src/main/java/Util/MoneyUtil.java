@@ -15,7 +15,7 @@ import java.util.Locale;
  * @author Nguyen
  */
 public class MoneyUtil {
-
+    
     static Locale localeVN = new Locale("vi", "VN");
     static NumberFormat vn = NumberFormat.getInstance(localeVN);
 
@@ -23,9 +23,21 @@ public class MoneyUtil {
         return vn.format(money);
     }
 
+    public static String formatMoneyLong(long money) {
+        return vn.format(money);
+    }
+
     public static Long removeDecimalPart(String money) {
         String moneyReplace = money.replace(".00", "");
         return Long.valueOf(moneyReplace);
+    }
+
+    public static String boDauCham(String money) {
+        return money.replace(".", "");
+    }
+
+    public static long boDauChamLong(String money) {
+        return Long.parseLong(money.replace(".", ""));
     }
 
     public static String formatMoney1(BigDecimal money) {

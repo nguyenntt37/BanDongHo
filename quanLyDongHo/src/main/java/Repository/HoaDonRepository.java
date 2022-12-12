@@ -34,7 +34,7 @@ public class HoaDonRepository {
     public List<HoaDon> getAll() {
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernatUtil.getFACTORY().openSession()) {
-            lstHoaDon = session.createNamedQuery("HoaDon.GET_ALL").getResultList();
+            lstHoaDon = session.createQuery("FROM HoaDon hd ORDER BY hd.id DESC").getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
